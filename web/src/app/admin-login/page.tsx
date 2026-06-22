@@ -3,32 +3,21 @@
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { toast } from "sonner";
 import { ShieldCheck, ArrowRight, ArrowLeft, Loader2 } from "lucide-react";
 
-import { authApi } from "@/lib/auth/api";
 import { useAuth } from "@/lib/auth/auth-context";
-import { isStaff, homePathFor } from "@/lib/auth/roles";
-import { emailSchema, loginPasswordSchema } from "@/lib/validation/schemas";
+import { homePathFor } from "@/lib/auth/roles";
 import { Logo } from "@/components/layout/logo";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-const schema = z.object({
-  email: emailSchema,
-  password: loginPasswordSchema,
-});
-
-type FormValues = z.infer<typeof schema>;
-
+// Demo-only: validation and the real API call are disabled. Signing in just
+// sets a fake Super Admin session and drops you into the admin portal.
 export default function AdminLoginPage() {
   const router = useRouter();
   const { setSession, isAuthenticated, loading, user } = useAuth();
-  const [formError, setFormError] = React.useState<string | null>(null);
 
   // Already signed in → bounce to the right home.
   React.useEffect(() => {
@@ -37,30 +26,23 @@ export default function AdminLoginPage() {
     }
   }, [loading, isAuthenticated, user, router]);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<FormValues>({ resolver: zodResolver(schema) });
-
-  const onSubmit = async (values: FormValues) => {
-    setFormError(null);
-    const res = await authApi.login(values.email, values.password);
-
-    if (!res.success || !res.data) {
-      setFormError(res.message ?? "Login failed.");
-      return;
-    }
-
-    // Enforce admin/staff access *before* establishing the session.
-    if (!isStaff(res.data.user.roles)) {
-      setFormError(
-        "This account doesn't have admin access. Please use the member login."
-      );
-      return;
-    }
-
-    setSession(res.data);
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSession({
+      accessToken: "demo-token",
+      refreshToken: "demo-refresh-token",
+      accessTokenExpiresAt: new Date(Date.now() + 86_400_000).toISOString(),
+      user: {
+        id: "demo-admin",
+        email: "superadmin@haven.dev",
+        firstName: "Super",
+        lastName: "Admin",
+        fullName: "Super Admin",
+        isActive: true,
+        emailConfirmed: true,
+        roles: ["Super Admin"],
+      },
+    });
     toast.success("Welcome to the admin portal");
     router.replace("/admin");
   };
@@ -99,13 +81,7 @@ export default function AdminLoginPage() {
           For administrators and staff only.
         </p>
 
-        {formError && (
-          <div className="mt-6 rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
-            {formError}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4" noValidate>
+        <form onSubmit={onSubmit} className="mt-6 space-y-4" noValidate>
           <div>
             <Label htmlFor="email">Email</Label>
             <Input
@@ -114,11 +90,7 @@ export default function AdminLoginPage() {
               autoComplete="email"
               placeholder="admin@haven.dev"
               className="mt-1.5"
-              {...register("email")}
             />
-            {errors.email && (
-              <p className="mt-1.5 text-xs text-destructive">{errors.email.message}</p>
-            )}
           </div>
           <div>
             <Label htmlFor="password">Password</Label>
@@ -128,16 +100,12 @@ export default function AdminLoginPage() {
               autoComplete="current-password"
               placeholder="••••••••"
               className="mt-1.5"
-              {...register("password")}
             />
-            {errors.password && (
-              <p className="mt-1.5 text-xs text-destructive">{errors.password.message}</p>
-            )}
           </div>
 
-          <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
-            {isSubmitting ? "Signing in…" : "Sign in to admin"}
-            {!isSubmitting && <ArrowRight className="size-4" />}
+          <Button type="submit" size="lg" className="w-full">
+            Sign in to admin
+            <ArrowRight className="size-4" />
           </Button>
         </form>
 

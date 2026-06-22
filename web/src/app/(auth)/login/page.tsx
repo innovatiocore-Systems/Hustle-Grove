@@ -3,46 +3,39 @@
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { toast } from "sonner";
 import { ArrowRight } from "lucide-react";
 
 import { useAuth } from "@/lib/auth/auth-context";
-import { homePathFor } from "@/lib/auth/roles";
-import { emailSchema, loginPasswordSchema } from "@/lib/validation/schemas";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-const schema = z.object({
-  email: emailSchema,
-  password: loginPasswordSchema,
-});
-
-type FormValues = z.infer<typeof schema>;
-
+// Demo-only: validation and the real API call are disabled. Signing in just
+// sets a fake Member session and drops you straight into the dashboard.
 export default function LoginPage() {
   const router = useRouter();
-  const { login } = useAuth();
-  const [formError, setFormError] = React.useState<string | null>(null);
+  const { setSession } = useAuth();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<FormValues>({ resolver: zodResolver(schema) });
-
-  const onSubmit = async (values: FormValues) => {
-    setFormError(null);
-    const res = await login(values.email, values.password);
-    if (res.ok) {
-      toast.success("Welcome back!");
-      router.replace(homePathFor(res.user?.roles));
-    } else {
-      setFormError(res.message ?? "Login failed.");
-    }
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSession({
+      accessToken: "demo-token",
+      refreshToken: "demo-refresh-token",
+      accessTokenExpiresAt: new Date(Date.now() + 86_400_000).toISOString(),
+      user: {
+        id: "demo-user",
+        email: "demo@havenworkspaces.com",
+        firstName: "Demo",
+        lastName: "User",
+        fullName: "Demo User",
+        isActive: true,
+        emailConfirmed: true,
+        roles: ["Member"],
+      },
+    });
+    toast.success("Welcome back!");
+    router.replace("/dashboard");
   };
 
   return (
@@ -52,13 +45,7 @@ export default function LoginPage() {
         Sign in to your Haven Workspaces account.
       </p>
 
-      {formError && (
-        <div className="mt-6 rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
-          {formError}
-        </div>
-      )}
-
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4" noValidate>
+      <form onSubmit={onSubmit} className="mt-6 space-y-4" noValidate>
         <div>
           <Label htmlFor="email">Email</Label>
           <Input
@@ -67,11 +54,7 @@ export default function LoginPage() {
             autoComplete="email"
             placeholder="you@company.com"
             className="mt-1.5"
-            {...register("email")}
           />
-          {errors.email && (
-            <p className="mt-1.5 text-xs text-destructive">{errors.email.message}</p>
-          )}
         </div>
 
         <div>
@@ -82,18 +65,12 @@ export default function LoginPage() {
             autoComplete="current-password"
             placeholder="••••••••"
             className="mt-1.5"
-            {...register("password")}
           />
-          {errors.password && (
-            <p className="mt-1.5 text-xs text-destructive">
-              {errors.password.message}
-            </p>
-          )}
         </div>
 
-        <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? "Signing in…" : "Sign in"}
-          {!isSubmitting && <ArrowRight className="size-4" />}
+        <Button type="submit" size="lg" className="w-full">
+          Sign in
+          <ArrowRight className="size-4" />
         </Button>
       </form>
 
