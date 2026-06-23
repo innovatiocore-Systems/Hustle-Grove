@@ -59,17 +59,10 @@ export function PopupBanner() {
   const [visible, setVisible] = React.useState(false);
 
   React.useEffect(() => {
-    if (!popupEnabled || !popupMessage.trim()) return;
-    const key = `hg-popup-${popupMessage.trim().length}-${popupMessage.trim().charCodeAt(0)}`;
-    if (sessionStorage.getItem(key)) return;
-    setVisible(true);
+    if (popupEnabled && popupMessage.trim()) setVisible(true);
   }, [popupEnabled, popupMessage]);
 
-  const dismiss = () => {
-    setVisible(false);
-    const key = `hg-popup-${popupMessage.trim().length}-${popupMessage.trim().charCodeAt(0)}`;
-    sessionStorage.setItem(key, "1");
-  };
+  const dismiss = () => setVisible(false);
 
   if (!visible) return null;
 
