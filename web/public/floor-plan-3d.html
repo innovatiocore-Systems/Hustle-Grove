@@ -146,7 +146,9 @@ sun.shadow.camera.top = 16;  sun.shadow.camera.bottom = -10;
 sun.shadow.bias = -0.0005;
 scene.add(sun);
 
-scene.add(Object.assign(new THREE.DirectionalLight(0xb8d8ff, 0.45), { position: new THREE.Vector3(-12, 12, -6) }));
+const fillLight = new THREE.DirectionalLight(0xb8d8ff, 0.45);
+fillLight.position.set(-12, 12, -6);
+scene.add(fillLight);
 
 // Warm accent points
 [
