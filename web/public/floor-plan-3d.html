@@ -1,506 +1,769 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>Hustle Grove — 3D Floor Plan | LV4 University Ave, Canberra</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #0c1014; overflow: hidden; font-family: 'Segoe UI', system-ui, sans-serif; }
-    canvas { display: block; }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:#08080c;overflow:hidden;font-family:'Segoe UI',system-ui,sans-serif}
+    canvas{display:block}
+    #ui{position:absolute;inset:0;pointer-events:none}
 
-    #ui { position: absolute; inset: 0; pointer-events: none; }
+    /* Header */
+    #hdr{position:absolute;top:22px;left:24px;display:flex;align-items:center;gap:13px}
+    #hdr .badge{
+      width:46px;height:46px;border-radius:50%;flex-shrink:0;
+      background:conic-gradient(from 180deg,#1a3a0d,#2d5a1a,#1a3a0d);
+      border:2px solid #c8a832;
+      display:flex;align-items:center;justify-content:center;
+      font-size:10px;font-weight:900;color:#c8a832;letter-spacing:.05em
+    }
+    #hdr h1{color:#f0c84a;font-size:15px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;line-height:1.3}
+    #hdr p{color:rgba(255,255,255,.45);font-size:11px;margin-top:2px}
 
-    #header {
-      position: absolute; top: 22px; left: 24px;
+    /* Panels */
+    .panel{
+      position:absolute;
+      background:rgba(6,8,12,.88);
+      backdrop-filter:blur(14px);
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:16px;padding:16px 20px;pointer-events:auto
     }
-    #header .brand {
-      display: flex; align-items: center; gap: 10px;
-    }
-    #header .badge {
-      width: 42px; height: 42px; border-radius: 50%;
-      background: radial-gradient(circle at 40% 40%, #2d5a1b, #0c1a08);
-      border: 2px solid #c8a832;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 900; color: #c8a832; letter-spacing: 0.05em;
-    }
-    #header h1 {
-      color: #f0c84a; font-size: 16px; font-weight: 800;
-      letter-spacing: 0.08em; text-transform: uppercase;
-    }
-    #header p {
-      color: rgba(255,255,255,0.5); font-size: 12px; margin-top: 3px;
-    }
+    .panel h3{color:#c8a832;font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;margin-bottom:12px}
 
-    #legend {
-      position: absolute; bottom: 24px; left: 24px;
-      background: rgba(10, 14, 18, 0.88);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 14px; padding: 16px 18px;
-      pointer-events: auto;
-      min-width: 210px;
-    }
-    #legend h3 {
-      color: #c8a832; font-size: 11px; font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px;
-    }
-    .leg { display: flex; align-items: center; gap: 9px; margin-bottom: 7px; color: rgba(255,255,255,0.75); font-size: 12px; }
-    .dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+    #legend{bottom:24px;left:24px;min-width:195px}
+    .leg{display:flex;align-items:center;gap:9px;margin-bottom:7px;color:rgba(255,255,255,.7);font-size:12px}
+    .dot{width:11px;height:11px;border-radius:3px;flex-shrink:0}
 
-    #stats {
-      position: absolute; bottom: 24px; right: 24px;
-      background: rgba(10, 14, 18, 0.88);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 14px; padding: 16px 20px;
-      color: rgba(255,255,255,0.7); font-size: 12px; line-height: 1.9;
-    }
-    #stats h3 {
-      color: #c8a832; font-size: 11px; font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px;
-    }
-    #stats .row { display: flex; justify-content: space-between; gap: 24px; }
-    #stats .val { color: #fff; font-weight: 700; }
+    #stats{bottom:24px;right:24px}
+    .row{display:flex;justify-content:space-between;gap:28px;color:rgba(255,255,255,.65);font-size:12px;line-height:2}
+    .row span:last-child{color:#fff;font-weight:700}
 
-    #hint {
-      position: absolute; top: 22px; right: 24px;
-      color: rgba(255,255,255,0.3); font-size: 11px; text-align: right; line-height: 1.7;
+    #hint{position:absolute;top:22px;right:24px;color:rgba(255,255,255,.28);font-size:11px;text-align:right;line-height:1.8}
+
+    /* Room tooltip */
+    #tooltip{
+      position:absolute;display:none;
+      background:rgba(6,8,12,.92);border:1px solid rgba(200,168,50,.4);
+      border-radius:10px;padding:10px 14px;color:#fff;font-size:12px;
+      pointer-events:none;z-index:10;line-height:1.6
     }
+    #tooltip strong{color:#f0c84a;display:block;margin-bottom:2px}
   </style>
 </head>
 <body>
+
 <div id="ui">
-  <div id="header">
-    <div class="brand">
-      <div class="badge">HG</div>
-      <div>
-        <h1>The Hustle Grove Workspace</h1>
-        <p>LV4 University Ave, Canberra — Proposed Floor Plan</p>
-      </div>
+  <div id="hdr">
+    <div class="badge">HG</div>
+    <div>
+      <h1>The Hustle Grove Workspace</h1>
+      <p>LV4 University Ave, Canberra — Interactive 3D Floor Plan</p>
     </div>
   </div>
 
-  <div id="legend">
+  <div class="panel" id="legend">
     <h3>Spaces</h3>
-    <div class="leg"><div class="dot" style="background:#3a7d44"></div>Entry Lounge</div>
-    <div class="leg"><div class="dot" style="background:#1a3a0f"></div>Soundproof Booth</div>
-    <div class="leg"><div class="dot" style="background:#1e4080"></div>Private Suites (×6)</div>
-    <div class="leg"><div class="dot" style="background:#7c3a10"></div>Meeting Room (10 pax)</div>
-    <div class="leg"><div class="dot" style="background:#1e2a3a"></div>14 Dedicated Desks</div>
-    <div class="leg"><div class="dot" style="background:#3a1a6a"></div>Comms Room</div>
+    <div class="leg"><div class="dot" style="background:#2d5a2d"></div>Entry Lounge</div>
+    <div class="leg"><div class="dot" style="background:#1a2a1a"></div>Soundproof Booth</div>
+    <div class="leg"><div class="dot" style="background:#1a2e52"></div>Private Suites (×6)</div>
+    <div class="leg"><div class="dot" style="background:#5c2a08"></div>Meeting Room 10 pax</div>
+    <div class="leg"><div class="dot" style="background:#181c24"></div>14 Dedicated Desks</div>
+    <div class="leg"><div class="dot" style="background:#28104a"></div>Comms Room</div>
   </div>
 
-  <div id="stats">
+  <div class="panel" id="stats">
     <h3>Floor Summary</h3>
-    <div class="row"><span>Private Suites</span><span class="val">6 rooms</span></div>
-    <div class="row"><span>Meeting Room</span><span class="val">10 seats</span></div>
-    <div class="row"><span>Dedicated Desks</span><span class="val">14 desks</span></div>
-    <div class="row"><span>Soundproof Booth</span><span class="val">1 (shared)</span></div>
-    <div class="row"><span>Comms Room</span><span class="val">1</span></div>
-    <div class="row"><span>Total Area</span><span class="val">~145 sqm</span></div>
+    <div class="row"><span>Private Suites</span><span>6 rooms</span></div>
+    <div class="row"><span>Meeting Room</span><span>10 seats</span></div>
+    <div class="row"><span>Dedicated Desks</span><span>14 desks</span></div>
+    <div class="row"><span>Soundproof Booth</span><span>1 (shared)</span></div>
+    <div class="row"><span>Comms Room</span><span>1</span></div>
+    <div class="row"><span>Total Area</span><span>~145 sqm</span></div>
   </div>
 
-  <div id="hint">Drag to rotate &nbsp;·&nbsp; Scroll to zoom<br>Right-drag to pan</div>
+  <div id="hint">Drag to rotate &nbsp;·&nbsp; Scroll to zoom<br>Right-drag to pan &nbsp;·&nbsp; Hover rooms</div>
+  <div id="tooltip"></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 <script>
-// ─── Scene Setup ────────────────────────────────────────────────────────────
-const W = window.innerWidth, H = window.innerHeight;
+// ══════════════════════════════════════════════════════════════
+//  SCENE
+// ══════════════════════════════════════════════════════════════
+const W = innerWidth, H = innerHeight;
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x0c1014);
-scene.fog = new THREE.FogExp2(0x0c1014, 0.018);
+scene.background = new THREE.Color(0x08080c);
+scene.fog = new THREE.FogExp2(0x08080c, 0.014);
 
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 renderer.setSize(W, H);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.physicallyCorrectLights = true;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.1;
+renderer.toneMappingExposure = 1.3;
 document.body.appendChild(renderer.domElement);
 
-const camera = new THREE.PerspectiveCamera(42, W / H, 0.1, 200);
-camera.position.set(12.5, 20, 26);
+const camera = new THREE.PerspectiveCamera(40, W/H, 0.1, 200);
+camera.position.set(12.5, 22, 28);
 camera.lookAt(12.5, 0, 3.5);
 
 const controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.target.set(12.5, 0, 3.5);
 controls.enableDamping = true;
-controls.dampingFactor = 0.07;
-controls.minPolarAngle = 0.15;
-controls.maxPolarAngle = Math.PI * 0.42;
-controls.minDistance = 8;
+controls.dampingFactor = 0.06;
+controls.minPolarAngle = 0.18;
+controls.maxPolarAngle = Math.PI * 0.40;
+controls.minDistance = 7;
 controls.maxDistance = 55;
 
-// ─── Lighting ───────────────────────────────────────────────────────────────
-scene.add(new THREE.AmbientLight(0xfff8e0, 0.55));
+// ══════════════════════════════════════════════════════════════
+//  LIGHTS
+// ══════════════════════════════════════════════════════════════
+const hemi = new THREE.HemisphereLight(0xfff5d0, 0x304820, 1.2);
+scene.add(hemi);
 
-const sun = new THREE.DirectionalLight(0xfff5d0, 1.8);
-sun.position.set(18, 28, 22);
+const sun = new THREE.DirectionalLight(0xfff8e8, 2.8);
+sun.position.set(20, 30, 20);
 sun.castShadow = true;
-sun.shadow.mapSize.set(2048, 2048);
-sun.shadow.camera.near = 1;
-sun.shadow.camera.far = 80;
-sun.shadow.camera.left = -20;
-sun.shadow.camera.right = 30;
-sun.shadow.camera.top = 15;
-sun.shadow.camera.bottom = -10;
-sun.shadow.bias = -0.001;
+sun.shadow.mapSize.set(4096, 4096);
+sun.shadow.camera.near = 1; sun.shadow.camera.far = 90;
+sun.shadow.camera.left = -20; sun.shadow.camera.right = 32;
+sun.shadow.camera.top = 16; sun.shadow.camera.bottom = -8;
+sun.shadow.bias = -0.0005;
 scene.add(sun);
 
-// Soft fill from opposite side
-const fill = new THREE.DirectionalLight(0xd0e8ff, 0.4);
-fill.position.set(-10, 15, -5);
+const fill = new THREE.DirectionalLight(0xc8e8ff, 0.6);
+fill.position.set(-12, 12, -8);
 scene.add(fill);
 
-// Warm accent point lights over key areas
-[[2.2, 3, 1.5, 0xffcc44, 0.6], [11, 3, 1.5, 0xff9944, 0.5], [22, 3, 1.5, 0xffcc44, 0.5]].forEach(([x, y, z, c, i]) => {
-  const pt = new THREE.PointLight(c, i, 12);
-  pt.position.set(x, y, z);
-  scene.add(pt);
-});
+// Warm accent points (room ambiance)
+[[2.2,2.5,1.6, 0xffcc44,8,3.5], [11,2.5,1.75, 0xff9933,10,2.5],
+ [22,2.5,1.6, 0xffcc44,8,3.5], [9.25,2,5, 0x8888ff,12,2]].forEach(
+  ([x,y,z,c,d,i]) => { const p=new THREE.PointLight(c,i,d); p.position.set(x,y,z); scene.add(p); }
+);
 
-// ─── Helpers ────────────────────────────────────────────────────────────────
-const mats = {};
-function mat(hex, opts = {}) {
-  const key = hex + JSON.stringify(opts);
-  if (!mats[key]) mats[key] = new THREE.MeshLambertMaterial({ color: hex, ...opts });
-  return mats[key];
+// ══════════════════════════════════════════════════════════════
+//  MATERIAL CACHE  (MeshStandardMaterial)
+// ══════════════════════════════════════════════════════════════
+const _mc = {};
+function M(hex, rough=0.7, metal=0, transparent=false, opacity=1) {
+  const k = `${hex}|${rough}|${metal}|${transparent}|${opacity}`;
+  return _mc[k] || (_mc[k] = new THREE.MeshStandardMaterial({
+    color:hex, roughness:rough, metalness:metal, transparent, opacity
+  }));
 }
 
-function box(w, h, d, color, x, y, z, opts = {}) {
-  const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat(color, opts));
-  m.position.set(x, y + h / 2, z);
-  m.castShadow = true;
-  m.receiveShadow = true;
-  scene.add(m);
-  return m;
+// ══════════════════════════════════════════════════════════════
+//  PRIMITIVE HELPERS
+// ══════════════════════════════════════════════════════════════
+function addMesh(geo, mat, x, y, z, ry=0, shadow=true) {
+  const m = new THREE.Mesh(geo, mat);
+  m.position.set(x, y, z);
+  m.rotation.y = ry;
+  if(shadow){ m.castShadow=true; m.receiveShadow=true; }
+  scene.add(m); return m;
 }
+const BG = THREE.BoxGeometry, CG = THREE.CylinderGeometry, SG = THREE.SphereGeometry;
 
-function cyl(r, h, color, x, y, z, segs = 8) {
-  const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, h, segs), mat(color));
-  m.position.set(x, y + h / 2, z);
-  m.castShadow = true;
-  scene.add(m);
-  return m;
-}
+function shadow(m){ m.traverse(c=>{ if(c.isMesh){c.castShadow=true;c.receiveShadow=true;} }); }
 
-function plane(w, d, color, x, z, opacity = 1) {
+// ══════════════════════════════════════════════════════════════
+//  FLOOR ZONES
+// ══════════════════════════════════════════════════════════════
+function floorZone(cx, cz, w, d, col) {
   const m = new THREE.Mesh(
-    new THREE.PlaneGeometry(w, d),
-    new THREE.MeshLambertMaterial({ color, transparent: opacity < 1, opacity })
+    new THREE.PlaneGeometry(w-0.04, d-0.04),
+    new THREE.MeshStandardMaterial({ color:col, roughness:0.55, metalness:0.08 })
   );
-  m.rotation.x = -Math.PI / 2;
-  m.position.set(x, 0.01, z);
+  m.rotation.x = -Math.PI/2;
+  m.position.set(cx, 0.008, cz);
   m.receiveShadow = true;
-  scene.add(m);
-  return m;
+  scene.add(m); return m;
 }
 
-function label(text, x, y, z, scale = 1) {
-  const lines = text.split('\n');
-  const lh = 28, pad = 14;
-  const maxW = Math.max(...lines.map(l => l.length)) * 11 + pad * 2;
-  const totalH = lines.length * lh + pad * 2;
-  const cv = document.createElement('canvas');
-  cv.width = Math.pow(2, Math.ceil(Math.log2(maxW)));
-  cv.height = Math.pow(2, Math.ceil(Math.log2(totalH)));
-  const ctx = cv.getContext('2d');
-  ctx.clearRect(0, 0, cv.width, cv.height);
-  ctx.fillStyle = 'rgba(8, 12, 18, 0.82)';
-  roundRect(ctx, 0, 0, maxW, totalH, 7);
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(200,168,50,0.5)';
-  ctx.lineWidth = 1.5;
-  roundRect(ctx, 0, 0, maxW, totalH, 7);
-  ctx.stroke();
-  ctx.fillStyle = '#ffffff';
-  ctx.font = `bold ${lh - 8}px "Segoe UI", Arial, sans-serif`;
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  lines.forEach((line, i) => {
-    const isFirst = i === 0;
-    ctx.fillStyle = isFirst ? '#f0c84a' : 'rgba(255,255,255,0.8)';
-    ctx.font = `${isFirst ? 'bold' : 'normal'} ${lh - (isFirst ? 6 : 9)}px "Segoe UI", Arial, sans-serif`;
-    ctx.fillText(line, maxW / 2, pad + lh * i + lh / 2);
+// Master base floor
+const baseFloor = new THREE.Mesh(
+  new THREE.PlaneGeometry(30, 14),
+  new THREE.MeshStandardMaterial({ color:0x0f1114, roughness:0.7, metalness:0.1 })
+);
+baseFloor.rotation.x = -Math.PI/2;
+baseFloor.position.set(12.5, 0, 3.5);
+baseFloor.receiveShadow = true;
+scene.add(baseFloor);
+
+// Zones [cx, cz, w, d, color]
+[
+  [2.25, 1.6,  4.5, 3.2, 0x1c3820],  // Entry Lounge
+  [0.75, 1.05, 1.3, 1.9, 0x0e1e10],  // Soundproof Booth
+  [6.25, 1.6,  3.5, 3.2, 0x111c30],  // Suite B
+  [11.0, 1.75, 6.0, 3.5, 0x2e1504],  // Meeting Room
+  [15.25,1.6,  2.5, 3.2, 0x111c30],  // Suite C
+  [18.25,1.6,  3.5, 3.2, 0x111c30],  // Suite D
+  [22.75,1.6,  4.5, 3.2, 0x111c30],  // Suite E
+  [2.25, 5.0,  4.5, 3.0, 0x111c30],  // Suite A
+  [9.25, 5.0,  9.5, 3.0, 0x10121a],  // Open Desks
+  [17.5, 5.25, 4.0, 2.5, 0x160820],  // Comms
+  [22.75,5.25, 4.5, 2.5, 0x111c30],  // Suite F
+].forEach(([cx,cz,w,d,c]) => floorZone(cx,cz,w,d,c));
+
+// ══════════════════════════════════════════════════════════════
+//  GOLD FLOOR INLAY STRIPS (replace walls)
+// ══════════════════════════════════════════════════════════════
+const inlayM = M(0xb8960a, 0.3, 0.85);
+function strip(x1,z1,x2,z2, w=0.05) {
+  const dx=x2-x1, dz=z2-z1, len=Math.sqrt(dx*dx+dz*dz);
+  const m = new THREE.Mesh(new THREE.BoxGeometry(len, 0.015, w), inlayM);
+  m.position.set((x1+x2)/2, 0.013, (z1+z2)/2);
+  m.rotation.y = -Math.atan2(dz,dx);
+  m.receiveShadow = true;
+  scene.add(m);
+}
+
+// Building perimeter inlay
+strip(0,0,25,0); strip(0,7,25,7);
+strip(0,0,0,7);  strip(25,0,25,7);
+
+// Internal room boundary inlays
+strip(4.5,0,   4.5,3.2); strip(4.5,3.5,4.5,7);
+strip(8.0,0,   8.0,3.5); strip(14.0,0,14.0,3.5);
+strip(16.5,0,  16.5,3.2); strip(16.5,3.8,16.5,7);
+strip(20.0,0,  20.0,3.2); strip(20.5,3.2,20.5,7);
+strip(14.0,3.8,14.0,7);
+strip(0,3.2,   4.5,3.2);  strip(4.5,3.2,8.0,3.2);
+strip(8.0,3.5, 14.0,3.5); strip(14.0,3.2,16.5,3.2);
+strip(16.5,3.2,20.0,3.2); strip(20.0,3.2,25.0,3.2);
+strip(14.0,3.8,16.5,3.8);
+
+// ══════════════════════════════════════════════════════════════
+//  FURNITURE FUNCTIONS
+// ══════════════════════════════════════════════════════════════
+
+// ── Desk + monitor + keyboard ──────────────────────────────────
+function makeDesk(x, z, ry=0, toneW=0xd4b898) {
+  const g = new THREE.Group();
+  const surfM = M(toneW,0.25,0.05), legM = M(0x787878,0.35,0.65), screenM = M(0x080810,0.08,0.2);
+
+  // Surface
+  const surf = new THREE.Mesh(new BG(1.4,0.038,0.7), surfM);
+  surf.position.y = 0.74;
+  g.add(surf);
+
+  // Modesty panel
+  const panel = new THREE.Mesh(new BG(1.36,0.44,0.022), surfM);
+  panel.position.set(0,0.52,-0.34);
+  g.add(panel);
+
+  // 2 slab legs
+  [-0.62,0.62].forEach(lx => {
+    const leg = new THREE.Mesh(new BG(0.04,0.72,0.68), legM);
+    leg.position.set(lx,0.36,0);
+    g.add(leg);
   });
-  const tex = new THREE.CanvasTexture(cv);
-  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite: false }));
-  const aspect = maxW / totalH;
-  sp.scale.set(aspect * scale * 1.4, scale * 1.4, 1);
-  sp.position.set(x, y, z);
-  scene.add(sp);
+  // Cross brace
+  const brace = new THREE.Mesh(new BG(1.18,0.025,0.04), legM);
+  brace.position.set(0,0.1,0);
+  g.add(brace);
+
+  // Monitor bezel
+  const bezel = new THREE.Mesh(new BG(0.54,0.35,0.03), M(0x1a1a22,0.25,0.5));
+  bezel.position.set(0,1.065,-0.26);
+  g.add(bezel);
+
+  // Screen glow
+  const screen = new THREE.Mesh(new BG(0.50,0.31,0.008),
+    new THREE.MeshStandardMaterial({color:0x1a3060,roughness:0.1,metalness:0.1,emissive:0x0a1840,emissiveIntensity:0.5}));
+  screen.position.set(0,1.065,-0.255);
+  g.add(screen);
+
+  // Stand
+  const sBase = new THREE.Mesh(new BG(0.18,0.012,0.14), legM);
+  sBase.position.set(0,0.775,-0.21);
+  g.add(sBase);
+  const sNeck = new THREE.Mesh(new CG(0.016,0.016,0.27,6), legM);
+  sNeck.position.set(0,0.912,-0.21);
+  g.add(sNeck);
+
+  // Keyboard
+  const kb = new THREE.Mesh(new BG(0.38,0.012,0.14), M(0x2a2a32,0.7,0.1));
+  kb.position.set(0,0.752,0.1);
+  g.add(kb);
+
+  // Mouse
+  const mouse = new THREE.Mesh(new BG(0.06,0.016,0.1), M(0x222228,0.4,0.3));
+  mouse.position.set(0.26,0.752,0.08);
+  g.add(mouse);
+
+  g.position.set(x,0,z);
+  g.rotation.y = ry;
+  shadow(g);
+  scene.add(g);
 }
 
-function roundRect(ctx, x, y, w, h, r) {
-  ctx.beginPath();
-  ctx.moveTo(x + r, y);
-  ctx.lineTo(x + w - r, y);
-  ctx.arcTo(x + w, y, x + w, y + r, r);
-  ctx.lineTo(x + w, y + h - r);
-  ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
-  ctx.lineTo(x + r, y + h);
-  ctx.arcTo(x, y + h, x, y + h - r, r);
-  ctx.lineTo(x, y + r);
-  ctx.arcTo(x, y, x + r, y, r);
-  ctx.closePath();
+// ── Ergonomic Chair ─────────────────────────────────────────────
+function makeChair(x, z, ry=0, fabricHex=0x1e2230) {
+  const g = new THREE.Group();
+  const fab = M(fabricHex,0.9,0), frame = M(0x3a3a40,0.4,0.7);
+
+  // Seat cushion (slightly rounded look via scale)
+  const seat = new THREE.Mesh(new BG(0.48,0.09,0.46), fab);
+  seat.position.y = 0.46;
+  g.add(seat);
+
+  // Seat foam lip
+  const lip = new THREE.Mesh(new BG(0.48,0.03,0.48), M(fabricHex,0.95,0));
+  lip.position.y = 0.44;
+  g.add(lip);
+
+  // Backrest
+  const back = new THREE.Mesh(new BG(0.46,0.46,0.07), fab);
+  back.position.set(0,0.72,-0.22);
+  back.rotation.x = 0.1;
+  g.add(back);
+
+  // Lumbar
+  const lumbar = new THREE.Mesh(new BG(0.38,0.1,0.05), M(Math.max(0,fabricHex-0x080808),0.9,0));
+  lumbar.position.set(0,0.56,-0.185);
+  g.add(lumbar);
+
+  // Armrests
+  [-0.27,0.27].forEach(ax => {
+    const arm = new THREE.Mesh(new BG(0.05,0.04,0.28), frame);
+    arm.position.set(ax,0.62,0);
+    g.add(arm);
+    const armTop = new THREE.Mesh(new BG(0.07,0.022,0.24), M(0x2a2a30,0.6,0));
+    armTop.position.set(ax,0.645,0);
+    g.add(armTop);
+  });
+
+  // 5 star base (5 legs)
+  for(let i=0;i<5;i++){
+    const a = (i/5)*Math.PI*2;
+    const spoke = new THREE.Mesh(new BG(0.32,0.014,0.025), frame);
+    spoke.position.set(Math.cos(a)*0.16, 0.02, Math.sin(a)*0.16);
+    spoke.rotation.y = -a;
+    g.add(spoke);
+    const foot = new THREE.Mesh(new CG(0.025,0.025,0.05,6), frame);
+    foot.position.set(Math.cos(a)*0.32, 0.025, Math.sin(a)*0.32);
+    g.add(foot);
+  }
+
+  // Central pole
+  const pole = new THREE.Mesh(new CG(0.022,0.022,0.42,8), frame);
+  pole.position.y = 0.21;
+  g.add(pole);
+
+  g.position.set(x,0,z);
+  g.rotation.y = ry;
+  shadow(g);
+  scene.add(g);
 }
 
-// ─── Building Dimensions ────────────────────────────────────────────────────
-// Scale: 1 unit = ~1 metre. Building footprint: 25 × 7
-const BL = 25;   // building length (X)
-const BW = 7;    // building width (Z)
-const WH = 3.0;  // wall height
-const WT = 0.12; // wall thickness
-const FLOOR_COL = 0x1a1e24;
-const WALL_COL  = 0xd8d4cc;
-const CEIL_COL  = 0x2a2e34;
-
-// Master floor
-plane(BL, BW, FLOOR_COL, BL / 2, BW / 2);
-
-// ─── Room Floor Pads ────────────────────────────────────────────────────────
-// format: cx, cz, w, d, color
-const rooms = [
-  // Entry Lounge
-  [2.25, 1.6, 4.5, 3.2, 0x1d4a2a],
-  // Soundproof booth (inside entry, slightly elevated)
-  [0.75, 1.05, 1.3, 1.9, 0x0e2a10],
-  // Suite B
-  [6.25, 1.6, 3.5, 3.2, 0x162e52],
-  // Meeting Room
-  [11.0, 1.75, 6.0, 3.5, 0x4a1e08],
-  // Suite C
-  [15.25, 1.6, 2.5, 3.2, 0x162e52],
-  // Suite D
-  [18.25, 1.6, 3.5, 3.2, 0x162e52],
-  // Suite E
-  [22.75, 1.6, 4.5, 3.2, 0x162e52],
-  // Suite A (bottom left)
-  [2.25, 5.0, 4.5, 3.0, 0x162e52],
-  // Open Desk Area
-  [9.25, 5.0, 9.5, 3.0, 0x141a22],
-  // Comms Room
-  [17.5, 5.25, 4.0, 2.5, 0x221040],
-  // Large Suite F
-  [22.75, 5.25, 4.5, 2.5, 0x162e52],
-];
-
-rooms.forEach(([cx, cz, w, d, col]) => {
-  plane(w - 0.05, d - 0.05, col, cx, cz, 0.95);
-});
-
-// ─── Outer Walls ────────────────────────────────────────────────────────────
-// South wall
-box(BL, WH, WT, WALL_COL, BL/2, 0, 0);
-// North wall
-box(BL, WH, WT, WALL_COL, BL/2, 0, BW);
-// West wall
-box(WT, WH, BW, WALL_COL, 0, 0, BW/2);
-// East wall
-box(WT, WH, BW, WALL_COL, BL, 0, BW/2);
-
-// ─── Internal Partition Walls ───────────────────────────────────────────────
-const iw = mat(0xb0aca4, { transparent: true, opacity: 0.9 });
-
-function iwall(x1, z1, x2, z2) {
-  const dx = x2 - x1, dz = z2 - z1;
-  const len = Math.sqrt(dx * dx + dz * dz);
-  const cx = (x1 + x2) / 2, cz = (z1 + z2) / 2;
-  const angle = Math.atan2(dz, dx);
-  const m = new THREE.Mesh(new THREE.BoxGeometry(len, WH, WT), iw);
-  m.position.set(cx, WH / 2, cz);
-  m.rotation.y = -angle;
-  m.castShadow = true;
-  m.receiveShadow = true;
-  scene.add(m);
+// ── Workstation (desk + chair) ─────────────────────────────────
+function ws(x, z, ry=0) {
+  makeDesk(x, z, ry);
+  const d = 0.72;
+  makeChair(x + Math.sin(ry)*d, z + Math.cos(ry)*d, ry + Math.PI);
 }
 
-// Vertical partitions (along X axis = walls running north-south)
-iwall(4.5, 0,   4.5, 3.2);   // Entry | Suite B (top)
-iwall(4.5, 3.5, 4.5, 7.0);   // Suite A | Open desks (bottom)
-iwall(8.0, 0,   8.0, 3.5);   // Suite B | Meeting Room
-iwall(14.0, 0,  14.0, 3.5);  // Meeting Room | Suite C
-iwall(16.5, 0,  16.5, 3.2);  // Suite C | Suite D
-iwall(16.5, 3.8,16.5, 7.0);  // Open desks | Comms zone
-iwall(20.0, 0,  20.0, 3.2);  // Suite D | corridor
-iwall(20.5, 3.2,20.5, 7.0);  // Comms | Suite F
-iwall(14.0, 3.8,14.0, 7.0);  // Open desks | Comms (partial)
-
-// Horizontal partitions (along Z axis = walls running east-west)
-iwall(0,   3.2, 4.5, 3.2);   // Entry south wall
-iwall(4.5, 3.2, 8.0, 3.2);   // Suite B south wall
-iwall(8.0, 3.5, 14.0, 3.5);  // Meeting Room south wall
-iwall(14.0,3.2, 16.5, 3.2);  // Suite C south wall
-iwall(16.5,3.2, 20.0, 3.2);  // Suite D south wall
-iwall(20.0,3.2, 25.0, 3.2);  // Suite E south wall
-iwall(14.0,3.8, 16.5, 3.8);  // Comms north wall (partial)
-iwall(20.0,3.5, 20.5, 3.5);  // Corridor connection
-
-// ─── Ceilings (semi-transparent to show inside) ─────────────────────────────
-const ceilMat = new THREE.MeshLambertMaterial({ color: CEIL_COL, transparent: true, opacity: 0.18, side: THREE.BackSide });
-const ceilGeo = new THREE.BoxGeometry(BL - 0.1, 0.08, BW - 0.1);
-const ceil = new THREE.Mesh(ceilGeo, ceilMat);
-ceil.position.set(BL / 2, WH, BW / 2);
-scene.add(ceil);
-
-// ─── Furniture ──────────────────────────────────────────────────────────────
-const DESK_COL   = 0xc8b898;
-const CHAIR_COL  = 0x2a2a2a;
-const TABLE_COL  = 0x8b6040;
-const SCREEN_COL = 0x111822;
-const PLANT_COL  = 0x2d6a2d;
-
-// Helper: desk + monitor + chair
-function workstation(x, z, facingZ = true) {
-  const dw = 1.4, dd = 0.65, dh = 0.75;
-  box(dw, dh, dd, DESK_COL, x, 0, z);
-  box(0.5, 0.38, 0.05, SCREEN_COL, x, dh, z + (facingZ ? -0.22 : 0.22));
-  // Chair
-  const chZ = z + (facingZ ? 0.55 : -0.55);
-  box(0.5, 0.45, 0.45, CHAIR_COL, x, 0, chZ);
-  box(0.5, 0.5, 0.08, CHAIR_COL, x, 0.45, chZ + (facingZ ? -0.18 : 0.18));
+// ── Plant ───────────────────────────────────────────────────────
+function makePlant(x, z, s=1) {
+  const g = new THREE.Group();
+  // Pot
+  const pot = new THREE.Mesh(new CG(0.17*s,0.14*s,0.26*s,10), M(0x7a5230,0.8,0.05));
+  pot.position.y = 0.13*s;
+  g.add(pot);
+  const rim = new THREE.Mesh(new CG(0.18*s,0.16*s,0.02,10), M(0x8a6240,0.7,0.1));
+  rim.position.y = 0.27*s;
+  g.add(rim);
+  const soil = new THREE.Mesh(new CG(0.155*s,0.155*s,0.015,10), M(0x1a1008,0.95,0));
+  soil.position.y = 0.265*s;
+  g.add(soil);
+  // Multi-sphere foliage
+  const cols = [0x256825,0x1a5a1a,0x2e7a1e,0x1e4a10];
+  const offsets = [[0,0.55,0,0.28],[0.2,0.52,0.08,0.22],[-0.18,0.52,-0.1,0.22],[0.05,0.62,0.15,0.18]];
+  offsets.forEach(([ox,oy,oz,r],i)=>{
+    const sp = new THREE.Mesh(new SG(r*s,8,6), M(cols[i%cols.length],0.9,0));
+    sp.position.set(ox*s,oy*s,oz*s);
+    g.add(sp);
+  });
+  g.position.set(x,0,z);
+  shadow(g);
+  scene.add(g);
 }
 
-// Helper: round table + chairs around it
-function roundTable(cx, cz, r = 0.55, seats = 4) {
-  cyl(r, 0.74, TABLE_COL, cx, 0, cz, 16);
-  cyl(0.05, 0.74, 0x5a4020, cx, 0, cz);
-  for (let i = 0; i < seats; i++) {
-    const a = (i / seats) * Math.PI * 2;
-    const rx = cx + Math.cos(a) * (r + 0.42);
-    const rz = cz + Math.sin(a) * (r + 0.42);
-    box(0.4, 0.42, 0.4, CHAIR_COL, rx, 0, rz);
+// ── Pendant Light ───────────────────────────────────────────────
+function pendant(x, z, warmth=0xffeecc) {
+  const g = new THREE.Group();
+  // Shade
+  const shade = new THREE.Mesh(new CG(0,0.18,0.22,10,1,true), M(0x222228,0.5,0.6));
+  shade.rotation.x = Math.PI;
+  shade.position.y = 2.5;
+  g.add(shade);
+  // Glowing bulb
+  const bulb = new THREE.Mesh(new SG(0.055,8,6),
+    new THREE.MeshStandardMaterial({color:warmth,emissive:warmth,emissiveIntensity:2.5}));
+  bulb.position.y = 2.38;
+  g.add(bulb);
+  // Cord
+  const cord = new THREE.Mesh(new CG(0.005,0.005,0.55,4), M(0x111111));
+  cord.position.y = 2.77;
+  g.add(cord);
+  // Light
+  const pt = new THREE.PointLight(warmth, 3.5, 6, 2);
+  pt.position.y = 2.38;
+  g.add(pt);
+  g.position.set(x,0,z);
+  scene.add(g);
+}
+
+// ── Round table ─────────────────────────────────────────────────
+function roundTable(x, z, r=0.55, seats=4) {
+  const top = new THREE.Mesh(new CG(r,r,0.045,20), M(0xb87840,0.2,0.1));
+  top.position.set(x,0.76,z);
+  shadow(top); scene.add(top);
+  const ped = new THREE.Mesh(new CG(0.06,0.06,0.72,8), M(0x666660,0.35,0.7));
+  ped.position.set(x,0.36,z);
+  shadow(ped); scene.add(ped);
+  const base = new THREE.Mesh(new CG(0.25,0.2,0.04,12), M(0x666660,0.35,0.7));
+  base.position.set(x,0.02,z);
+  shadow(base); scene.add(base);
+  for(let i=0;i<seats;i++){
+    const a=(i/seats)*Math.PI*2;
+    makeChair(x+Math.cos(a)*(r+0.48), z+Math.sin(a)*(r+0.48), a+Math.PI, 0x2a2030);
   }
 }
 
-// Helper: plant in corner
-function plant(x, z) {
-  cyl(0.22, 0.3, 0x5a3a1a, x, 0, z, 6);
-  cyl(0.3, 0.5, PLANT_COL, x, 0.3, z, 8);
-  cyl(0.18, 0.4, 0x1a5a1a, x + 0.1, 0.5, z - 0.1, 8);
+// ── Sofa ─────────────────────────────────────────────────────────
+function sofa(x, z, ry=0, w=1.8, col=0x2a3048) {
+  const g = new THREE.Group();
+  // Base
+  const base = new THREE.Mesh(new BG(w,0.28,0.72), M(col,0.85,0));
+  base.position.y = 0.14;
+  g.add(base);
+  // Seat cushions (2)
+  for(let i=0;i<2;i++){
+    const c = new THREE.Mesh(new BG(w/2-0.04,0.1,0.66), M(col,0.85,0));
+    c.position.set((i-0.5)*w/2+0.01*i,0.33,0.02);
+    g.add(c);
+  }
+  // Back
+  const back = new THREE.Mesh(new BG(w,0.46,0.1), M(col,0.85,0));
+  back.position.set(0,0.5,-0.32);
+  g.add(back);
+  // Armrests
+  [-w/2, w/2].forEach(ax => {
+    const arm = new THREE.Mesh(new BG(0.1,0.38,0.72), M(col,0.85,0));
+    arm.position.set(ax*(1-0.1/w),0.33,0);
+    g.add(arm);
+  });
+  // Legs (4)
+  [[-w/2+0.15,-0.3],[w/2-0.15,-0.3],[-w/2+0.15,0.3],[w/2-0.15,0.3]].forEach(([lx,lz])=>{
+    const leg = new THREE.Mesh(new BG(0.05,0.06,0.05), M(0x4a3820,0.6,0.1));
+    leg.position.set(lx,0.03,lz);
+    g.add(leg);
+  });
+  g.position.set(x,0,z); g.rotation.y=ry;
+  shadow(g); scene.add(g);
 }
 
-// ── Entry Lounge ──
-roundTable(2.8, 2.2, 0.62, 4);
-box(1.8, 0.42, 0.55, 0x4a3020, 1.0, 0, 1.2); // sofa
-box(0.9, 0.6, 0.35, DESK_COL, 3.8, 0, 0.5);   // tea/coffee counter
-box(0.6, 1.5, 0.1, 0x888888, 4.0, 0, 0.25);   // notice board
-plant(0.4, 2.9);
-plant(3.8, 2.9);
-
-// ── Soundproof Booth ──
-box(0.8, 0.74, 0.55, DESK_COL, 0.72, 0, 1.0);
-box(0.35, 0.38, 0.04, SCREEN_COL, 0.72, 0.74, 0.78);
-box(0.45, 0.42, 0.42, CHAIR_COL, 0.72, 0, 1.52);
-
-// ── Copy/Print station (between entry and suite B bottom) ──
-box(1.0, 0.95, 0.6, 0x888888, 4.2, 0, 2.6); // printer
-
-// ── Suite B (medium, 12.3 sqm) ──
-workstation(5.3, 0.9);
-workstation(7.1, 0.9);
-workstation(5.3, 2.6, false);
-workstation(7.1, 2.6, false);
-plant(4.7, 0.4);
-
-// ── Meeting Room (10 pax) ──
-// Large oval conference table
-const tableGeo = new THREE.CylinderGeometry(0.9, 0.9, 0.74, 32);
-tableGeo.scale(2.5, 1, 1);
-const tableMesh = new THREE.Mesh(tableGeo, mat(TABLE_COL));
-tableMesh.position.set(11.0, 0.37, 1.75);
-tableMesh.castShadow = true;
-scene.add(tableMesh);
-// 10 chairs around the table
-const meetSeats = 10;
-for (let i = 0; i < meetSeats; i++) {
-  const a = (i / meetSeats) * Math.PI * 2;
-  const ex = 2.6, ez = 1.05;
-  const rx = 11.0 + Math.cos(a) * (ex + 0.48);
-  const rz = 1.75 + Math.sin(a) * (ez + 0.48);
-  box(0.45, 0.42, 0.42, CHAIR_COL, rx, 0, rz);
-  box(0.45, 0.4, 0.07, CHAIR_COL, rx, 0.42, rz + (Math.sin(a) > 0 ? -0.16 : 0.16));
-}
-plant(8.3, 0.4);
-plant(13.5, 0.4);
-// Projector screen on south wall
-box(2.2, 1.4, 0.04, 0xf0f0f0, 11.0, WH - 1.8, 0.1);
-
-// ── Suite C (small, 8.88 sqm) ──
-workstation(14.8, 0.9);
-workstation(15.9, 2.5, false);
-plant(14.2, 0.4);
-
-// ── Suite D (medium, 12.3 sqm) ──
-workstation(17.3, 0.9);
-workstation(19.1, 0.9);
-workstation(18.2, 2.6, false);
-plant(16.7, 0.4);
-
-// ── Suite E (medium, 12.15 sqm) ──
-workstation(21.3, 0.9);
-workstation(23.3, 0.9);
-workstation(22.3, 2.6, false);
-plant(20.7, 0.4);
-
-// ── Suite A (small, 9.88 sqm) ──
-workstation(1.3, 4.2);
-workstation(3.2, 4.2);
-workstation(2.2, 5.9, false);
-plant(0.4, 3.7);
-
-// ── 14 Dedicated Desks (two rows of 7) ──
-for (let i = 0; i < 7; i++) {
-  workstation(5.2 + i * 1.25, 4.1);
-  workstation(5.2 + i * 1.25, 5.9, false);
+// ── Coffee Table ─────────────────────────────────────────────────
+function coffeeTable(x, z) {
+  const top = new THREE.Mesh(new BG(0.9,0.04,0.5), M(0xc0a870,0.2,0.15));
+  top.position.set(x,0.42,z); shadow(top); scene.add(top);
+  [[-0.38,-0.2],[0.38,-0.2],[-0.38,0.2],[0.38,0.2]].forEach(([lx,lz])=>{
+    const l=new THREE.Mesh(new BG(0.04,0.4,0.04),M(0x666650,0.35,0.6));
+    l.position.set(x+lx,0.2,z+lz); shadow(l); scene.add(l);
+  });
 }
 
-// ── Comms Room ──
-box(1.4, 1.8, 0.5, 0x1a1a2a, 15.5, 0, 5.2);  // server rack
-box(1.4, 1.8, 0.5, 0x1a1a2a, 15.5, 0, 6.0);  // server rack 2
-box(1.8, 0.74, 0.6, DESK_COL, 18.5, 0, 4.3); // desk
-box(0.7, 0.38, 0.04, SCREEN_COL, 18.5, 0.74, 4.1);
+// ── Reception Desk ────────────────────────────────────────────────
+function reception(cx, cz) {
+  const wM = M(0xd4b898,0.3,0.05), fM = M(0x222230,0.4,0.3);
+  // Front panel
+  addMesh(new BG(2.2,1.05,0.08), wM, cx, 0.525, cz);
+  // Side returns
+  addMesh(new BG(0.08,1.05,0.85), wM, cx-1.1, 0.525, cz-0.42);
+  addMesh(new BG(0.08,1.05,0.85), wM, cx+1.1, 0.525, cz-0.42);
+  // Counter top
+  addMesh(new BG(2.3,0.04,1.0), wM, cx, 1.08, cz-0.44);
+  // Accent strip
+  addMesh(new BG(2.2,0.04,0.04), M(0xc8a832,0.2,0.8), cx, 0.52, cz+0.01);
+  // Monitor on desk
+  const bezel = new THREE.Mesh(new BG(0.44,0.3,0.03), M(0x111118,0.25,0.5));
+  bezel.position.set(cx,1.42,cz-0.5);
+  shadow(bezel); scene.add(bezel);
+  const scr = new THREE.Mesh(new BG(0.40,0.26,0.01),
+    new THREE.MeshStandardMaterial({color:0x0a1840,emissive:0x0a1840,emissiveIntensity:0.6}));
+  scr.position.set(cx,1.42,cz-0.495);
+  scene.add(scr);
+}
 
-// ── Suite F (large, 15 sqm) ──
-workstation(21.3, 4.2);
-workstation(23.5, 4.2);
-workstation(21.3, 6.0, false);
-workstation(23.5, 6.0, false);
-roundTable(22.4, 5.1, 0.4, 4);
-plant(20.7, 3.4);
+// ── Server Rack ─────────────────────────────────────────────────
+function serverRack(x, z) {
+  const g = new THREE.Group();
+  const bodyM = M(0x111118,0.4,0.5), panelM = M(0x0a0a12,0.3,0.7);
+  const body = new THREE.Mesh(new BG(0.6,1.8,0.7), bodyM);
+  body.position.y = 0.9;
+  g.add(body);
+  for(let i=0;i<8;i++){
+    const rack = new THREE.Mesh(new BG(0.55,0.14,0.65), panelM);
+    rack.position.y = 0.16+i*0.21;
+    g.add(rack);
+    // LED strip
+    const led = new THREE.Mesh(new BG(0.4,0.02,0.02),
+      new THREE.MeshStandardMaterial({color:0x00ff44,emissive:0x00cc44,emissiveIntensity:1.5}));
+    led.position.set(-0.05,0.16+i*0.21+0.05,-0.31);
+    g.add(led);
+  }
+  g.position.set(x,0,z);
+  shadow(g); scene.add(g);
+}
 
-// ─── Room Labels ────────────────────────────────────────────────────────────
-label('Entry Lounge',       2.25, 2.2, 1.6);
-label('Soundproof\nBooth',  0.75, 1.8, 1.05,  0.75);
-label('Suite B\n12.3 sqm',  6.25, 2.2, 1.6);
-label('Meeting Room\n10 PAX', 11.0, 2.2, 1.75);
-label('Suite C\n8.88 sqm',  15.25,2.2, 1.6);
-label('Suite D\n12.3 sqm',  18.25,2.2, 1.6);
-label('Suite E\n12.15 sqm', 22.75,2.2, 1.6);
-label('Suite A\n9.88 sqm',  2.25, 2.2, 5.0);
-label('14 Dedicated\nDesks',9.25, 2.2, 5.0);
-label('Comms Room',         17.5, 2.2, 5.25,  0.85);
-label('Suite F\n15 sqm',    22.75,2.2, 5.25);
+// ── Whiteboard ───────────────────────────────────────────────────
+function whiteboard(x, y, z, w=1.6, ry=0) {
+  const frame = new THREE.Mesh(new BG(w+0.06,0.92,0.04), M(0x888890,0.4,0.5));
+  frame.position.set(x,y,z); frame.rotation.y=ry; shadow(frame); scene.add(frame);
+  const board = new THREE.Mesh(new BG(w,0.84,0.02),
+    new THREE.MeshStandardMaterial({color:0xf8f6f0,roughness:0.95,metalness:0}));
+  const nx=x+Math.sin(ry)*0.01, nz=z+Math.cos(ry)*0.01;
+  board.position.set(nx,y,nz); board.rotation.y=ry; scene.add(board);
+}
 
-// ─── Decorative Ground Grid ─────────────────────────────────────────────────
-const gridHelper = new THREE.GridHelper(60, 60, 0x1a2030, 0x141c26);
-gridHelper.position.set(BL / 2, -0.01, BW / 2);
-scene.add(gridHelper);
+// ── TV / Display screen ──────────────────────────────────────────
+function tv(x, y, z, w=1.4, ry=0) {
+  const frame = new THREE.Mesh(new BG(w+0.06,w*0.58+0.06,0.04), M(0x111118,0.3,0.6));
+  frame.position.set(x,y,z); frame.rotation.y=ry; shadow(frame); scene.add(frame);
+  const scr = new THREE.Mesh(new BG(w,w*0.58,0.015),
+    new THREE.MeshStandardMaterial({color:0x101830,roughness:0.05,emissive:0x08102a,emissiveIntensity:0.4}));
+  scr.position.set(x+Math.sin(ry)*0.008, y, z+Math.cos(ry)*0.008);
+  scr.rotation.y=ry; scene.add(scr);
+}
 
-// ─── Render Loop ─────────────────────────────────────────────────────────────
-window.addEventListener('resize', () => {
-  const W = window.innerWidth, H = window.innerHeight;
-  camera.aspect = W / H;
-  camera.updateProjectionMatrix();
-  renderer.setSize(W, H);
+// ══════════════════════════════════════════════════════════════
+//  ROOM CONTENTS
+// ══════════════════════════════════════════════════════════════
+
+// ── Entry Lounge ────────────────────────────────────────────────
+pendant(1.5, 1.6); pendant(3.2, 1.6);
+reception(2.3, 3.05);
+sofa(2.6, 1.8, 0, 1.6, 0x1e3028);
+coffeeTable(2.6, 2.55);
+makePlant(0.45, 2.85); makePlant(4.0, 2.8);
+// Tea/coffee counter
+addMesh(new BG(1.6,0.9,0.5), M(0xd4b898,0.3,0.05), 3.5,0.45,0.35);
+addMesh(new BG(1.6,0.04,0.52), M(0xd4b898,0.25,0.1), 3.5,0.92,0.34);
+// Coffee machine
+addMesh(new BG(0.28,0.36,0.24), M(0x222228,0.4,0.5), 4.0,0.94,0.32);
+
+// ── Soundproof Booth ────────────────────────────────────────────
+pendant(0.75, 1.05, 0xffeedd);
+makeDesk(0.75, 0.9);
+makeChair(0.75, 1.62, Math.PI);
+// Acoustic panels on implied walls (low boxes on floor)
+addMesh(new BG(1.1,0.6,0.05), M(0x3a5a3a,0.95,0), 0.75,0.32,0.17);
+
+// ── Medium Suite B ──────────────────────────────────────────────
+pendant(5.8, 1.6); pendant(7.1, 1.6);
+ws(5.3, 0.9); ws(7.1, 0.9);
+ws(5.3, 2.55, Math.PI); ws(7.1, 2.55, Math.PI);
+makePlant(4.65, 0.4);
+whiteboard(6.4, 1.45, 0.06, 1.2);
+
+// ── Meeting Room (10 pax) ────────────────────────────────────────
+pendant(9.5, 1.75); pendant(11.0, 1.75); pendant(12.5, 1.75);
+// Oval conference table
+const tblGeo = new THREE.CylinderGeometry(0.9, 0.9, 0.05, 32);
+tblGeo.scale(3.2, 1, 1.05);
+const tblMesh = new THREE.Mesh(tblGeo, M(0x6a3e18,0.2,0.1));
+tblMesh.position.set(11.0, 0.76, 1.75);
+shadow(tblMesh); scene.add(tblMesh);
+// Table base pedestals
+[-1.6,0,1.6].forEach(ox => {
+  const ped = new THREE.Mesh(new CG(0.06,0.06,0.72,8), M(0x555550,0.35,0.7));
+  ped.position.set(11.0+ox, 0.36, 1.75);
+  shadow(ped); scene.add(ped);
+});
+// 10 chairs around table
+for(let i=0;i<10;i++){
+  const a=(i/10)*Math.PI*2;
+  const rx=11.0+Math.cos(a)*3.3, rz=1.75+Math.sin(a)*1.58;
+  makeChair(rx, rz, a+Math.PI, 0x2a1808);
+}
+// TV at end
+tv(8.2, 1.65, 1.75, 1.2, -Math.PI/2);
+// Projector screen (on floor like a display stand)
+addMesh(new BG(0.04,2.0,1.4), M(0xf0eeea,0.95,0), 8.15, 1.0, 1.75, -Math.PI/2);
+makePlant(8.25, 0.3, 0.8); makePlant(13.75, 0.3, 0.8);
+
+// ── Small Suite C ───────────────────────────────────────────────
+pendant(15.25, 1.6);
+ws(14.8, 0.85); ws(15.9, 2.5, Math.PI);
+makePlant(14.2, 0.4, 0.8);
+
+// ── Medium Suite D ──────────────────────────────────────────────
+pendant(17.3, 1.6); pendant(19.0, 1.6);
+ws(17.3, 0.9); ws(19.1, 0.9);
+ws(18.2, 2.6, Math.PI);
+makePlant(16.7, 0.4);
+whiteboard(18.2, 1.45, 0.06, 1.2);
+
+// ── Medium Suite E ──────────────────────────────────────────────
+pendant(21.5, 1.6); pendant(23.3, 1.6);
+ws(21.3, 0.9); ws(23.2, 0.9);
+ws(22.25, 2.6, Math.PI);
+makePlant(20.7, 0.4);
+
+// ── Small Suite A ───────────────────────────────────────────────
+pendant(1.4, 5.0); pendant(3.0, 5.0);
+ws(1.3, 4.1); ws(3.1, 4.1);
+ws(2.2, 5.9, Math.PI);
+makePlant(0.4, 3.7);
+
+// ── 14 Dedicated Desks ──────────────────────────────────────────
+for(let i=0;i<7;i++){
+  pendant(5.3+i*1.35, 4.3);
+  ws(5.3+i*1.35, 4.15);
+  ws(5.3+i*1.35, 5.9, Math.PI);
+}
+// Central aisle plants
+makePlant(7.0, 5.05, 0.8); makePlant(11.0, 5.05, 0.8);
+
+// ── Comms Room ──────────────────────────────────────────────────
+pendant(17.0, 5.25, 0x88ccff);
+serverRack(15.2, 4.8); serverRack(15.2, 5.7);
+serverRack(16.1, 4.8); serverRack(16.1, 5.7);
+makeDesk(18.5, 4.4);
+makeChair(18.5, 5.1, Math.PI, 0x181828);
+
+// ── Large Suite F ───────────────────────────────────────────────
+pendant(21.5, 5.0); pendant(23.5, 5.0);
+ws(21.3, 4.0); ws(23.5, 4.0);
+ws(21.3, 6.15, Math.PI); ws(23.5, 6.15, Math.PI);
+roundTable(22.4, 5.1, 0.42, 4);
+makePlant(20.7, 3.6, 0.9);
+
+// ══════════════════════════════════════════════════════════════
+//  FLOATING LABELS
+// ══════════════════════════════════════════════════════════════
+function label(lines, x, y, z, sc=1) {
+  const L = Array.isArray(lines) ? lines : [lines];
+  const lh=30, pad=14;
+  const maxW = Math.max(...L.map(l=>l.length))*12+pad*2;
+  const totalH = L.length*lh+pad*2;
+  const cv = document.createElement('canvas');
+  cv.width  = Math.pow(2,Math.ceil(Math.log2(Math.max(maxW,64))));
+  cv.height = Math.pow(2,Math.ceil(Math.log2(Math.max(totalH,32))));
+  const ctx = cv.getContext('2d');
+  ctx.clearRect(0,0,cv.width,cv.height);
+  ctx.fillStyle='rgba(5,7,12,0.86)';
+  rr(ctx,0,0,maxW,totalH,8); ctx.fill();
+  ctx.strokeStyle='rgba(200,168,50,0.55)'; ctx.lineWidth=1.5;
+  rr(ctx,0,0,maxW,totalH,8); ctx.stroke();
+  L.forEach((line,i)=>{
+    const first=i===0;
+    ctx.fillStyle = first?'#f0c84a':'rgba(255,255,255,0.78)';
+    ctx.font = `${first?'700':'400'} ${first?lh-6:lh-10}px "Segoe UI",Arial,sans-serif`;
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(line, maxW/2, pad+lh*i+lh/2);
+  });
+  const tex = new THREE.CanvasTexture(cv);
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthWrite:false}));
+  const aspect = maxW/totalH;
+  sp.scale.set(aspect*sc*1.5, sc*1.5, 1);
+  sp.position.set(x, y, z);
+  scene.add(sp);
+}
+function rr(ctx,x,y,w,h,r) {
+  ctx.beginPath(); ctx.moveTo(x+r,y);
+  ctx.lineTo(x+w-r,y); ctx.arcTo(x+w,y,x+w,y+r,r);
+  ctx.lineTo(x+w,y+h-r); ctx.arcTo(x+w,y+h,x+w-r,y+h,r);
+  ctx.lineTo(x+r,y+h); ctx.arcTo(x,y+h,x,y+h-r,r);
+  ctx.lineTo(x,y+r); ctx.arcTo(x,y,x+r,y,r); ctx.closePath();
+}
+
+label(['Entry Lounge'],              2.25,2.4,1.6);
+label(['Soundproof Booth'],          0.75,1.9,1.05, 0.75);
+label(['Suite B','12.3 sqm'],        6.25,2.4,1.6);
+label(['Meeting Room','10 PAX'],     11.0,2.4,1.75);
+label(['Suite C','8.88 sqm'],        15.25,2.4,1.6);
+label(['Suite D','12.3 sqm'],        18.25,2.4,1.6);
+label(['Suite E','12.15 sqm'],       22.75,2.4,1.6);
+label(['Suite A','9.88 sqm'],        2.25,2.4,5.0);
+label(['14 Dedicated Desks'],        9.25,2.4,5.0);
+label(['Comms Room'],                17.5,2.4,5.25, 0.85);
+label(['Suite F','15 sqm'],          22.75,2.4,5.25);
+
+// ══════════════════════════════════════════════════════════════
+//  GROUND GRID
+// ══════════════════════════════════════════════════════════════
+const grid = new THREE.GridHelper(60,60,0x1a2030,0x111820);
+grid.position.set(12.5,-0.005,3.5);
+scene.add(grid);
+
+// ══════════════════════════════════════════════════════════════
+//  HOVER TOOLTIP
+// ══════════════════════════════════════════════════════════════
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+const tooltip = document.getElementById('tooltip');
+
+const roomHitBoxes = [];
+const roomData = [
+  [2.25,1.6,4.5,3.2,'Entry Lounge','Open reception & networking area'],
+  [0.75,1.05,1.3,1.9,'Soundproof Booth','Private calls & focus work (shared)'],
+  [6.25,1.6,3.5,3.2,'Medium Suite B','Private office · 12.3 sqm'],
+  [11.0,1.75,6.0,3.5,'Meeting Room','Conference · 10 PAX'],
+  [15.25,1.6,2.5,3.2,'Small Suite C','Private office · 8.88 sqm'],
+  [18.25,1.6,3.5,3.2,'Medium Suite D','Private office · 12.3 sqm'],
+  [22.75,1.6,4.5,3.2,'Medium Suite E','Private office · 12.15 sqm'],
+  [2.25,5.0,4.5,3.0,'Small Suite A','Private office · 9.88 sqm'],
+  [9.25,5.0,9.5,3.0,'14 Dedicated Desks','Open hot-desk area'],
+  [17.5,5.25,4.0,2.5,'Comms Room','Server & IT infrastructure'],
+  [22.75,5.25,4.5,2.5,'Large Suite F','Private office · 15 sqm'],
+];
+
+roomData.forEach(([cx,cz,w,d,name,desc]) => {
+  const m = new THREE.Mesh(
+    new THREE.BoxGeometry(w,0.05,d),
+    new THREE.MeshBasicMaterial({visible:false})
+  );
+  m.position.set(cx,0.01,cz);
+  m.userData = {name,desc};
+  scene.add(m);
+  roomHitBoxes.push(m);
 });
 
-(function animate() {
-  requestAnimationFrame(animate);
+renderer.domElement.addEventListener('mousemove', e => {
+  mouse.set((e.clientX/W)*2-1, -(e.clientY/H)*2+1);
+  raycaster.setFromCamera(mouse, camera);
+  const hits = raycaster.intersectObjects(roomHitBoxes);
+  if(hits.length) {
+    const d = hits[0].object.userData;
+    tooltip.innerHTML = `<strong>${d.name}</strong>${d.desc}`;
+    tooltip.style.display = 'block';
+    tooltip.style.left = (e.clientX+14)+'px';
+    tooltip.style.top  = (e.clientY-10)+'px';
+  } else {
+    tooltip.style.display = 'none';
+  }
+});
+
+// ══════════════════════════════════════════════════════════════
+//  RESIZE + RENDER LOOP
+// ══════════════════════════════════════════════════════════════
+window.addEventListener('resize', () => {
+  const W=innerWidth, H=innerHeight;
+  camera.aspect=W/H; camera.updateProjectionMatrix();
+  renderer.setSize(W,H);
+});
+
+(function loop() {
+  requestAnimationFrame(loop);
   controls.update();
   renderer.render(scene, camera);
 })();
