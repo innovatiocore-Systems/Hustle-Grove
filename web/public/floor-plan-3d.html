@@ -85,12 +85,22 @@ canvas{display:block}
   </div>
 </div>
 
-<script type="importmap">
-{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
-</script>
+<div id="err" style="display:none;position:fixed;inset:0;background:#07080c;color:#ff6b6b;font-family:monospace;font-size:13px;padding:40px;z-index:999;white-space:pre-wrap"></div>
 <script type="module">
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+const CDN = 'https://cdn.jsdelivr.net/npm/three@0.160.0';
+let THREE, OrbitControls;
+try {
+  THREE = await import(CDN + '/build/three.module.js');
+  ({ OrbitControls } = await import(CDN + '/examples/jsm/controls/OrbitControls.js'));
+} catch(e) {
+  document.getElementById('err').style.display='block';
+  document.getElementById('err').textContent='CDN load failed:\n'+e;
+  throw e;
+}
+window.addEventListener('error', e => {
+  document.getElementById('err').style.display='block';
+  document.getElementById('err').textContent='Runtime error:\n'+(e.error||e.message);
+});
 
 // ── Renderer ──────────────────────────────────────────────────
 const renderer = new THREE.WebGLRenderer({ antialias: true });
