@@ -92,9 +92,26 @@ export function UsersManager() {
     setLoading(false);
   }, [page, search]);
 
+  // Refetch whenever the page or search changes. State is only set after the
+  // await resolves, so this never triggers a synchronous setState-in-effect
+  // cascade.
   React.useEffect(() => {
-    load();
-  }, [load]);
+    let active = true;
+    adminApi.getUsers(page, PAGE_SIZE, search || undefined).then((res) => {
+      if (!active) return;
+      if (res.success && res.data) {
+        setUsers(res.data.items);
+        setTotal(res.data.totalCount);
+        setTotalPages(res.data.totalPages || 1);
+      } else {
+        setError(res.message ?? "Failed to load users.");
+      }
+      setLoading(false);
+    });
+    return () => {
+      active = false;
+    };
+  }, [page, search]);
 
   React.useEffect(() => {
     adminApi.getRoles().then((res) => {

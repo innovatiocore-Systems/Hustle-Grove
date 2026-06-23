@@ -11,7 +11,7 @@ import { Reveal } from "@/components/marketing/reveal";
 export const metadata: Metadata = {
   title: "Resources",
   description:
-    "Ideas on productivity, workplace design, startups and remote work from the Hustlegrove team.",
+    "Ideas on productivity, workplace design, startups and remote work from the Hustle Grove team.",
 };
 
 export default function ResourcesPage() {

@@ -73,7 +73,7 @@ export const events: CommunityEvent[] = [
     capacity: 30,
     spotsLeft: 6,
     speakers: [
-      { name: "Aisha Khan", role: "Head of Design, Hustlegrove", avatar: avatar("1438761681033-6461ffad8d80") },
+      { name: "Aisha Khan", role: "Head of Design, Hustle Grove", avatar: avatar("1438761681033-6461ffad8d80") },
     ],
     schedule: [
       { time: "10:00 AM", title: "Foundations & tokens" },
@@ -98,7 +98,7 @@ export const events: CommunityEvent[] = [
     spotsLeft: 20,
     speakers: [
       { name: "Priya Nair", role: "Head of People, Brightside", avatar: avatar("1494790108377-be9c29b29330") },
-      { name: "Sofia Alvarez", role: "CEO, Hustlegrove", avatar: avatar("1544005313-94ddf0286df2") },
+      { name: "Sofia Alvarez", role: "CEO, Hustle Grove", avatar: avatar("1544005313-94ddf0286df2") },
     ],
     schedule: [
       { time: "5:30 PM", title: "Welcome & refreshments" },
@@ -122,7 +122,7 @@ export const events: CommunityEvent[] = [
     capacity: 70,
     spotsLeft: 0,
     speakers: [
-      { name: "James Whitfield", role: "COO, Hustlegrove", avatar: avatar("1472099645785-5658abf4ff4e") },
+      { name: "James Whitfield", role: "COO, Hustle Grove", avatar: avatar("1472099645785-5658abf4ff4e") },
       { name: "Daniel Cho", role: "MD, Meridian Partners", avatar: avatar("1507003211169-0a1dd7228f2d") },
     ],
     schedule: [

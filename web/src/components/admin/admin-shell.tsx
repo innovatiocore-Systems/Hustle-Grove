@@ -5,19 +5,9 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
-  MapPin,
-  Building2,
-  CalendarCheck,
-  Users,
-  UserCog,
-  ShieldCheck,
-  Inbox,
-  CreditCard,
-  BarChart3,
   Settings,
   Menu,
   X,
-  Search,
   LogOut,
 } from "lucide-react";
 
@@ -31,17 +21,10 @@ import {
   DropdownSeparator,
 } from "@/components/ui/dropdown-menu";
 
+// The admin portal is intentionally scoped to two surfaces. Other module route
+// files remain in the codebase but are not linked from the nav.
 const nav = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
-  { label: "Users", href: "/admin/users", icon: UserCog },
-  { label: "Roles & Permissions", href: "/admin/roles", icon: ShieldCheck },
-  { label: "Locations", href: "/admin/locations", icon: MapPin },
-  { label: "Workspaces", href: "/admin/workspaces", icon: Building2 },
-  { label: "Bookings", href: "/admin/bookings", icon: CalendarCheck },
-  { label: "Members", href: "/admin/members", icon: Users },
-  { label: "Inquiries", href: "/admin/inquiries", icon: Inbox },
-  { label: "Invoices", href: "/admin/invoices", icon: CreditCard },
-  { label: "Reports", href: "/admin/reports", icon: BarChart3 },
   { label: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
@@ -53,7 +36,7 @@ function SidebarContent({ pathname }: { pathname: string }) {
           H
         </span>
         <div className="leading-none">
-          <p className="font-display text-base text-white">Hustlegrove</p>
+          <p className="font-display text-base text-white">Hustle Grove</p>
           <p className="text-[0.6rem] font-bold uppercase tracking-[0.2em] text-white/50">
             Admin
           </p>
@@ -87,11 +70,11 @@ function SidebarContent({ pathname }: { pathname: string }) {
 
       <div className="border-t border-sidebar-border p-3">
         <Link
-          href="/dashboard"
+          href="/"
           className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent/60 hover:text-sidebar-foreground"
         >
           <LogOut className="size-5" />
-          Exit admin
+          Back to site
         </Link>
       </div>
     </div>
@@ -103,8 +86,14 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const { user, logout } = useAuth();
   const [open, setOpen] = React.useState(false);
+  const [prevPathname, setPrevPathname] = React.useState(pathname);
 
-  React.useEffect(() => setOpen(false), [pathname]);
+  // Close the mobile nav whenever the route changes (set-during-render to
+  // avoid a setState-in-effect cascade).
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setOpen(false);
+  }
 
   const initials = user
     ? `${user.firstName?.[0] ?? ""}${user.lastName?.[0] ?? ""}` || "U"
@@ -152,14 +141,6 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             <Menu className="size-5" />
           </button>
 
-          <div className="relative hidden max-w-sm flex-1 md:block">
-            <Search className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-            <input
-              placeholder="Search members, bookings…"
-              className="h-10 w-full rounded-full border border-input bg-card pl-10 pr-4 text-sm outline-none transition-colors focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40"
-            />
-          </div>
-
           <div className="ml-auto flex items-center gap-2">
             <span className="hidden rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary sm:block">
               Admin mode
@@ -179,9 +160,9 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                 <p className="font-normal text-muted-foreground">{user?.email}</p>
               </DropdownLabel>
               <DropdownSeparator />
-              <DropdownItem onSelect={() => router.push("/dashboard")}>
+              <DropdownItem onSelect={() => router.push("/")}>
                 <LayoutDashboard />
-                Member dashboard
+                Back to site
               </DropdownItem>
               <DropdownItem onSelect={signOut}>
                 <LogOut />

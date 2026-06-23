@@ -3,6 +3,7 @@ import { MapPin, Mail, Phone, Clock } from "lucide-react";
 
 import { site } from "@/data/site";
 import { faqs } from "@/data/faqs";
+import { getSiteSettings } from "@/lib/settings/server";
 import { PageHeader } from "@/components/marketing/page-header";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { InquiryForm } from "@/components/marketing/inquiry-form";
@@ -11,35 +12,37 @@ import { Accordion } from "@/components/ui/accordion";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Get in touch with Hustlegrove Workspaces. Book a tour, ask about membership, or talk to our enterprise team.",
+    "Get in touch with Hustle Grove Workspaces. Book a tour, ask about membership, or talk to our enterprise team.",
 };
 
-const contactDetails = [
-  {
-    icon: MapPin,
-    label: "Visit us",
-    value: site.headquarters,
-  },
-  {
-    icon: Mail,
-    label: "Email us",
-    value: site.email,
-    href: `mailto:${site.email}`,
-  },
-  {
-    icon: Phone,
-    label: "Call us",
-    value: site.phone,
-    href: `tel:${site.phone}`,
-  },
-  {
-    icon: Clock,
-    label: "Hours",
-    value: "Mon–Fri, 8am–6pm · Member access 24/7",
-  },
-];
+export default async function ContactPage() {
+  const settings = await getSiteSettings();
 
-export default function ContactPage() {
+  const contactDetails = [
+    {
+      icon: MapPin,
+      label: "Visit us",
+      value: settings.address,
+    },
+    {
+      icon: Mail,
+      label: "Email us",
+      value: site.email,
+      href: `mailto:${site.email}`,
+    },
+    {
+      icon: Phone,
+      label: "Call us",
+      value: site.phone,
+      href: `tel:${site.phone}`,
+    },
+    {
+      icon: Clock,
+      label: "Hours",
+      value: "Mon–Fri, 8am–6pm · Member access 24/7",
+    },
+  ];
+
   return (
     <>
       <PageHeader
@@ -101,7 +104,7 @@ export default function ContactPage() {
               <MapPin className="size-7 text-primary" />
             </span>
             <p className="mt-4 font-medium text-foreground">
-              {site.headquarters}
+              {settings.address}
             </p>
             <p className="text-sm text-muted-foreground">
               Interactive map coming soon

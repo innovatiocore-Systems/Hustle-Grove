@@ -7,6 +7,8 @@ import { z } from "zod";
 import { toast } from "sonner";
 import { Send } from "lucide-react";
 
+import { cn } from "@/lib/utils";
+import { createInquiry } from "@/lib/inquiries/api";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -18,7 +20,7 @@ const schema = z.object({
   email: z.string().email("Enter a valid email address"),
   company: z.string().optional(),
   phone: z.string().optional(),
-  interest: z.string().min(1, "Select an option"),
+  interest: z.string().optional(),
   message: z.string().min(10, "Tell us a little more (10+ characters)"),
 });
 
@@ -33,6 +35,31 @@ const interests = [
   "Enterprise / Custom",
 ];
 
+/** Scheduling grid — used when the form is attached to a specific room. */
+const days = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+const slots = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00"];
+
+// Deterministic "booked" pattern so server/client markup matches.
+function isBooked(dayIndex: number, slotIndex: number) {
+  return (dayIndex * 3 + slotIndex * 2) % 5 === 0;
+}
+
+/** Resolve the next calendar date (YYYY-MM-DD) for a Mon–Fri offset. */
+function nextDateForWeekday(dayIndex: number): string {
+  const target = dayIndex + 1; // Mon=1 … Fri=5
+  const now = new Date();
+  const result = new Date(now);
+  const diff = (target - now.getDay() + 7) % 7 || 7;
+  result.setDate(now.getDate() + diff);
+  return result.toISOString().slice(0, 10);
+}
+
+export interface RoomContext {
+  roomId?: string;
+  roomName: string;
+  location?: string;
+}
+
 function FieldError({ message }: { message?: string }) {
   if (!message) return null;
   return <p className="mt-1.5 text-xs text-destructive">{message}</p>;
@@ -43,12 +70,18 @@ export function InquiryForm({
   description = "Tell us about your team and we'll be in touch within one business day.",
   defaultInterest,
   submitLabel = "Send inquiry",
+  room,
 }: {
   title?: string;
   description?: string;
   defaultInterest?: string;
   submitLabel?: string;
+  /** When provided, the form attaches to a specific room and shows a date/time picker. */
+  room?: RoomContext;
 }) {
+  const [day, setDay] = React.useState(0);
+  const [slot, setSlot] = React.useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -60,12 +93,38 @@ export function InquiryForm({
   });
 
   const onSubmit = async (values: FormValues) => {
-    // Phase 1 — no backend. Simulate a network request.
-    await new Promise((r) => setTimeout(r, 800));
+    const requestedDate = room && slot ? nextDateForWeekday(day) : "";
+    const requestedTime = room && slot ? slot : "";
+
+    const res = await createInquiry({
+      fullName: values.name,
+      email: values.email,
+      phone: values.phone ?? "",
+      company: values.company ?? "",
+      roomId: room?.roomId ?? "",
+      roomName: room?.roomName ?? values.interest ?? "",
+      location: room?.location ?? "",
+      requestedDate,
+      requestedTime,
+      message: values.message,
+    });
+
+    if (!res.ok) {
+      toast.error("Couldn't send your inquiry", {
+        description: res.error ?? "Please try again in a moment.",
+      });
+      return;
+    }
+
     toast.success("Thanks! Your inquiry has been received.", {
-      description: `We'll email ${values.email} within one business day.`,
+      description: room
+        ? `We'll confirm ${room.roomName}${
+            slot ? ` for ${days[day]} at ${slot}` : ""
+          } shortly.`
+        : `We'll email ${values.email} within one business day.`,
     });
     reset({ interest: defaultInterest ?? "" });
+    setSlot(null);
   };
 
   return (
@@ -74,6 +133,61 @@ export function InquiryForm({
       <p className="mt-2 text-sm text-muted-foreground">{description}</p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4" noValidate>
+        {room && (
+          <div className="rounded-xl border border-border/70 bg-muted/30 p-4">
+            <Label>Preferred date &amp; time</Label>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {days.map((d, i) => (
+                <button
+                  key={d}
+                  type="button"
+                  onClick={() => {
+                    setDay(i);
+                    setSlot(null);
+                  }}
+                  className={cn(
+                    "rounded-lg px-3 py-1.5 text-sm font-medium transition-colors",
+                    day === i
+                      ? "bg-brand-gradient text-white"
+                      : "text-muted-foreground hover:bg-muted"
+                  )}
+                >
+                  {d}
+                </button>
+              ))}
+            </div>
+            <div className="mt-3 grid grid-cols-4 gap-2">
+              {slots.map((s, i) => {
+                const booked = isBooked(day, i);
+                const selected = slot === s;
+                return (
+                  <button
+                    key={s}
+                    type="button"
+                    disabled={booked}
+                    onClick={() => setSlot(s)}
+                    className={cn(
+                      "rounded-lg border py-2 text-sm font-medium transition-colors",
+                      booked
+                        ? "cursor-not-allowed border-border/60 bg-muted/50 text-muted-foreground/50 line-through"
+                        : selected
+                          ? "border-primary bg-primary/10 text-primary"
+                          : "border-border bg-card text-foreground hover:border-primary/40"
+                    )}
+                  >
+                    {s}
+                  </button>
+                );
+              })}
+            </div>
+            <p className="mt-2 text-xs text-muted-foreground">
+              {slot
+                ? `Requesting ${days[day]} at ${slot}. Availability is indicative.`
+                : "Select a slot (optional) — availability is indicative."}
+            </p>
+          </div>
+        )}
+
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <Label htmlFor="name">Full name</Label>
@@ -95,20 +209,22 @@ export function InquiryForm({
           </div>
         </div>
 
-        <div>
-          <Label htmlFor="interest">I&apos;m interested in</Label>
-          <Select id="interest" className="mt-1.5" defaultValue={defaultInterest ?? ""} {...register("interest")}>
-            <option value="" disabled>
-              Select a workspace type
-            </option>
-            {interests.map((i) => (
-              <option key={i} value={i}>
-                {i}
+        {!room && (
+          <div>
+            <Label htmlFor="interest">I&apos;m interested in</Label>
+            <Select id="interest" className="mt-1.5" defaultValue={defaultInterest ?? ""} {...register("interest")}>
+              <option value="" disabled>
+                Select a workspace type
               </option>
-            ))}
-          </Select>
-          <FieldError message={errors.interest?.message} />
-        </div>
+              {interests.map((i) => (
+                <option key={i} value={i}>
+                  {i}
+                </option>
+              ))}
+            </Select>
+            <FieldError message={errors.interest?.message} />
+          </div>
+        )}
 
         <div>
           <Label htmlFor="message">How can we help?</Label>

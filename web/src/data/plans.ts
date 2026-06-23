@@ -59,7 +59,7 @@ export const plans: Plan[] = [
     features: [
       "Fully furnished, lockable office",
       "Branded to your company",
-      "Access to every Hustlegrove location",
+      "Access to every Hustle Grove location",
       "20 meeting-room hours / month",
       "Priority booking & support",
     ],

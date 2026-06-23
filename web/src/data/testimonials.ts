@@ -4,7 +4,7 @@ import { avatar } from "@/lib/images";
 export const testimonials: Testimonial[] = [
   {
     quote:
-      "Hustlegrove gave our team a home that actually reflects our brand. The space is beautiful, the community is real, and we scaled from 6 to 30 people without ever changing offices.",
+      "Hustle Grove gave our team a home that actually reflects our brand. The space is beautiful, the community is real, and we scaled from 6 to 30 people without ever changing offices.",
     author: "Elena Marsh",
     role: "COO",
     company: "Northwind Labs",
@@ -28,7 +28,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      "We tried three other providers before Hustlegrove. Nothing else came close on design, service, or the calibre of the community in the building.",
+      "We tried three other providers before Hustle Grove. Nothing else came close on design, service, or the calibre of the community in the building.",
     author: "Daniel Cho",
     role: "Managing Director",
     company: "Meridian Partners",

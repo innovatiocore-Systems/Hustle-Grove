@@ -5,8 +5,10 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
-  Hustlegrove Workspaces design tokens.
-  Palette: indigo brand + violet accent, cool lavender neutrals, navy stats band.
+  The Hustle Grove Workspace design tokens.
+  Palette: grove green brand + gold accent, warm near-neutral greys, near-black
+  badge surfaces (matching the logo). The `--violet` token is repurposed as the
+  gold accent so existing `*-violet` / brand-gradient usages become green→gold.
   Typography: Inter (body), Plus Jakarta Sans (display), Caveat (script accent).
 */
 @theme inline {
@@ -60,79 +62,80 @@
 :root {
   --radius: 0.75rem;
 
-  /* Neutrals — cool, slightly lavender */
+  /* Neutrals — warm, near-neutral with a faint olive cast */
   --background: oklch(1 0 0);
-  --foreground: oklch(0.22 0.045 266);
+  --foreground: oklch(0.22 0.014 130);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.22 0.045 266);
+  --card-foreground: oklch(0.22 0.014 130);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.22 0.045 266);
+  --popover-foreground: oklch(0.22 0.014 130);
 
-  /* Indigo brand + violet accent */
-  --primary: oklch(0.51 0.22 274);
-  --primary-foreground: oklch(0.99 0.005 270);
-  --violet: oklch(0.55 0.25 295);
-  --violet-foreground: oklch(0.99 0.005 290);
+  /* Grove green brand + gold accent (--violet repurposed as gold) */
+  --primary: oklch(0.52 0.105 140);
+  --primary-foreground: oklch(0.99 0.012 110);
+  --violet: oklch(0.66 0.135 78);
+  --violet-foreground: oklch(0.99 0.012 95);
 
-  --secondary: oklch(0.965 0.015 285);
-  --secondary-foreground: oklch(0.32 0.08 274);
-  --muted: oklch(0.97 0.012 285);
-  --muted-foreground: oklch(0.52 0.03 282);
-  --accent: oklch(0.955 0.022 285);
-  --accent-foreground: oklch(0.32 0.08 274);
+  --secondary: oklch(0.96 0.014 125);
+  --secondary-foreground: oklch(0.34 0.06 140);
+  --muted: oklch(0.97 0.01 125);
+  --muted-foreground: oklch(0.5 0.022 128);
+  --accent: oklch(0.955 0.018 125);
+  --accent-foreground: oklch(0.34 0.06 140);
 
-  /* Lavender section wash + amber for star ratings */
-  --sand: oklch(0.975 0.016 286);
-  --gold: oklch(0.8 0.13 80);
-  --gold-foreground: oklch(0.3 0.05 80);
+  /* Warm parchment section wash + gold for star ratings */
+  --sand: oklch(0.975 0.022 96);
+  --gold: oklch(0.8 0.13 82);
+  --gold-foreground: oklch(0.3 0.05 82);
 
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.92 0.012 285);
-  --input: oklch(0.92 0.012 285);
-  --ring: oklch(0.51 0.22 274);
+  --border: oklch(0.91 0.012 125);
+  --input: oklch(0.91 0.012 125);
+  --ring: oklch(0.52 0.105 140);
 
-  --sidebar: oklch(0.24 0.07 273);
-  --sidebar-foreground: oklch(0.93 0.012 285);
-  --sidebar-primary: oklch(0.62 0.2 280);
-  --sidebar-primary-foreground: oklch(0.99 0.005 270);
-  --sidebar-accent: oklch(0.3 0.06 273);
-  --sidebar-accent-foreground: oklch(0.98 0.005 285);
-  --sidebar-border: oklch(0.36 0.05 273);
-  --sidebar-ring: oklch(0.62 0.2 280);
+  /* Near-black badge surfaces (logo) with green accent + gold highlights */
+  --sidebar: oklch(0.19 0.013 135);
+  --sidebar-foreground: oklch(0.93 0.012 110);
+  --sidebar-primary: oklch(0.75 0.13 84);
+  --sidebar-primary-foreground: oklch(0.2 0.03 90);
+  --sidebar-accent: oklch(0.29 0.045 142);
+  --sidebar-accent-foreground: oklch(0.98 0.01 110);
+  --sidebar-border: oklch(0.33 0.02 138);
+  --sidebar-ring: oklch(0.75 0.13 84);
 }
 
 .dark {
-  --background: oklch(0.18 0.03 273);
-  --foreground: oklch(0.95 0.01 285);
-  --card: oklch(0.22 0.035 273);
-  --card-foreground: oklch(0.95 0.01 285);
-  --popover: oklch(0.22 0.035 273);
-  --popover-foreground: oklch(0.95 0.01 285);
-  --primary: oklch(0.66 0.19 277);
-  --primary-foreground: oklch(0.18 0.03 273);
-  --violet: oklch(0.66 0.22 295);
-  --violet-foreground: oklch(0.18 0.03 273);
-  --secondary: oklch(0.28 0.03 273);
-  --secondary-foreground: oklch(0.95 0.01 285);
-  --muted: oklch(0.28 0.03 273);
-  --muted-foreground: oklch(0.72 0.02 285);
-  --accent: oklch(0.3 0.04 273);
-  --accent-foreground: oklch(0.95 0.01 285);
-  --sand: oklch(0.24 0.035 273);
-  --gold: oklch(0.8 0.13 80);
-  --gold-foreground: oklch(0.2 0.03 80);
+  --background: oklch(0.17 0.011 135);
+  --foreground: oklch(0.95 0.009 110);
+  --card: oklch(0.21 0.013 135);
+  --card-foreground: oklch(0.95 0.009 110);
+  --popover: oklch(0.21 0.013 135);
+  --popover-foreground: oklch(0.95 0.009 110);
+  --primary: oklch(0.66 0.13 140);
+  --primary-foreground: oklch(0.17 0.02 135);
+  --violet: oklch(0.78 0.13 84);
+  --violet-foreground: oklch(0.18 0.03 90);
+  --secondary: oklch(0.27 0.013 135);
+  --secondary-foreground: oklch(0.95 0.009 110);
+  --muted: oklch(0.27 0.013 135);
+  --muted-foreground: oklch(0.72 0.016 115);
+  --accent: oklch(0.3 0.025 140);
+  --accent-foreground: oklch(0.95 0.009 110);
+  --sand: oklch(0.22 0.013 135);
+  --gold: oklch(0.8 0.13 82);
+  --gold-foreground: oklch(0.2 0.03 82);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.66 0.19 277);
-  --sidebar: oklch(0.15 0.025 273);
-  --sidebar-foreground: oklch(0.93 0.012 285);
-  --sidebar-primary: oklch(0.66 0.19 277);
-  --sidebar-primary-foreground: oklch(0.99 0.005 270);
-  --sidebar-accent: oklch(0.26 0.035 273);
-  --sidebar-accent-foreground: oklch(0.98 0.005 285);
+  --ring: oklch(0.66 0.13 140);
+  --sidebar: oklch(0.14 0.009 135);
+  --sidebar-foreground: oklch(0.93 0.012 110);
+  --sidebar-primary: oklch(0.78 0.13 84);
+  --sidebar-primary-foreground: oklch(0.18 0.03 90);
+  --sidebar-accent: oklch(0.27 0.035 142);
+  --sidebar-accent-foreground: oklch(0.98 0.01 110);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.66 0.19 277);
+  --sidebar-ring: oklch(0.78 0.13 84);
 }
 
 @layer base {
@@ -202,11 +205,16 @@
   .bg-stats-gradient {
     background:
       radial-gradient(
-        80% 120% at 100% 0%,
-        oklch(0.4 0.15 290) 0%,
+        70% 110% at 100% 0%,
+        oklch(0.62 0.11 100) 0%,
         transparent 55%
       ),
-      linear-gradient(120deg, oklch(0.28 0.09 274), oklch(0.22 0.08 280));
+      radial-gradient(
+        60% 90% at 0% 100%,
+        oklch(0.45 0.1 142) 0%,
+        transparent 50%
+      ),
+      linear-gradient(125deg, oklch(0.2 0.025 138), oklch(0.15 0.012 135));
   }
 }
 

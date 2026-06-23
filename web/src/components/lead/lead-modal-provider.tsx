@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { Send } from "lucide-react";
 
 import { locations } from "@/data/locations";
+import { createInquiry } from "@/lib/inquiries/api";
 import { Dialog, DialogHeader } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -96,19 +97,52 @@ export function LeadModalProvider({ children }: { children: React.ReactNode }) {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
+    const str = (key: string) => (data.get(key) as string | null)?.trim() ?? "";
     setSubmitting(true);
-    await new Promise((r) => setTimeout(r, 700));
+
+    // The brochure is a simple download — everything else is a real lead and is
+    // persisted as an inquiry the admin team can action.
+    if (type === "brochure") {
+      await new Promise((r) => setTimeout(r, 500));
+      setSubmitting(false);
+      close();
+      toast.success("Brochure on its way!", {
+        description: `We've emailed it to ${str("email")}.`,
+      });
+      return;
+    }
+
+    const parts = [
+      config ? `[${config.title}]` : null,
+      str("team") ? `Team size: ${str("team")}` : null,
+      str("message"),
+    ].filter(Boolean);
+
+    const res = await createInquiry({
+      fullName: str("name"),
+      email: str("email"),
+      phone: str("phone"),
+      company: str("company"),
+      roomName: config?.title ?? "",
+      location: str("location"),
+      requestedDate: str("date"),
+      requestedTime: "",
+      message: parts.join(" — "),
+    });
+
     setSubmitting(false);
     close();
-    if (type === "brochure") {
-      toast.success("Brochure on its way!", {
-        description: `We've emailed it to ${data.get("email")}.`,
+
+    if (!res.ok) {
+      toast.error("Couldn't send your request", {
+        description: res.error ?? "Please try again in a moment.",
       });
-    } else {
-      toast.success("Thanks — we've received your request.", {
-        description: "Our team will be in touch within one business day.",
-      });
+      return;
     }
+
+    toast.success("Thanks — we've received your request.", {
+      description: "Our team will be in touch within one business day.",
+    });
   };
 
   return (

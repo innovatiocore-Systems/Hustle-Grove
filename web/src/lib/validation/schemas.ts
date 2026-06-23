@@ -49,3 +49,29 @@ export const roleNameSchema = z
   .min(1, "Role name is required")
   .max(100, "Role name must be 100 characters or fewer")
   .regex(/^[\p{L}\p{N} ._-]+$/u, "Role name contains invalid characters");
+
+/**
+ * Public inquiry submission. Used by the marketing inquiry form, the room
+ * availability flow and the "Book a tour" modal. The room/date/time fields are
+ * optional because not every entry point captures them.
+ */
+export const inquirySchema = z.object({
+  fullName: nameSchema("Full name"),
+  email: emailSchema,
+  phone: phoneSchema,
+  company: optionalText(120),
+  roomId: optionalText(120),
+  roomName: optionalText(160),
+  location: optionalText(160),
+  requestedDate: z.string().trim().max(40).optional().or(z.literal("")),
+  requestedTime: z.string().trim().max(40).optional().or(z.literal("")),
+  message: z
+    .string()
+    .trim()
+    .min(10, "Tell us a little more (10+ characters)")
+    .max(2000, "Message is too long")
+    .optional()
+    .or(z.literal("")),
+});
+
+export type InquiryInput = z.infer<typeof inquirySchema>;

@@ -1,13 +1,40 @@
+"use client";
+
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
+import { useSiteSettings } from "@/components/site-settings-provider";
 
 function LogoMark({ className }: { className?: string }) {
+  // A circuit-board tree echoing the Hustle Grove badge: gold branches with
+  // green + gold node "leaves" growing from a trunk.
   return (
-    <svg viewBox="0 0 32 32" className={cn("size-9", className)} aria-hidden>
-      <rect x="4.5" y="4" width="6.5" height="24" rx="3.25" className="fill-primary" />
-      <rect x="21" y="4" width="6.5" height="24" rx="3.25" className="fill-violet" />
-      <rect x="8.5" y="12.25" width="15" height="6.5" rx="3.25" className="fill-primary" />
+    <svg
+      viewBox="0 0 32 32"
+      className={cn("size-9", className)}
+      fill="none"
+      aria-hidden
+    >
+      <g
+        className="stroke-violet"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M16 30V16.5" strokeWidth="2.1" />
+        <path d="M16 22l-6.4-5.4" />
+        <path d="M16 22l6.4-5.4" />
+        <path d="M16 18l-4.6-6" />
+        <path d="M16 18l4.6-6" />
+        <path d="M16 17V8" />
+      </g>
+      <g>
+        <circle cx="16" cy="7.4" r="1.8" className="fill-primary" />
+        <circle cx="9.6" cy="17.1" r="1.8" className="fill-primary" />
+        <circle cx="22.4" cy="17.1" r="1.8" className="fill-violet" />
+        <circle cx="11.4" cy="12" r="1.5" className="fill-violet" />
+        <circle cx="20.6" cy="12" r="1.5" className="fill-primary" />
+      </g>
     </svg>
   );
 }
@@ -19,31 +46,35 @@ export function Logo({
   variant?: "default" | "light";
   className?: string;
 }) {
+  const { name, logoUrl } = useSiteSettings();
+
   return (
     <Link
       href="/"
       className={cn("group inline-flex items-center gap-2.5", className)}
-      aria-label="Hustlegrove Workspaces home"
+      aria-label={`${name} home`}
     >
-      <LogoMark />
-      <span className="flex flex-col leading-none">
-        <span
-          className={cn(
-            "font-display text-xl tracking-tight",
-            variant === "light" ? "text-white" : "text-foreground"
-          )}
-        >
-          Hustlegrove
-        </span>
-        <span
-          className={cn(
-            "text-[0.6rem] font-bold uppercase tracking-[0.22em]",
-            variant === "light" ? "text-white/55" : "text-muted-foreground"
-          )}
-        >
-          Workspaces
-        </span>
-      </span>
+      {logoUrl ? (
+        // An uploaded logo replaces the default lockup entirely.
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={logoUrl}
+          alt={name}
+          className="h-9 w-auto max-w-[12rem] object-contain"
+        />
+      ) : (
+        <>
+          <LogoMark />
+          <span
+            className={cn(
+              "font-display text-xl tracking-tight",
+              variant === "light" ? "text-white" : "text-foreground"
+            )}
+          >
+            {name}
+          </span>
+        </>
+      )}
     </Link>
   );
 }

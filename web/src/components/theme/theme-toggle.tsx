@@ -5,11 +5,11 @@ import { useTheme } from "next-themes";
 import { Sun, Moon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { useMounted } from "@/lib/hooks/use-mounted";
 
 export function ThemeToggle({ className }: { className?: string }) {
   const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => setMounted(true), []);
+  const mounted = useMounted();
 
   const isDark = resolvedTheme === "dark";
 

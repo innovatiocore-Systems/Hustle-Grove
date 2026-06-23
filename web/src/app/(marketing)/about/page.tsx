@@ -12,16 +12,16 @@ import { CtaSection } from "@/components/marketing/cta-section";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Hustlegrove Workspaces designs premium, flexible workspaces and communities that help modern teams do their best work.",
+    "Hustle Grove Workspaces designs premium, flexible workspaces and communities that help modern teams do their best work.",
 };
 
 export default function AboutPage() {
   return (
     <>
       <PageHeader
-        eyebrow="About Hustlegrove"
+        eyebrow="About Hustle Grove"
         title="We design workspaces people love to show up to"
-        description="Hustlegrove Workspaces was founded on a simple belief: where you work shapes how you work. We craft premium, flexible spaces — and the communities inside them — for modern teams."
+        description="Hustle Grove Workspaces was founded on a simple belief: where you work shapes how you work. We craft premium, flexible spaces — and the communities inside them — for modern teams."
       />
 
       {/* Story */}
@@ -30,7 +30,7 @@ export default function AboutPage() {
           <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-xl shadow-foreground/5">
             <Image
               src={img("1600508774634-4e11d34730e2", 1100, 850)}
-              alt="The Hustlegrove Workspaces team in a bright office lounge"
+              alt="The Hustle Grove Workspaces team in a bright office lounge"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
@@ -49,7 +49,7 @@ export default function AboutPage() {
                 somewhere you&apos;d genuinely want to be.
               </p>
               <p>
-                Today, Hustlegrove is home to more than 6,400 members across 24
+                Today, Hustle Grove is home to more than 6,400 members across 24
                 locations in 9 cities. We&apos;ve stayed obsessed with the same
                 details — natural light, considered design, real hospitality —
                 that made that first floor special.
@@ -82,7 +82,7 @@ export default function AboutPage() {
       <section className="container-px py-20 md:py-28">
         <SectionHeading
           eyebrow="What we value"
-          title={<>The principles behind every Hustlegrove</>}
+          title={<>The principles behind every Hustle Grove</>}
           description="Four ideas guide how we design our spaces, hire our teams and serve our members."
           align="center"
           className="mx-auto"
@@ -124,7 +124,7 @@ export default function AboutPage() {
       <section className="container-px py-20 md:py-28">
         <SectionHeading
           eyebrow="Leadership"
-          title={<>Meet the team behind Hustlegrove</>}
+          title={<>Meet the team behind Hustle Grove</>}
           description="A team of operators, designers and hospitality leaders obsessed with member experience."
         />
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

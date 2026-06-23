@@ -3,6 +3,7 @@ import { Inter, Plus_Jakarta_Sans, Caveat } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
+import { getSiteSettings } from "@/lib/settings/server";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -24,8 +25,8 @@ const caveat = Caveat({
 
 export const metadata: Metadata = {
   title: {
-    default: "Hustlegrove Workspaces — Work your way. Grow your way.",
-    template: "%s · Hustlegrove Workspaces",
+    default: "The Hustle Grove Workspace — Where ambition takes root.",
+    template: "%s · Hustle Grove",
   },
   description:
     "Flexible private offices, dedicated desks, hot desks and meeting rooms designed for modern teams to do their best work.",
@@ -35,15 +36,17 @@ export const metadata: Metadata = {
     "flexible workspace",
     "dedicated desk",
     "meeting rooms",
-    "Hustlegrove Workspaces",
+    "Hustle Grove Workspaces",
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const siteSettings = await getSiteSettings();
+
   return (
     <html
       lang="en"
@@ -51,7 +54,7 @@ export default function RootLayout({
       className={`${inter.variable} ${jakarta.variable} ${caveat.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-background text-foreground">
-        <Providers>{children}</Providers>
+        <Providers siteSettings={siteSettings}>{children}</Providers>
         <Toaster richColors position="top-center" />
       </body>
     </html>

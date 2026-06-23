@@ -8,6 +8,7 @@ import {
   type AuthUser,
   type RegisterPayload,
 } from "@/lib/auth/api";
+import { signOutSupabase } from "@/lib/auth/supabase-auth";
 
 const TOKEN_KEY = "haven_token";
 const USER_KEY = "haven_user";
@@ -37,6 +38,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [token, setToken] = React.useState<string | null>(null);
   const [loading, setLoading] = React.useState(true);
 
+  // Bootstrap auth state from localStorage after mount. This must run in an
+  // effect (not a lazy initializer) so the server and first client render both
+  // start from the logged-out/loading state, avoiding a hydration mismatch.
+  /* eslint-disable react-hooks/set-state-in-effect -- hydration-safe read from an external store on mount */
   React.useEffect(() => {
     try {
       const storedToken = localStorage.getItem(TOKEN_KEY);
@@ -50,6 +55,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
     setLoading(false);
   }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const persist = React.useCallback((auth: AuthResponse) => {
     localStorage.setItem(TOKEN_KEY, auth.accessToken);
@@ -87,6 +93,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.removeItem(USER_KEY);
     setToken(null);
     setUser(null);
+    void signOutSupabase();
   }, []);
 
   const value: AuthContextValue = {

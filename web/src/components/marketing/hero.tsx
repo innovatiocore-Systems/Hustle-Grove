@@ -114,7 +114,7 @@ export function Hero() {
           <div className="relative aspect-[4/3.4] overflow-hidden rounded-3xl shadow-2xl shadow-primary/15 sm:aspect-[4/3] lg:aspect-[4/3.6]">
             <Image
               src={img("1497366754035-f200968a6e72", 1100, 1000)}
-              alt="A bright, modern Hustlegrove workspace lounge"
+              alt="A bright, modern Hustle Grove workspace lounge"
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 50vw"

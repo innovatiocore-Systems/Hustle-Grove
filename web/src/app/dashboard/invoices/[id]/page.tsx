@@ -79,7 +79,7 @@ export default async function InvoiceDetailPage({
             <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               From
             </p>
-            <p className="mt-2 font-medium text-foreground">Hustlegrove Workspaces</p>
+            <p className="mt-2 font-medium text-foreground">Hustle Grove Workspaces</p>
             <p className="text-sm text-muted-foreground">548 Market Street</p>
             <p className="text-sm text-muted-foreground">San Francisco, CA</p>
           </div>

@@ -11,7 +11,7 @@ import { CtaSection } from "@/components/marketing/cta-section";
 export const metadata: Metadata = {
   title: "Events & Community",
   description:
-    "Networking nights, workshops, meetups and panels across the Hustlegrove community. Free for members.",
+    "Networking nights, workshops, meetups and panels across the Hustle Grove community. Free for members.",
 };
 
 export default function EventsPage() {

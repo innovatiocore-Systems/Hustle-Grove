@@ -23,7 +23,7 @@ export function NewsletterSignup({
     setSubmitting(false);
     e.currentTarget.reset();
     toast.success("You're subscribed!", {
-      description: `We'll send the best of Hustlegrove to ${data.get("email")}.`,
+      description: `We'll send the best of Hustle Grove to ${data.get("email")}.`,
     });
   };
 
@@ -51,7 +51,7 @@ export function NewsletterSignup({
         <Mail className="size-6" />
       </span>
       <h2 className="mt-5 font-display text-3xl text-white">
-        Get the best of Hustlegrove
+        Get the best of Hustle Grove
       </h2>
       <p className="mx-auto mt-3 max-w-md text-white/70">
         Workspace tips, community stories and new-location news — once a month, no

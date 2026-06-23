@@ -71,9 +71,23 @@ export function RolesManager() {
     setLoading(false);
   }, []);
 
+  // Initial fetch. State is only set after the awaits resolve, so this never
+  // triggers a synchronous setState-in-effect cascade.
   React.useEffect(() => {
-    load();
-  }, [load]);
+    let active = true;
+    Promise.all([adminApi.getRoles(), adminApi.getPermissions()]).then(
+      ([rolesRes, permsRes]) => {
+        if (!active) return;
+        if (rolesRes.success && rolesRes.data) setRoles(rolesRes.data);
+        else setError(rolesRes.message ?? "Failed to load roles.");
+        if (permsRes.success && permsRes.data) setPermissions(permsRes.data);
+        setLoading(false);
+      }
+    );
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const totalPermissions = permissions.length;
 

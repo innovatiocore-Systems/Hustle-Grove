@@ -8,7 +8,7 @@ import { CtaSection } from "@/components/marketing/cta-section";
 export const metadata: Metadata = {
   title: "Locations",
   description:
-    "Explore Hustlegrove Workspaces locations across the country. Search and filter premium coworking spaces by city and workspace type.",
+    "Explore Hustle Grove Workspaces locations across the country. Search and filter premium coworking spaces by city and workspace type.",
 };
 
 export default function LocationsPage() {

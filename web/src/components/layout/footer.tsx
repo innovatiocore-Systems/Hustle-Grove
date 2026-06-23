@@ -2,9 +2,22 @@ import Link from "next/link";
 import { MapPin, Mail, Phone } from "lucide-react";
 
 import { site, footerNav } from "@/data/site";
+import { FEATURES } from "@/lib/features";
 import { Logo } from "@/components/layout/logo";
+import { getSiteSettings } from "@/lib/settings/server";
 
-export function Footer() {
+export async function Footer() {
+  const settings = await getSiteSettings();
+
+  // In the demo, member-portal links are hidden along with the rest of the
+  // member experience (see FEATURES.memberAccess).
+  const columns = footerNav.map((col) => ({
+    ...col,
+    links: col.links.filter(
+      (link) => FEATURES.memberAccess || !link.href.startsWith("/dashboard")
+    ),
+  }));
+
   return (
     <footer className="bg-sidebar text-sidebar-foreground">
       <div className="container-px py-16">
@@ -18,7 +31,7 @@ export function Footer() {
             <div className="mt-6 space-y-3 text-sm text-white/70">
               <p className="flex items-start gap-2.5">
                 <MapPin className="mt-0.5 size-4 shrink-0 text-sidebar-primary" />
-                {site.headquarters}
+                {settings.address}
               </p>
               <p className="flex items-center gap-2.5">
                 <Mail className="size-4 shrink-0 text-sidebar-primary" />
@@ -36,7 +49,7 @@ export function Footer() {
           </div>
 
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
-            {footerNav.map((col) => (
+            {columns.map((col) => (
               <div key={col.heading}>
                 <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50">
                   {col.heading}
@@ -60,7 +73,7 @@ export function Footer() {
 
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-sm text-white/55 sm:flex-row">
           <p>
-            © {new Date().getFullYear()} {site.name}. All rights reserved.
+            © {new Date().getFullYear()} {settings.name}. All rights reserved.
           </p>
           <div className="flex gap-6">
             <Link href="#" className="hover:text-white">

@@ -137,10 +137,14 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const { logout } = useAuth();
   const [open, setOpen] = React.useState(false);
+  const [prevPathname, setPrevPathname] = React.useState(pathname);
 
-  React.useEffect(() => {
+  // Close the mobile nav whenever the route changes (set-during-render to
+  // avoid a setState-in-effect cascade).
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
     setOpen(false);
-  }, [pathname]);
+  }
 
   const signOut = () => {
     logout();

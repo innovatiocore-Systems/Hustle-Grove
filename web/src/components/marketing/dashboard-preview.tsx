@@ -37,7 +37,7 @@ const sidebarItems = [
 const activity = [
   { title: "Invoice INV-1024", meta: "Paid", date: "May 13, 2025", badge: "success" as const },
   { title: "Booking Confirmed", meta: "Meeting Room A", date: "May 10, 2025" },
-  { title: "Check-in", meta: "Hustlegrove Downtown", date: "May 9, 2025" },
+  { title: "Check-in", meta: "Hustle Grove Downtown", date: "May 9, 2025" },
 ];
 
 export function DashboardPreview() {
@@ -66,7 +66,7 @@ export function DashboardPreview() {
             {/* Mini sidebar */}
             <div className="hidden w-44 shrink-0 flex-col bg-sidebar p-3 md:flex">
               <div className="px-2 py-2 font-display text-sm text-white">
-                Hustlegrove
+                Hustle Grove
               </div>
               <div className="mt-2 space-y-0.5">
                 {sidebarItems.map((item) => {
@@ -156,7 +156,7 @@ export function DashboardPreview() {
                         Tomorrow, 10:00 AM – 12:00 PM
                       </p>
                       <p className="text-[0.65rem] text-muted-foreground">
-                        Hustlegrove Downtown
+                        Hustle Grove Downtown
                       </p>
                     </div>
                   </div>

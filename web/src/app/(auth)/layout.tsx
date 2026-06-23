@@ -3,6 +3,7 @@ import { ArrowLeft, ShieldCheck, Users, Sparkles } from "lucide-react";
 
 import { Logo } from "@/components/layout/logo";
 import { GuestOnly } from "@/lib/auth/guest-only";
+import { MemberGate } from "@/lib/auth/member-gate";
 
 export default function AuthLayout({
   children,
@@ -10,6 +11,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
+    <MemberGate>
     <div className="grid min-h-screen lg:grid-cols-2">
       {/* Brand panel */}
       <div className="bg-stats-gradient relative hidden flex-col justify-between p-12 lg:flex">
@@ -20,7 +22,7 @@ export default function AuthLayout({
           </h1>
           <p className="mt-4 text-white/70">
             Secure authentication, role-based access and a complete member
-            directory — powered by the Haven Workspaces API.
+            directory — powered by the Hustle Grove platform.
           </p>
           <ul className="mt-8 space-y-3 text-sm text-white/80">
             <li className="flex items-center gap-3">
@@ -38,7 +40,7 @@ export default function AuthLayout({
           </ul>
         </div>
         <p className="text-xs text-white/50">
-          © {new Date().getFullYear()} Haven Workspaces
+          © {new Date().getFullYear()} Hustle Grove
         </p>
       </div>
 
@@ -63,5 +65,6 @@ export default function AuthLayout({
         </div>
       </div>
     </div>
+    </MemberGate>
   );
 }

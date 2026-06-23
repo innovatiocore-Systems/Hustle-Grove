@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { Menu, X, ArrowRight, ChevronDown, Search } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { FEATURES } from "@/lib/features";
 import { solutions } from "@/data/solutions";
 import { Logo } from "@/components/layout/logo";
 import { buttonVariants } from "@/components/ui/button";
@@ -31,6 +32,7 @@ export function Navbar() {
   const [open, setOpen] = React.useState(false);
   const [solutionsOpen, setSolutionsOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
+  const [prevPathname, setPrevPathname] = React.useState(pathname);
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -39,10 +41,13 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  React.useEffect(() => {
+  // Collapse the menus when the route changes (set-during-render to avoid a
+  // setState-in-effect cascade).
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
     setOpen(false);
     setSolutionsOpen(false);
-  }, [pathname]);
+  }
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -163,12 +168,14 @@ export function Navbar() {
             </kbd>
           </button>
           <ThemeToggle />
-          <Link
-            href="/login"
-            className="ml-1 text-sm font-medium text-foreground/70 transition-colors hover:text-foreground"
-          >
-            Member Login
-          </Link>
+          {FEATURES.memberAccess && (
+            <Link
+              href="/login"
+              className="ml-1 text-sm font-medium text-foreground/70 transition-colors hover:text-foreground"
+            >
+              Member Login
+            </Link>
+          )}
           <LeadButton lead="tour" size="sm" className="gap-1.5">
             Book a Tour
             <ArrowRight className="size-4" />
@@ -199,12 +206,14 @@ export function Navbar() {
               </Link>
             ))}
             <div className="mt-3 flex flex-col gap-2">
-              <Link
-                href="/login"
-                className={cn(buttonVariants({ variant: "outline" }), "w-full")}
-              >
-                Member Login
-              </Link>
+              {FEATURES.memberAccess && (
+                <Link
+                  href="/login"
+                  className={cn(buttonVariants({ variant: "outline" }), "w-full")}
+                >
+                  Member Login
+                </Link>
+              )}
               <Link href="/contact" className={cn(buttonVariants(), "w-full")}>
                 Book a Tour
               </Link>

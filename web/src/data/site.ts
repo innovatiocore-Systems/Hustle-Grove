@@ -1,7 +1,7 @@
 export const site = {
-  name: "Hustlegrove Workspaces",
-  shortName: "Hustlegrove",
-  tagline: "Work your way. Grow your way.",
+  name: "Hustle Grove",
+  shortName: "Hustle Grove",
+  tagline: "Where ambition takes root.",
   description:
     "Flexible private offices, dedicated desks, hot desks and meeting rooms designed for modern teams.",
   email: "hello@hustlegrove.com",

@@ -1,12 +1,11 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-import { cn } from "@/lib/utils";
+import { FEATURES } from "@/lib/features";
 import { solutions } from "@/data/solutions";
 import { locations } from "@/data/locations";
 import { featuredAmenities } from "@/data/amenities";
 import { testimonials } from "@/data/testimonials";
-import { buttonVariants } from "@/components/ui/button";
 import { Hero } from "@/components/marketing/hero";
 import { LogoCloud } from "@/components/marketing/logo-cloud";
 import { StatsBand } from "@/components/marketing/stats-band";
@@ -61,10 +60,12 @@ export default function HomePage() {
         <StatsBand />
       </Reveal>
 
-      {/* Member dashboard preview */}
-      <Reveal>
-        <DashboardPreview />
-      </Reveal>
+      {/* Member dashboard preview — hidden while member access is disabled */}
+      {FEATURES.memberAccess && (
+        <Reveal>
+          <DashboardPreview />
+        </Reveal>
+      )}
 
       {/* Featured Locations */}
       <section className="bg-sand/60 py-20 md:py-28">
@@ -73,7 +74,7 @@ export default function HomePage() {
             <SectionHeading
               eyebrow="Featured locations"
               title={<>Inspiring spaces in great neighbourhoods</>}
-              description="Each Hustlegrove is designed around its city and community — explore a few of our members' favourites."
+              description="Each Hustle Grove is designed around its city and community — explore a few of our members' favourites."
               className="max-w-2xl"
             />
             <Link
@@ -122,7 +123,7 @@ export default function HomePage() {
             <SectionHeading
               eyebrow="Loved by teams"
               title={<>Trusted by thousands of growing teams</>}
-              description="Don't just take our word for it — here's what members say about working at Hustlegrove."
+              description="Don't just take our word for it — here's what members say about working at Hustle Grove."
             />
           </Reveal>
           <div className="mt-12 grid gap-6 md:grid-cols-2">

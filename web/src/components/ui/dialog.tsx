@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { useMounted } from "@/lib/hooks/use-mounted";
 
 export function Dialog({
   open,
@@ -19,8 +20,7 @@ export function Dialog({
   className?: string;
   align?: "center" | "top";
 }) {
-  const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => setMounted(true), []);
+  const mounted = useMounted();
 
   React.useEffect(() => {
     if (!open) return;

@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { FEATURES } from "@/lib/features";
 import { locations } from "@/data/locations";
 import { Dialog } from "@/components/ui/dialog";
 import { useLeadModal } from "@/components/lead/lead-modal-provider";
@@ -38,6 +39,7 @@ export function CommandPalette() {
   const [open, setOpen] = React.useState(false);
   const [query, setQuery] = React.useState("");
   const [active, setActive] = React.useState(0);
+  const [prevOpen, setPrevOpen] = React.useState(open);
 
   React.useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -55,12 +57,15 @@ export function CommandPalette() {
     };
   }, []);
 
-  React.useEffect(() => {
+  // Reset the search state when the palette closes (set-during-render to
+  // avoid a setState-in-effect cascade).
+  if (open !== prevOpen) {
+    setPrevOpen(open);
     if (!open) {
       setQuery("");
       setActive(0);
     }
-  }, [open]);
+  }
 
   const items = React.useMemo<Item[]>(() => {
     const actions: Item[] = [
@@ -77,7 +82,9 @@ export function CommandPalette() {
       { id: "n-resources", group: "Navigate", label: "Resources", icon: FileText, href: "/resources" },
       { id: "n-about", group: "Navigate", label: "About", icon: Info, href: "/about" },
       { id: "n-contact", group: "Navigate", label: "Contact", icon: Phone, href: "/contact" },
-      { id: "n-dash", group: "Navigate", label: "Member Dashboard", icon: LayoutDashboard, href: "/dashboard" },
+      ...(FEATURES.memberAccess
+        ? [{ id: "n-dash", group: "Navigate", label: "Member Dashboard", icon: LayoutDashboard, href: "/dashboard" } as Item]
+        : []),
       { id: "n-admin", group: "Navigate", label: "Admin Portal", icon: LayoutDashboard, href: "/admin" },
     ];
     const locs: Item[] = locations.map((l) => ({

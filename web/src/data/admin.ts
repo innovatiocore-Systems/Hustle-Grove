@@ -54,35 +54,6 @@ export const upcomingTours = [
   { name: "Ethan Garcia", company: "Northstar AI", date: "Jun 22", time: "11:00 AM", location: "South Lake Union" },
 ];
 
-export type InquiryStage = "New" | "Contacted" | "Tour booked" | "Proposal" | "Won";
-
-export interface Inquiry {
-  id: string;
-  name: string;
-  company: string;
-  interest: string;
-  value: number;
-  stage: InquiryStage;
-  time: string;
-}
-
-export const inquiries: Inquiry[] = [
-  { id: "Q-3021", name: "Olivia Bennett", company: "Vega Robotics", interest: "Private Office · 12 desks", value: 11400, stage: "New", time: "10m ago" },
-  { id: "Q-3020", name: "Noah Williams", company: "Drift Studio", interest: "Dedicated Desks · 5", value: 2100, stage: "New", time: "1h ago" },
-  { id: "Q-3018", name: "Mia Thompson", company: "Cobalt Health", interest: "Enterprise floor", value: 48000, stage: "Contacted", time: "3h ago" },
-  { id: "Q-3015", name: "Ethan Garcia", company: "Northstar AI", interest: "Private Office · 20 desks", value: 19000, stage: "Tour booked", time: "Yesterday" },
-  { id: "Q-3012", name: "Ava Martinez", company: "Loop Finance", interest: "Private Office · 8 desks", value: 7600, stage: "Proposal", time: "2 days ago" },
-  { id: "Q-3009", name: "Liam Johnson", company: "Bright Labs", interest: "Hot Desks · 10", value: 2200, stage: "Won", time: "3 days ago" },
-];
-
-export const inquiryStages: InquiryStage[] = [
-  "New",
-  "Contacted",
-  "Tour booked",
-  "Proposal",
-  "Won",
-];
-
 export interface AdminMember {
   name: string;
   email: string;
@@ -100,23 +71,6 @@ export const adminMembers: AdminMember[] = [
   { name: "Sara Lopez", email: "sara@cobalt.health", company: "Cobalt Health", plan: "Enterprise", location: "Tribeca House", status: "Trial", joined: "Jun 2026" },
   { name: "Tom Becker", email: "tom@driftstudio.com", company: "Drift Studio", plan: "Hot Desk", location: "Fulton Market", status: "Past due", joined: "Feb 2025" },
   { name: "Hana Suzuki", email: "hana@loop.finance", company: "Loop Finance", plan: "Dedicated Desk", location: "South Lake Union", status: "Active", joined: "Apr 2025" },
-];
-
-export interface AdminWorkspace {
-  name: string;
-  location: string;
-  type: string;
-  capacity: number;
-  occupied: number;
-  status: "Live" | "Maintenance";
-}
-
-export const adminWorkspaces: AdminWorkspace[] = [
-  { name: "Suite 4A", location: "Market Street", type: "Private Office", capacity: 12, occupied: 12, status: "Live" },
-  { name: "Studio Floor 2", location: "SoMa Collective", type: "Dedicated Desks", capacity: 40, occupied: 35, status: "Live" },
-  { name: "Open Floor 3", location: "Fulton Market", type: "Hot Desks", capacity: 60, occupied: 46, status: "Live" },
-  { name: "Boardroom A", location: "Market Street", type: "Meeting Room", capacity: 14, occupied: 0, status: "Live" },
-  { name: "Suite 7B", location: "Tribeca House", type: "Private Office", capacity: 20, occupied: 18, status: "Maintenance" },
 ];
 
 export interface AdminLocation {

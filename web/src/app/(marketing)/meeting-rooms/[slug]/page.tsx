@@ -6,7 +6,6 @@ import { MapPin, Users, Check, ChevronRight, Tv } from "lucide-react";
 import { getMeetingRoom, meetingRooms } from "@/data/meeting-rooms";
 import { Gallery } from "@/components/marketing/gallery";
 import { AvailabilityBadge } from "@/components/marketing/availability-badge";
-import { MockCalendar } from "@/components/marketing/mock-calendar";
 import { InquiryForm } from "@/components/marketing/inquiry-form";
 
 export function generateStaticParams() {
@@ -120,27 +119,19 @@ export default async function MeetingRoomDetailPage({
               </ul>
             </div>
 
-            <div>
-              <h2 className="font-display text-2xl text-foreground">
-                Check availability
-              </h2>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Select a day and time to request this room. Availability is
-                indicative.
-              </p>
-              <div className="mt-5">
-                <MockCalendar roomName={room.name} />
-              </div>
-            </div>
           </div>
 
           {/* Sidebar */}
           <aside className="lg:sticky lg:top-24 lg:self-start">
             <InquiryForm
               title="Enquire about this room"
-              description={`Tell us your dates and we'll confirm ${room.name}.`}
-              defaultInterest="Meeting Room"
+              description={`Pick a date and time and we'll confirm ${room.name}.`}
               submitLabel="Send inquiry"
+              room={{
+                roomId: room.slug,
+                roomName: room.name,
+                location: room.location,
+              }}
             />
           </aside>
         </div>

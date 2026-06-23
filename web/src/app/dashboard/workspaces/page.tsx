@@ -12,7 +12,7 @@ export default function WorkspacesPage() {
       <div>
         <h1 className="font-display text-3xl text-foreground">Workspaces</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Your plan and the spaces available across the Hustlegrove network.
+          Your plan and the spaces available across the Hustle Grove network.
         </p>
       </div>
 

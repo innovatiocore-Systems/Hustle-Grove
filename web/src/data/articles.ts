@@ -21,7 +21,7 @@ export interface Article {
 
 const sofia = {
   name: "Sofia Alvarez",
-  role: "CEO, Hustlegrove",
+  role: "CEO, Hustle Grove",
   avatar: avatar("1544005313-94ddf0286df2"),
 };
 const aisha = {

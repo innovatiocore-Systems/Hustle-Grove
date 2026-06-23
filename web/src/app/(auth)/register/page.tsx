@@ -42,7 +42,7 @@ export default function RegisterPage() {
     <div>
       <h1 className="font-display text-3xl text-foreground">Create your account</h1>
       <p className="mt-2 text-sm text-muted-foreground">
-        Join Haven Workspaces in less than a minute.
+        Join Hustle Grove in less than a minute.
       </p>
 
       <form onSubmit={onSubmit} className="mt-6 space-y-4" noValidate>

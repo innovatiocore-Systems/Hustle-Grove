@@ -6,7 +6,7 @@ import { ADMIN_ROLES } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
   title: "Admin Portal",
-  description: "Operations and analytics for Haven Workspaces.",
+  description: "Operations and analytics for Hustle Grove.",
 };
 
 export default function AdminLayout({

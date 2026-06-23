@@ -7,17 +7,21 @@ import { toast } from "sonner";
 import { ShieldCheck, ArrowRight, ArrowLeft, Loader2 } from "lucide-react";
 
 import { useAuth } from "@/lib/auth/auth-context";
-import { homePathFor } from "@/lib/auth/roles";
+import { homePathFor, isStaff } from "@/lib/auth/roles";
+import { signInWithSupabase, signOutSupabase } from "@/lib/auth/supabase-auth";
+import { FEATURES } from "@/lib/features";
 import { Logo } from "@/components/layout/logo";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-// Demo-only: validation and the real API call are disabled. Signing in just
-// sets a fake Super Admin session and drops you into the admin portal.
 export default function AdminLoginPage() {
   const router = useRouter();
   const { setSession, isAuthenticated, loading, user } = useAuth();
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [submitting, setSubmitting] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
 
   // Already signed in → bounce to the right home.
   React.useEffect(() => {
@@ -26,23 +30,33 @@ export default function AdminLoginPage() {
     }
   }, [loading, isAuthenticated, user, router]);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSession({
-      accessToken: "demo-token",
-      refreshToken: "demo-refresh-token",
-      accessTokenExpiresAt: new Date(Date.now() + 86_400_000).toISOString(),
-      user: {
-        id: "demo-admin",
-        email: "superadmin@haven.dev",
-        firstName: "Super",
-        lastName: "Admin",
-        fullName: "Super Admin",
-        isActive: true,
-        emailConfirmed: true,
-        roles: ["Super Admin"],
-      },
-    });
+    setError(null);
+
+    if (!email.trim() || !password) {
+      setError("Enter your email and password.");
+      return;
+    }
+
+    setSubmitting(true);
+    const res = await signInWithSupabase(email.trim(), password);
+
+    if (!res.ok || !res.data) {
+      setError(res.message ?? "Couldn't sign you in.");
+      setSubmitting(false);
+      return;
+    }
+
+    // The admin portal is staff-only — block members who authenticate here.
+    if (!isStaff(res.data.user.roles)) {
+      await signOutSupabase();
+      setError("This account doesn't have admin access.");
+      setSubmitting(false);
+      return;
+    }
+
+    setSession(res.data);
     toast.success("Welcome to the admin portal");
     router.replace("/admin");
   };
@@ -88,8 +102,11 @@ export default function AdminLoginPage() {
               id="email"
               type="email"
               autoComplete="email"
-              placeholder="admin@haven.dev"
+              placeholder="admin@hustlegrove.com"
               className="mt-1.5"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={submitting}
             />
           </div>
           <div>
@@ -100,25 +117,44 @@ export default function AdminLoginPage() {
               autoComplete="current-password"
               placeholder="••••••••"
               className="mt-1.5"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              disabled={submitting}
             />
           </div>
 
-          <Button type="submit" size="lg" className="w-full">
-            Sign in to admin
-            <ArrowRight className="size-4" />
+          {error && (
+            <p className="rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">
+              {error}
+            </p>
+          )}
+
+          <Button type="submit" size="lg" className="w-full" disabled={submitting}>
+            {submitting ? (
+              <>
+                <Loader2 className="size-4 animate-spin" />
+                Signing in…
+              </>
+            ) : (
+              <>
+                Sign in to admin
+                <ArrowRight className="size-4" />
+              </>
+            )}
           </Button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-muted-foreground">
-          Not an admin?{" "}
-          <Link href="/login" className="font-semibold text-primary hover:underline">
-            Member sign in
-          </Link>
-        </p>
+        {FEATURES.memberAccess && (
+          <p className="mt-6 text-center text-sm text-muted-foreground">
+            Not an admin?{" "}
+            <Link href="/login" className="font-semibold text-primary hover:underline">
+              Member sign in
+            </Link>
+          </p>
+        )}
 
         <p className="mt-6 rounded-xl bg-muted/50 px-4 py-3 text-center text-xs text-muted-foreground">
-          Demo admin: <span className="font-medium text-foreground">superadmin@haven.dev</span> /{" "}
-          <span className="font-medium text-foreground">SuperAdmin123!</span>
+          Admin access only. Contact your workspace owner if you need an account.
         </p>
       </div>
     </div>
