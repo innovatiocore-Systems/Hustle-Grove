@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { img, avatar } from "@/lib/images";
+import { avatar } from "@/lib/images";
 import { buttonVariants } from "@/components/ui/button";
 
 const featureCard = [
@@ -111,14 +111,14 @@ export function Hero() {
 
         {/* Imagery + floating feature card */}
         <div className="relative">
-          <div className="relative aspect-[4/3.4] overflow-hidden rounded-3xl shadow-2xl shadow-primary/15 sm:aspect-[4/3] lg:aspect-[4/3.6]">
+          <div className="relative aspect-[4/3.4] overflow-hidden rounded-3xl shadow-2xl shadow-primary/15 sm:aspect-[4/3] lg:aspect-[4/3.6]" style={{ background: "oklch(0.14 0.009 135)" }}>
             <Image
-              src={img("1497366754035-f200968a6e72", 1100, 1000)}
-              alt="A bright, modern Hustle Grove workspace lounge"
+              src="/hero-badge.png"
+              alt="The Hustle Grove Workspace — circuit-board tree badge"
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
+              className="object-contain p-6"
             />
           </div>
 
