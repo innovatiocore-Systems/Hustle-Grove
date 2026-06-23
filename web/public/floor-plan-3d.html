@@ -85,22 +85,10 @@ canvas{display:block}
   </div>
 </div>
 
-<div id="err" style="display:none;position:fixed;inset:0;background:#07080c;color:#ff6b6b;font-family:monospace;font-size:13px;padding:40px;z-index:999;white-space:pre-wrap"></div>
 <script type="module">
-const CDN = 'https://cdn.jsdelivr.net/npm/three@0.160.0';
-let THREE, OrbitControls;
-try {
-  THREE = await import(CDN + '/build/three.module.js');
-  ({ OrbitControls } = await import(CDN + '/examples/jsm/controls/OrbitControls.js'));
-} catch(e) {
-  document.getElementById('err').style.display='block';
-  document.getElementById('err').textContent='CDN load failed:\n'+e;
-  throw e;
-}
-window.addEventListener('error', e => {
-  document.getElementById('err').style.display='block';
-  document.getElementById('err').textContent='Runtime error:\n'+(e.error||e.message);
-});
+// esm.sh rewrites all internal bare specifiers — no importmap needed
+import * as THREE from 'https://esm.sh/three@0.160.0';
+import { OrbitControls } from 'https://esm.sh/three@0.160.0/examples/jsm/controls/OrbitControls.js';
 
 // ── Renderer ──────────────────────────────────────────────────
 const renderer = new THREE.WebGLRenderer({ antialias: true });
