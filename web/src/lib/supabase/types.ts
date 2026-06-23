@@ -21,6 +21,9 @@ export type Database = {
           address: string
           logo_url: string | null
           logo_size: number
+          popup_enabled: boolean
+          popup_title: string
+          popup_message: string
           updated_at: string
         }
         Insert: {
@@ -29,6 +32,9 @@ export type Database = {
           address?: string
           logo_url?: string | null
           logo_size?: number
+          popup_enabled?: boolean
+          popup_title?: string
+          popup_message?: string
           updated_at?: string
         }
         Update: {
@@ -37,6 +43,9 @@ export type Database = {
           address?: string
           logo_url?: string | null
           logo_size?: number
+          popup_enabled?: boolean
+          popup_title?: string
+          popup_message?: string
           updated_at?: string
         }
         Relationships: []

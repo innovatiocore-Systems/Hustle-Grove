@@ -39,6 +39,9 @@ export async function updateSiteSettings(input: {
   address: string;
   logoUrl: string | null;
   logoSize: number;
+  popupEnabled: boolean;
+  popupTitle: string;
+  popupMessage: string;
 }): Promise<SettingsResult> {
   const authed = await getAuthedClient();
   if (!authed.ok) return { ok: false, message: authed.message };
@@ -50,6 +53,9 @@ export async function updateSiteSettings(input: {
       address: input.address,
       logo_url: input.logoUrl,
       logo_size: input.logoSize,
+      popup_enabled: input.popupEnabled,
+      popup_title: input.popupTitle,
+      popup_message: input.popupMessage,
       updated_at: new Date().toISOString(),
     })
     .eq("id", true);

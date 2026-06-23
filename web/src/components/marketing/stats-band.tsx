@@ -1,27 +1,27 @@
-import { Building2, Users, Star, Trophy } from "lucide-react";
+import { Building2, Users, Star, LayoutGrid } from "lucide-react";
 
 import { Counter } from "@/components/marketing/counter";
 
 const stats = [
   {
+    icon: LayoutGrid,
+    value: "~145 sqm",
+    label: "Premium Floor Space",
+  },
+  {
     icon: Building2,
-    value: "24+",
-    label: "Prime Locations",
+    value: "21",
+    label: "Workspaces Available",
   },
   {
     icon: Users,
-    value: "6,400+",
-    label: "Happy Members",
+    value: "40+",
+    label: "Active Members",
   },
   {
     icon: Star,
     value: "4.9/5",
     label: "Member Rating",
-  },
-  {
-    icon: Trophy,
-    value: "Award-Winning",
-    label: "Workspaces",
   },
 ];
 

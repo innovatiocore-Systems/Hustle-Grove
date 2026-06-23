@@ -6,6 +6,9 @@ export interface SiteSettings {
   address: string;
   logoUrl: string | null;
   logoSize: number; // height in px, range 24–80
+  popupEnabled: boolean;
+  popupTitle: string;
+  popupMessage: string;
 }
 
 /** Falls back to the static defaults when Supabase is unavailable. */
@@ -14,4 +17,7 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
   address: site.headquarters,
   logoUrl: null,
   logoSize: 36,
+  popupEnabled: false,
+  popupTitle: "",
+  popupMessage: "",
 };

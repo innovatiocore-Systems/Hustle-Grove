@@ -13,6 +13,9 @@ interface SiteSettingsRow {
   address: string;
   logo_url: string | null;
   logo_size: number | null;
+  popup_enabled: boolean | null;
+  popup_title: string | null;
+  popup_message: string | null;
 }
 
 /**
@@ -25,7 +28,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
 
   try {
     const res = await fetch(
-      `${url}/rest/v1/site_settings?select=name,address,logo_url,logo_size&limit=1`,
+      `${url}/rest/v1/site_settings?select=name,address,logo_url,logo_size,popup_enabled,popup_title,popup_message&limit=1`,
       {
         headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}` },
         next: { revalidate: 30, tags: [SITE_SETTINGS_TAG] },
@@ -42,6 +45,9 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       address: row.address ?? DEFAULT_SITE_SETTINGS.address,
       logoUrl: row.logo_url,
       logoSize: row.logo_size ?? DEFAULT_SITE_SETTINGS.logoSize,
+      popupEnabled: row.popup_enabled ?? false,
+      popupTitle: row.popup_title ?? "",
+      popupMessage: row.popup_message ?? "",
     };
   } catch {
     return DEFAULT_SITE_SETTINGS;

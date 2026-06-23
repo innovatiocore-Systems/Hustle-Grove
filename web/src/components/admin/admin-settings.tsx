@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Upload, Loader2, Trash2 } from "lucide-react";
+import { Upload, Loader2, Trash2, Megaphone } from "lucide-react";
 
 import type { SiteSettings } from "@/lib/settings/types";
 import { updateSiteSettings, uploadLogo } from "@/lib/settings/api";
@@ -39,6 +39,9 @@ export function AdminSettings({ initial }: { initial: SiteSettings }) {
   const [address, setAddress] = React.useState(initial.address);
   const [logoUrl, setLogoUrl] = React.useState<string | null>(initial.logoUrl);
   const [logoSize, setLogoSize] = React.useState(initial.logoSize);
+  const [popupEnabled, setPopupEnabled] = React.useState(initial.popupEnabled);
+  const [popupTitle, setPopupTitle] = React.useState(initial.popupTitle);
+  const [popupMessage, setPopupMessage] = React.useState(initial.popupMessage);
   const [uploading, setUploading] = React.useState(false);
   const [saving, setSaving] = React.useState(false);
 
@@ -46,7 +49,10 @@ export function AdminSettings({ initial }: { initial: SiteSettings }) {
     name !== initial.name ||
     address !== initial.address ||
     logoUrl !== initial.logoUrl ||
-    logoSize !== initial.logoSize;
+    logoSize !== initial.logoSize ||
+    popupEnabled !== initial.popupEnabled ||
+    popupTitle !== initial.popupTitle ||
+    popupMessage !== initial.popupMessage;
 
   const onPickLogo = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -86,6 +92,9 @@ export function AdminSettings({ initial }: { initial: SiteSettings }) {
       address: address.trim(),
       logoUrl,
       logoSize,
+      popupEnabled,
+      popupTitle: popupTitle.trim(),
+      popupMessage: popupMessage.trim(),
     });
 
     if (!res.ok) {
@@ -105,6 +114,9 @@ export function AdminSettings({ initial }: { initial: SiteSettings }) {
     setAddress(initial.address);
     setLogoUrl(initial.logoUrl);
     setLogoSize(initial.logoSize);
+    setPopupEnabled(initial.popupEnabled);
+    setPopupTitle(initial.popupTitle);
+    setPopupMessage(initial.popupMessage);
   };
 
   return (
@@ -219,6 +231,58 @@ export function AdminSettings({ initial }: { initial: SiteSettings }) {
                 placeholder="548 Market Street, Suite 400, San Francisco, CA 94104"
               />
             </div>
+          </div>
+        </div>
+      </Card>
+
+      <Card
+        title="Announcement Popup"
+        description="Show a message to visitors when they first open the website. Changes take effect immediately."
+      >
+        <div className="space-y-5">
+          <div className="flex items-center justify-between gap-4 rounded-xl border border-border/60 bg-muted/30 p-4">
+            <div className="flex items-center gap-3">
+              <Megaphone className="size-5 shrink-0 text-primary" />
+              <div>
+                <p className="text-sm font-medium text-foreground">Enable popup</p>
+                <p className="text-xs text-muted-foreground">Show the announcement on every page load (once per session)</p>
+              </div>
+            </div>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={popupEnabled}
+              onClick={() => setPopupEnabled((v) => !v)}
+              className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${popupEnabled ? "bg-primary" : "bg-muted"}`}
+            >
+              <span
+                className={`pointer-events-none inline-block size-5 rounded-full bg-white shadow-lg transition-transform ${popupEnabled ? "translate-x-5" : "translate-x-0"}`}
+              />
+            </button>
+          </div>
+
+          <div>
+            <Label className="mb-1.5" htmlFor="popup-title">Popup title (optional)</Label>
+            <Input
+              id="popup-title"
+              value={popupTitle}
+              onChange={(e) => setPopupTitle(e.target.value)}
+              placeholder="Welcome to The Hustle Grove Workspace!"
+            />
+          </div>
+
+          <div>
+            <Label className="mb-1.5" htmlFor="popup-message">Message</Label>
+            <Textarea
+              id="popup-message"
+              className="min-h-28"
+              value={popupMessage}
+              onChange={(e) => setPopupMessage(e.target.value)}
+              placeholder="We're open Monday–Friday 8am–6pm. Members enjoy 24/7 access. Book a free tour today!"
+            />
+            <p className="mt-1.5 text-xs text-muted-foreground">
+              Shown to visitors once per browser session. Updating the message resets dismissals.
+            </p>
           </div>
         </div>
       </Card>
