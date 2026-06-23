@@ -1,12 +1,12 @@
 export const site = {
-  name: "Hustle Grove",
+  name: "The Hustle Grove Workspace",
   shortName: "Hustle Grove",
   tagline: "Where ambition takes root.",
   description:
     "Flexible private offices, dedicated desks, hot desks and meeting rooms designed for modern teams.",
-  email: "hello@hustlegrove.com",
-  phone: "+1 (415) 555-0142",
-  headquarters: "548 Market Street, Suite 400, San Francisco, CA 94104",
+  email: "hello@hustlegrove.com.au",
+  phone: "+61 2 6100 0142",
+  headquarters: "Level 4, 1 University Avenue\nCanberra ACT 2601, Australia",
 };
 
 export const mainNav = [

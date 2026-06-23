@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   Settings,
+  Inbox,
   Menu,
   X,
   LogOut,
@@ -24,8 +25,9 @@ import {
 // The admin portal is intentionally scoped to two surfaces. Other module route
 // files remain in the codebase but are not linked from the nav.
 const nav = [
-  { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
-  { label: "Settings", href: "/admin/settings", icon: Settings },
+  { label: "Dashboard",  href: "/admin",            icon: LayoutDashboard },
+  { label: "Inquiries",  href: "/admin/inquiries",   icon: Inbox },
+  { label: "Settings",   href: "/admin/settings",    icon: Settings },
 ];
 
 function SidebarContent({ pathname }: { pathname: string }) {
