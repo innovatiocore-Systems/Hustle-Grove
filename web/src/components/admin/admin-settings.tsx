@@ -38,13 +38,15 @@ export function AdminSettings({ initial }: { initial: SiteSettings }) {
   const [name, setName] = React.useState(initial.name);
   const [address, setAddress] = React.useState(initial.address);
   const [logoUrl, setLogoUrl] = React.useState<string | null>(initial.logoUrl);
+  const [logoSize, setLogoSize] = React.useState(initial.logoSize);
   const [uploading, setUploading] = React.useState(false);
   const [saving, setSaving] = React.useState(false);
 
   const dirty =
     name !== initial.name ||
     address !== initial.address ||
-    logoUrl !== initial.logoUrl;
+    logoUrl !== initial.logoUrl ||
+    logoSize !== initial.logoSize;
 
   const onPickLogo = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -83,6 +85,7 @@ export function AdminSettings({ initial }: { initial: SiteSettings }) {
       name: name.trim(),
       address: address.trim(),
       logoUrl,
+      logoSize,
     });
 
     if (!res.ok) {
@@ -101,6 +104,7 @@ export function AdminSettings({ initial }: { initial: SiteSettings }) {
     setName(initial.name);
     setAddress(initial.address);
     setLogoUrl(initial.logoUrl);
+    setLogoSize(initial.logoSize);
   };
 
   return (
@@ -170,6 +174,25 @@ export function AdminSettings({ initial }: { initial: SiteSettings }) {
             <p className="mt-2 text-xs text-muted-foreground">
               PNG, SVG, or JPG up to 2 MB. Leave empty to use the default mark.
             </p>
+
+            <div className="mt-4">
+              <Label className="mb-2 block">
+                Logo size — {logoSize}px
+              </Label>
+              <div className="flex items-center gap-3">
+                <span className="text-xs text-muted-foreground">Small</span>
+                <input
+                  type="range"
+                  min={24}
+                  max={80}
+                  step={2}
+                  value={logoSize}
+                  onChange={(e) => setLogoSize(Number(e.target.value))}
+                  className="h-2 w-48 cursor-pointer accent-primary"
+                />
+                <span className="text-xs text-muted-foreground">Large</span>
+              </div>
+            </div>
           </div>
 
           <div className="grid gap-5 sm:grid-cols-2">

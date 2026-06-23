@@ -12,6 +12,7 @@ interface SiteSettingsRow {
   name: string;
   address: string;
   logo_url: string | null;
+  logo_size: number | null;
 }
 
 /**
@@ -24,7 +25,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
 
   try {
     const res = await fetch(
-      `${url}/rest/v1/site_settings?select=name,address,logo_url&limit=1`,
+      `${url}/rest/v1/site_settings?select=name,address,logo_url,logo_size&limit=1`,
       {
         headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}` },
         next: { revalidate: 30, tags: [SITE_SETTINGS_TAG] },
@@ -40,6 +41,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       name: row.name || DEFAULT_SITE_SETTINGS.name,
       address: row.address ?? DEFAULT_SITE_SETTINGS.address,
       logoUrl: row.logo_url,
+      logoSize: row.logo_size ?? DEFAULT_SITE_SETTINGS.logoSize,
     };
   } catch {
     return DEFAULT_SITE_SETTINGS;

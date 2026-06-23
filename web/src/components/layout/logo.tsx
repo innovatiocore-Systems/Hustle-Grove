@@ -46,7 +46,7 @@ export function Logo({
   variant?: "default" | "light";
   className?: string;
 }) {
-  const { name, logoUrl } = useSiteSettings();
+  const { name, logoUrl, logoSize } = useSiteSettings();
 
   return (
     <Link
@@ -60,7 +60,8 @@ export function Logo({
         <img
           src={logoUrl}
           alt={name}
-          className="h-9 w-auto max-w-[12rem] object-contain"
+          style={{ height: logoSize }}
+          className="w-auto max-w-[12rem] object-contain"
         />
       ) : (
         <>

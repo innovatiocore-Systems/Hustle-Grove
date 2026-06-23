@@ -38,6 +38,7 @@ export async function updateSiteSettings(input: {
   name: string;
   address: string;
   logoUrl: string | null;
+  logoSize: number;
 }): Promise<SettingsResult> {
   const authed = await getAuthedClient();
   if (!authed.ok) return { ok: false, message: authed.message };
@@ -48,6 +49,7 @@ export async function updateSiteSettings(input: {
       name: input.name,
       address: input.address,
       logo_url: input.logoUrl,
+      logo_size: input.logoSize,
       updated_at: new Date().toISOString(),
     })
     .eq("id", true);
