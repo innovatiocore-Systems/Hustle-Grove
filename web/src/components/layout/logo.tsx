@@ -5,13 +5,12 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useSiteSettings } from "@/components/site-settings-provider";
 
-function LogoMark({ className }: { className?: string }) {
-  // A circuit-board tree echoing the Hustle Grove badge: gold branches with
-  // green + gold node "leaves" growing from a trunk.
+function LogoMark({ size, className }: { size: number; className?: string }) {
   return (
     <svg
       viewBox="0 0 32 32"
-      className={cn("size-9", className)}
+      style={{ width: size, height: size }}
+      className={cn(className)}
       fill="none"
       aria-hidden
     >
@@ -65,7 +64,7 @@ export function Logo({
         />
       ) : (
         <>
-          <LogoMark />
+          <LogoMark size={logoSize} />
           <span
             className={cn(
               "font-display text-xl tracking-tight",

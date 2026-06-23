@@ -20,6 +20,7 @@ export type Database = {
           name: string
           address: string
           logo_url: string | null
+          logo_size: number
           updated_at: string
         }
         Insert: {
@@ -27,6 +28,7 @@ export type Database = {
           name: string
           address?: string
           logo_url?: string | null
+          logo_size?: number
           updated_at?: string
         }
         Update: {
@@ -34,6 +36,7 @@ export type Database = {
           name?: string
           address?: string
           logo_url?: string | null
+          logo_size?: number
           updated_at?: string
         }
         Relationships: []
