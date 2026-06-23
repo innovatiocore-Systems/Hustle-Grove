@@ -54,7 +54,6 @@ export function Logo({
       aria-label={`${name} home`}
     >
       {logoUrl ? (
-        // An uploaded logo replaces the default lockup entirely.
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={logoUrl}
@@ -63,18 +62,16 @@ export function Logo({
           className="w-auto max-w-[12rem] object-contain"
         />
       ) : (
-        <>
-          <LogoMark size={logoSize} />
-          <span
-            className={cn(
-              "font-display text-xl tracking-tight",
-              variant === "light" ? "text-white" : "text-foreground"
-            )}
-          >
-            {name}
-          </span>
-        </>
+        <LogoMark size={logoSize} />
       )}
+      <span
+        className={cn(
+          "font-display text-xl tracking-tight",
+          variant === "light" ? "text-white" : "text-foreground"
+        )}
+      >
+        {name}
+      </span>
     </Link>
   );
 }
