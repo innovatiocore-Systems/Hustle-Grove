@@ -6,7 +6,6 @@ import { solutions } from "@/data/solutions";
 import { featuredAmenities } from "@/data/amenities";
 import { testimonials } from "@/data/testimonials";
 import { Hero } from "@/components/marketing/hero";
-import { LogoCloud } from "@/components/marketing/logo-cloud";
 import { StatsBand } from "@/components/marketing/stats-band";
 import { DashboardPreview } from "@/components/marketing/dashboard-preview";
 import { Reveal } from "@/components/marketing/reveal";
@@ -22,7 +21,6 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <LogoCloud />
 
       {/* Workspace Solutions */}
       <section className="bg-sand/60 py-20 md:py-28">
