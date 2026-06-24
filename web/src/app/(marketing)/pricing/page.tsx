@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Clock, CalendarDays, CalendarRange, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { Clock, CalendarDays, CalendarRange, ArrowRight, MapPin } from "lucide-react";
 
 import { faqs } from "@/data/faqs";
 import { meetingRoomRates } from "@/data/plans";
@@ -43,11 +44,20 @@ export default function PricingPage() {
       {/* Private Office Suite Breakdown */}
       <section className="container-px pb-16 md:pb-20">
         <div className="rounded-2xl border border-border/70 bg-card p-6 md:p-8">
-          <SectionHeading
-            eyebrow="Private Offices"
-            title={<>Suite pricing & availability</>}
-            description="Six lockable suites on Level 4 — pick the size that fits your team."
-          />
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <SectionHeading
+              eyebrow="Private Offices"
+              title={<>Suite pricing & availability</>}
+              description="Six lockable suites on Level 4 — pick the size that fits your team."
+            />
+            <Link
+              href="/locations"
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-border/70 bg-muted/50 px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
+            >
+              <MapPin className="size-4" />
+              View floor plan
+            </Link>
+          </div>
           <div className="mt-8 overflow-hidden rounded-xl border border-border/70">
             <table className="w-full border-collapse text-sm">
               <thead>
