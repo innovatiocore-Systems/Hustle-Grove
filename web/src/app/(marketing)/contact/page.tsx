@@ -95,21 +95,19 @@ export default async function ContactPage() {
         </div>
       </section>
 
-      {/* Map placeholder */}
+      {/* Map */}
       <section className="container-px pb-16 md:pb-20">
-        <div className="relative aspect-[21/9] overflow-hidden rounded-3xl border border-border/70 bg-muted">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,var(--color-primary)_0,transparent_55%)] opacity-10" />
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-            <span className="flex size-14 items-center justify-center rounded-full bg-background shadow-md">
-              <MapPin className="size-7 text-primary" />
-            </span>
-            <p className="mt-4 font-medium text-foreground">
-              {settings.address}
-            </p>
-            <p className="text-sm text-muted-foreground">
-              Interactive map coming soon
-            </p>
-          </div>
+        <div className="overflow-hidden rounded-3xl border border-border/70">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3257.051427834239!2d149.1231730766086!3d-35.279847593521524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b164d426070001d%3A0x2c16216b7ef71df9!2slevel%207%2F28%20University%20Ave%2C%20Canberra%20ACT%202601%2C%20Australia!5e0!3m2!1sen!2snp!4v1782299287785!5m2!1sen!2snp"
+            width="100%"
+            height="450"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="strict-origin-when-cross-origin"
+            title="Hustle Grove location"
+          />
         </div>
       </section>
 
