@@ -43,9 +43,9 @@ export function Hero() {
           </span>
 
           <h1 className="mt-6 font-display text-5xl leading-[0.98] text-foreground sm:text-6xl md:text-7xl">
-            Work your way.
+            Hustle your way.
             <br />
-            Grow{" "}
+            Grove{" "}
             <span className="relative inline-block font-script font-normal text-violet">
               your way
               <svg
