@@ -39,24 +39,25 @@ export default function AboutPage() {
           <div>
             <SectionHeading
               eyebrow="Our story"
-              title={<>From one floor to a national network</>}
+              title={<>Built for Canberra&apos;s best teams</>}
             />
             <div className="mt-6 space-y-4 text-base leading-relaxed text-muted-foreground">
               <p>
-                We opened our first floor in San Francisco in 2018 with a dozen
-                desks and a strong point of view: flexible workspace didn&apos;t
-                have to feel temporary, generic or corporate. It could feel like
-                somewhere you&apos;d genuinely want to be.
+                We launched Hustle Grove with a single conviction: premium,
+                flexible workspace shouldn&apos;t be a privilege reserved for
+                large corporates. It should be available to every ambitious team
+                — from day one.
               </p>
               <p>
-                Today, Hustle Grove is home to more than 6,400 members across 24
-                locations in 9 cities. We&apos;ve stayed obsessed with the same
-                details — natural light, considered design, real hospitality —
-                that made that first floor special.
+                Today our Level 4 space at 28 University Avenue sits at the heart
+                of Canberra&apos;s CBD. We&apos;ve obsessed over every detail —
+                natural light, considered design, real hospitality — so that the
+                moment you walk in, it feels like somewhere you&apos;d genuinely
+                want to work.
               </p>
               <p>
-                As we grow, our mission hasn&apos;t changed: to give every team a
-                workspace worth showing up for, on terms that flex with them.
+                Our mission is simple: give every team a workspace worth showing
+                up for, on terms that flex with them.
               </p>
             </div>
           </div>

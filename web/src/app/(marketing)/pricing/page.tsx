@@ -6,7 +6,6 @@ import { meetingRoomRates } from "@/data/plans";
 import { PageHeader } from "@/components/marketing/page-header";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { PricingPlans } from "@/components/marketing/pricing-plans";
-import { ComparisonTable } from "@/components/marketing/comparison-table";
 import { Accordion } from "@/components/ui/accordion";
 import { LeadButton } from "@/components/lead/lead-button";
 
@@ -113,18 +112,6 @@ export default function PricingPage() {
           <p className="mt-6 text-center text-xs text-muted-foreground">
             Members receive 5–unlimited complimentary hours per month depending on plan.
           </p>
-        </div>
-      </section>
-
-      {/* Comparison */}
-      <section className="container-px py-20 md:py-24">
-        <SectionHeading
-          eyebrow="Compare"
-          title={<>Everything in every plan, side by side</>}
-          description="A clear look at what's included so you can choose with confidence."
-        />
-        <div className="mt-10 rounded-2xl border border-border/70 bg-card p-2 md:p-4">
-          <ComparisonTable />
         </div>
       </section>
 

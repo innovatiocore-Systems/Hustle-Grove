@@ -41,8 +41,7 @@ export const footerNav = [
     links: [
       { label: "Membership Plans", href: "/pricing" },
       { label: "Meeting Rooms", href: "/meeting-rooms" },
-      { label: "Events", href: "/events" },
-      { label: "Resources", href: "/resources" },
+{ label: "Resources", href: "/resources" },
     ],
   },
 ];

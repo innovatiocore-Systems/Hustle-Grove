@@ -3,11 +3,10 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ArrowRight, ChevronDown, Search } from "lucide-react";
+import { Menu, X, ArrowRight, Search } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { FEATURES } from "@/lib/features";
-import { solutions } from "@/data/solutions";
 import { Logo } from "@/components/layout/logo";
 import { buttonVariants } from "@/components/ui/button";
 import { LeadButton } from "@/components/lead/lead-button";
@@ -17,7 +16,6 @@ const links = [
   { label: "Home", href: "/" },
   { label: "Locations", href: "/locations" },
   { label: "Memberships", href: "/pricing" },
-  { label: "Events", href: "/events" },
   { label: "Resources", href: "/resources" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
@@ -30,7 +28,6 @@ function openCommandPalette() {
 export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
-  const [solutionsOpen, setSolutionsOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
   const [prevPathname, setPrevPathname] = React.useState(pathname);
 
@@ -41,12 +38,9 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Collapse the menus when the route changes (set-during-render to avoid a
-  // setState-in-effect cascade).
   if (pathname !== prevPathname) {
     setPrevPathname(pathname);
     setOpen(false);
-    setSolutionsOpen(false);
   }
 
   const isActive = (href: string) =>
@@ -87,56 +81,6 @@ export function Navbar() {
           >
             Locations
           </Link>
-
-          {/* Solutions dropdown */}
-          <div className="relative">
-            <button
-              type="button"
-              onClick={() => setSolutionsOpen((v) => !v)}
-              className="flex items-center gap-1 rounded-lg px-3.5 py-2 text-sm font-medium text-foreground/70 transition-colors hover:text-foreground"
-              aria-expanded={solutionsOpen}
-            >
-              Solutions
-              <ChevronDown
-                className={cn(
-                  "size-4 transition-transform",
-                  solutionsOpen && "rotate-180"
-                )}
-              />
-            </button>
-            {solutionsOpen && (
-              <>
-                <div
-                  className="fixed inset-0 z-0"
-                  onClick={() => setSolutionsOpen(false)}
-                />
-                <div className="absolute left-0 top-full z-10 mt-2 w-72 rounded-2xl border border-border bg-popover p-2 shadow-xl">
-                  {solutions.map((s) => {
-                    const Icon = s.icon;
-                    return (
-                      <Link
-                        key={s.slug}
-                        href="/locations"
-                        className="flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-muted"
-                      >
-                        <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                          <Icon className="size-5" />
-                        </span>
-                        <span>
-                          <span className="block text-sm font-semibold text-foreground">
-                            {s.name}
-                          </span>
-                          <span className="block text-xs text-muted-foreground">
-                            {s.tagline}
-                          </span>
-                        </span>
-                      </Link>
-                    );
-                  })}
-                </div>
-              </>
-            )}
-          </div>
 
           {links.slice(2).map((item) => (
             <Link

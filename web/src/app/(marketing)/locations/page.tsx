@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { MapPin, Users, Building2, Clock, Wifi, Car, Coffee, Shield, ArrowRight } from "lucide-react";
+import { MapPin, Users, Clock, Wifi, Car, Coffee, Shield, ArrowRight } from "lucide-react";
 
 import { getSiteSettings } from "@/lib/settings/server";
 import { PageHeader } from "@/components/marketing/page-header";
@@ -43,34 +43,19 @@ export default async function LocationsPage() {
         description="One premium floor. Every workspace type. Everything included — so you can focus on what matters."
       />
 
-      {/* 3D Interactive Floor Plan */}
+      {/* 2D Floor Plan */}
       <section className="container-px py-10 md:py-14">
-        <div className="overflow-hidden rounded-3xl border border-border/70 bg-muted shadow-xl shadow-black/5">
-          <div className="flex items-center justify-between border-b border-border/60 bg-card px-5 py-3.5">
-            <div className="flex items-center gap-2.5">
-              <Building2 className="size-4 text-primary" />
-              <span className="text-sm font-semibold text-foreground">Interactive 3D Floor Plan</span>
-              <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">Level 4</span>
-            </div>
-            <a
-              href="/floor-plan-3d.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs font-medium text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
-            >
-              Open fullscreen ↗
-            </a>
-          </div>
-          <iframe
-            src="/floor-plan-3d.html"
-            title="Hustle Grove 3D Floor Plan"
-            className="w-full"
-            style={{ height: "540px", border: "none" }}
+        <div className="overflow-hidden rounded-3xl border border-border/70 shadow-2xl shadow-black/20">
+          <img
+            src="/floor-plan-2d.png"
+            alt="Hustle Grove 2D Floor Plan — Level 4, University Ave Canberra"
+            className="w-full block"
             loading="lazy"
+            style={{ display: "block" }}
           />
         </div>
         <p className="mt-3 text-center text-xs text-muted-foreground">
-          Drag to rotate · Scroll to zoom · Hover a room for details
+          Level 4 · 6 private suites · 14 dedicated desks · 1 meeting room
         </p>
       </section>
 

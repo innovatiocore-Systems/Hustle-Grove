@@ -1,17 +1,14 @@
 import Link from "next/link";
-import { ArrowRight, Building2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import { FEATURES } from "@/lib/features";
-import { solutions } from "@/data/solutions";
 import { featuredAmenities } from "@/data/amenities";
 import { testimonials } from "@/data/testimonials";
 import { Hero } from "@/components/marketing/hero";
-import { LogoCloud } from "@/components/marketing/logo-cloud";
 import { StatsBand } from "@/components/marketing/stats-band";
 import { DashboardPreview } from "@/components/marketing/dashboard-preview";
 import { Reveal } from "@/components/marketing/reveal";
 import { SectionHeading } from "@/components/marketing/section-heading";
-import { SolutionCard } from "@/components/marketing/solution-card";
 import { AmenityCard } from "@/components/marketing/amenity-card";
 import { TestimonialCard } from "@/components/marketing/testimonial-card";
 import { CtaSection } from "@/components/marketing/cta-section";
@@ -22,36 +19,6 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <LogoCloud />
-
-      {/* Workspace Solutions */}
-      <section className="bg-sand/60 py-20 md:py-28">
-        <div className="container-px">
-          <Reveal className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
-            <SectionHeading
-              eyebrow="Spaces for every need"
-              title={<>Find your perfect space</>}
-              description="Beautiful spaces. Flexible terms. Inspiring environment."
-              className="max-w-2xl"
-            />
-            <Link
-              href="/locations"
-              className="hidden items-center gap-1.5 text-sm font-semibold text-primary hover:underline md:inline-flex"
-            >
-              Explore the floor
-              <ArrowRight className="size-4" />
-            </Link>
-          </Reveal>
-
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {solutions.map((solution, i) => (
-              <Reveal key={solution.slug} delay={i * 90}>
-                <SolutionCard solution={solution} index={i} />
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Stats band */}
       <Reveal>
@@ -85,32 +52,17 @@ export default function HomePage() {
           </Reveal>
 
           <Reveal className="mt-10">
-            <div className="overflow-hidden rounded-3xl border border-border/70 bg-muted shadow-xl shadow-black/5">
-              <div className="flex items-center justify-between border-b border-border/60 bg-card px-5 py-3.5">
-                <div className="flex items-center gap-2.5">
-                  <Building2 className="size-4 text-primary" />
-                  <span className="text-sm font-semibold text-foreground">Interactive 3D Floor Plan</span>
-                  <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">~145 sqm</span>
-                </div>
-                <a
-                  href="/floor-plan-3d.html"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs font-medium text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
-                >
-                  Open fullscreen ↗
-                </a>
-              </div>
-              <iframe
-                src="/floor-plan-3d.html"
-                title="Hustle Grove 3D Floor Plan"
-                className="w-full"
-                style={{ height: "460px", border: "none" }}
+            <div className="overflow-hidden rounded-3xl border border-border/70 shadow-2xl shadow-black/20">
+              <img
+                src="/floor-plan-2d.png"
+                alt="Hustle Grove 2D Floor Plan — Level 4, University Ave Canberra"
+                className="w-full block"
                 loading="lazy"
+                style={{ display: "block" }}
               />
             </div>
             <p className="mt-3 text-center text-xs text-muted-foreground">
-              Drag to rotate · Scroll to zoom · Hover a room for details
+              Level 4 · 6 private suites · 14 dedicated desks · 1 meeting room
             </p>
           </Reveal>
 
