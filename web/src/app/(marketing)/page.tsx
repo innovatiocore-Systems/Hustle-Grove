@@ -6,6 +6,7 @@ import { solutions } from "@/data/solutions";
 import { featuredAmenities } from "@/data/amenities";
 import { testimonials } from "@/data/testimonials";
 import { Hero } from "@/components/marketing/hero";
+import { LazyIframe } from "@/components/marketing/lazy-iframe";
 import { StatsBand } from "@/components/marketing/stats-band";
 import { DashboardPreview } from "@/components/marketing/dashboard-preview";
 import { Reveal } from "@/components/marketing/reveal";
@@ -99,12 +100,11 @@ export default function HomePage() {
                   Open fullscreen ↗
                 </a>
               </div>
-              <iframe
+              <LazyIframe
                 src="/floor-plan-3d.html"
                 title="Hustle Grove 3D Floor Plan"
+                height={460}
                 className="w-full"
-                style={{ height: "460px", border: "none" }}
-                loading="lazy"
               />
             </div>
             <p className="mt-3 text-center text-xs text-muted-foreground">
