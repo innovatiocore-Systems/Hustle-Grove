@@ -2,7 +2,6 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { FEATURES } from "@/lib/features";
-import { solutions } from "@/data/solutions";
 import { featuredAmenities } from "@/data/amenities";
 import { testimonials } from "@/data/testimonials";
 import { Hero } from "@/components/marketing/hero";
@@ -10,7 +9,6 @@ import { StatsBand } from "@/components/marketing/stats-band";
 import { DashboardPreview } from "@/components/marketing/dashboard-preview";
 import { Reveal } from "@/components/marketing/reveal";
 import { SectionHeading } from "@/components/marketing/section-heading";
-import { SolutionCard } from "@/components/marketing/solution-card";
 import { AmenityCard } from "@/components/marketing/amenity-card";
 import { TestimonialCard } from "@/components/marketing/testimonial-card";
 import { CtaSection } from "@/components/marketing/cta-section";
@@ -21,35 +19,6 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-
-      {/* Workspace Solutions */}
-      <section className="bg-sand/60 py-20 md:py-28">
-        <div className="container-px">
-          <Reveal className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
-            <SectionHeading
-              eyebrow="Spaces for every need"
-              title={<>Find your perfect space</>}
-              description="Beautiful spaces. Flexible terms. Inspiring environment."
-              className="max-w-2xl"
-            />
-            <Link
-              href="/locations"
-              className="hidden items-center gap-1.5 text-sm font-semibold text-primary hover:underline md:inline-flex"
-            >
-              Explore the floor
-              <ArrowRight className="size-4" />
-            </Link>
-          </Reveal>
-
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {solutions.map((solution, i) => (
-              <Reveal key={solution.slug} delay={i * 90}>
-                <SolutionCard solution={solution} index={i} />
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Stats band */}
       <Reveal>
