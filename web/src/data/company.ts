@@ -4,10 +4,10 @@ import type { Stat, Value, TeamMember } from "@/lib/types";
 import { avatar } from "@/lib/images";
 
 export const companyStats: Stat[] = [
-  { label: "Locations", value: "24", description: "Across 9 cities" },
-  { label: "Members", value: "6,400+", description: "Growing community" },
+  { label: "Location", value: "Canberra", description: "Level 4, University Ave CBD" },
+  { label: "Floor Space", value: "~145 sqm", description: "One premium level" },
   { label: "Member Retention", value: "94%", description: "Love where they work" },
-  { label: "Google Rating", value: "4.8", description: "From 500+ reviews" },
+  { label: "Member Rating", value: "4.9/5", description: "From our members" },
 ];
 
 export const values: Value[] = [
@@ -32,7 +32,7 @@ export const values: Value[] = [
   {
     title: "Built to last",
     description:
-      "Sustainable materials, energy-smart buildings and a commitment to the cities we call home.",
+      "Sustainable materials, an energy-smart building and a commitment to the city we call home.",
     icon: Leaf,
   },
 ];

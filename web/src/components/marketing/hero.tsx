@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { img, avatar } from "@/lib/images";
+import { img } from "@/lib/images";
 import { buttonVariants } from "@/components/ui/button";
 
 const featureCard = [
@@ -21,12 +21,6 @@ const featureCard = [
   { icon: Users, title: "Community Driven", sub: "Events & networking" },
 ];
 
-const avatars = [
-  avatar("1500648767791-00dcc994a43e"),
-  avatar("1494790108377-be9c29b29330"),
-  avatar("1507003211169-0a1dd7228f2d"),
-  avatar("1438761681033-6461ffad8d80"),
-];
 
 export function Hero() {
   return (
@@ -85,28 +79,6 @@ export function Hero() {
             </Link>
           </div>
 
-          <div className="mt-9 flex items-center gap-3">
-            <div className="flex -space-x-2.5">
-              {avatars.map((src, i) => (
-                <Image
-                  key={i}
-                  src={src}
-                  alt=""
-                  width={36}
-                  height={36}
-                  className="size-9 rounded-full border-2 border-background object-cover"
-                />
-              ))}
-            </div>
-            <p className="text-sm text-muted-foreground">
-              Trusted by{" "}
-              <span className="font-semibold text-foreground">
-                6,400+ professionals
-              </span>
-              <br className="hidden sm:block" /> across{" "}
-              <span className="font-semibold text-foreground">24 locations</span>
-            </p>
-          </div>
         </div>
 
         {/* Right — dark panel + floating feature card */}
