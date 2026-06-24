@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 
 import { useAuth } from "@/lib/auth/auth-context";
-import { homePathFor } from "@/lib/auth/roles";
 
 /**
  * Client-side route guard.
@@ -29,12 +28,10 @@ export function RequireAuth({
 
   React.useEffect(() => {
     if (loading) return;
-    if (!isAuthenticated) {
+    if (!isAuthenticated || !hasRole) {
       router.replace(redirectTo);
-    } else if (!hasRole) {
-      router.replace(homePathFor(user?.roles));
     }
-  }, [loading, isAuthenticated, hasRole, user, router, redirectTo]);
+  }, [loading, isAuthenticated, hasRole, router, redirectTo]);
 
   if (loading || !isAuthenticated || !hasRole) {
     return (
