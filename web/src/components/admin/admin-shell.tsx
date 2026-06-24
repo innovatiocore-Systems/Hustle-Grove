@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   Settings,
   Inbox,
+  BookOpen,
   Menu,
   X,
   LogOut,
@@ -25,8 +26,9 @@ import {
 // The admin portal is intentionally scoped to two surfaces. Other module route
 // files remain in the codebase but are not linked from the nav.
 const nav = [
-  { label: "Dashboard",  href: "/admin",            icon: LayoutDashboard },
+  { label: "Dashboard",  href: "/admin",             icon: LayoutDashboard },
   { label: "Inquiries",  href: "/admin/inquiries",   icon: Inbox },
+  { label: "Resources",  href: "/admin/resources",   icon: BookOpen },
   { label: "Settings",   href: "/admin/settings",    icon: Settings },
 ];
 
