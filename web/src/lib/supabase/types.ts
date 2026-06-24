@@ -14,69 +14,60 @@ export type Database = {
   }
   public: {
     Tables: {
-      site_settings: {
+      articles: {
         Row: {
-          id: boolean
-          name: string
-          address: string
-          logo_url: string | null
-          logo_size: number
-          popup_enabled: boolean
-          popup_title: string
-          popup_message: string
+          author_avatar: string
+          author_name: string
+          author_role: string
+          category: string
+          content: string[]
+          created_at: string
+          date: string
+          excerpt: string
+          featured: boolean
+          id: string
+          image: string
+          published: boolean
+          read_time: string
+          slug: string
+          title: string
           updated_at: string
         }
         Insert: {
-          id?: boolean
-          name: string
-          address?: string
-          logo_url?: string | null
-          logo_size?: number
-          popup_enabled?: boolean
-          popup_title?: string
-          popup_message?: string
-          updated_at?: string
-        }
-        Update: {
-          id?: boolean
-          name?: string
-          address?: string
-          logo_url?: string | null
-          logo_size?: number
-          popup_enabled?: boolean
-          popup_title?: string
-          popup_message?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      profiles: {
-        Row: {
-          id: string
-          email: string
-          first_name: string
-          last_name: string
-          role: string
-          is_active: boolean
-          created_at: string
-        }
-        Insert: {
-          id: string
-          email: string
-          first_name?: string
-          last_name?: string
-          role?: string
-          is_active?: boolean
+          author_avatar?: string
+          author_name?: string
+          author_role?: string
+          category?: string
+          content?: string[]
           created_at?: string
-        }
-        Update: {
+          date?: string
+          excerpt?: string
+          featured?: boolean
           id?: string
-          email?: string
-          first_name?: string
-          last_name?: string
-          role?: string
-          is_active?: boolean
+          image?: string
+          published?: boolean
+          read_time?: string
+          slug: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_avatar?: string
+          author_name?: string
+          author_role?: string
+          category?: string
+          content?: string[]
           created_at?: string
+          date?: string
+          excerpt?: string
+          featured?: boolean
+          id?: string
+          image?: string
+          published?: boolean
+          read_time?: string
+          slug?: string
+          title?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -128,12 +119,78 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          first_name: string
+          id: string
+          is_active: boolean
+          last_name: string
+          role: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          first_name?: string
+          id: string
+          is_active?: boolean
+          last_name?: string
+          role?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          first_name?: string
+          id?: string
+          is_active?: boolean
+          last_name?: string
+          role?: string
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          address: string
+          id: boolean
+          logo_size: number
+          logo_url: string | null
+          name: string
+          popup_enabled: boolean
+          popup_message: string
+          popup_title: string
+          updated_at: string
+        }
+        Insert: {
+          address?: string
+          id?: boolean
+          logo_size?: number
+          logo_url?: string | null
+          name: string
+          popup_enabled?: boolean
+          popup_message?: string
+          popup_title?: string
+          updated_at?: string
+        }
+        Update: {
+          address?: string
+          id?: boolean
+          logo_size?: number
+          logo_url?: string | null
+          name?: string
+          popup_enabled?: boolean
+          popup_message?: string
+          popup_title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_admin: { Args: never; Returns: boolean }
     }
     Enums: {
       inquiry_status: "New" | "Contacted" | "Qualified" | "Converted" | "Closed"
