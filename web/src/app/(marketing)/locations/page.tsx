@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Our Space",
   description:
-    "Tour The Hustle Grove Workspace at 21-24/28 University Avenue, Canberra ACT 2601. Explore private suites, dedicated desks, meeting rooms and more.",
+    "Tour The Hustle Grove Workspace at LV4 University Ave, Canberra. Explore private suites, dedicated desks, meeting rooms and more.",
 };
 
 const spaces = [
@@ -39,7 +39,7 @@ export default async function LocationsPage() {
     <>
       <PageHeader
         eyebrow="Our space"
-        title="21-24/28 University Avenue, Canberra ACT 2601"
+        title="LV4 University Ave, Canberra"
         description="One premium floor. Every workspace type. Everything included — so you can focus on what matters."
       />
 
