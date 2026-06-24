@@ -53,7 +53,7 @@ export default async function LocationsPage() {
               <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">~145 sqm</span>
             </div>
             <a
-              href="/floor-plan-2d.svg"
+              href="/floor-plan-2d.png"
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs font-medium text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
@@ -62,7 +62,7 @@ export default async function LocationsPage() {
             </a>
           </div>
           <img
-            src="/floor-plan-2d.svg"
+            src="/floor-plan-2d.png"
             alt="Hustle Grove 2D Floor Plan"
             className="w-full"
             loading="lazy"
