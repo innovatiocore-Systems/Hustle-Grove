@@ -70,7 +70,7 @@ export default function HomePage() {
         <div className="container-px">
           <Reveal className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <SectionHeading
-              eyebrow="Our space · Level 4, University Ave"
+              eyebrow="Our space · 21-24/28 University Ave, Canberra"
               title={<>Tour the floor before you visit</>}
               description="Explore every workspace zone in our interactive 3D floor plan. Private suites, dedicated desks, meeting room and more — all on one level."
               className="max-w-2xl"

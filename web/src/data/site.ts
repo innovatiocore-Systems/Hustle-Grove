@@ -6,7 +6,7 @@ export const site = {
     "Flexible private offices, dedicated desks, hot desks and meeting rooms designed for modern teams.",
   email: "hello@hustlegrove.com.au",
   phone: "+61 2 6100 0142",
-  headquarters: "Level 4, 1 University Avenue\nCanberra ACT 2601, Australia",
+  headquarters: "21-24/28 University Avenue\nCanberra ACT 2601, Australia",
 };
 
 export const mainNav = [
