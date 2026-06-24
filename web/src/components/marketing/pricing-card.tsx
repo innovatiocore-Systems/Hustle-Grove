@@ -52,14 +52,16 @@ export function PricingCard({
         {plan.ctaLabel}
       </LeadButton>
 
-      <ul className="mt-6 space-y-3 border-t border-border/70 pt-6">
-        {plan.features.map((f) => (
-          <li key={f} className="flex items-start gap-2.5 text-sm text-muted-foreground">
-            <Check className="mt-0.5 size-4 shrink-0 text-primary" />
-            {f}
-          </li>
-        ))}
-      </ul>
+      {plan.features.length > 0 && (
+        <ul className="mt-6 space-y-3 border-t border-border/70 pt-6">
+          {plan.features.map((f) => (
+            <li key={f} className="flex items-start gap-2.5 text-sm text-muted-foreground">
+              <Check className="mt-0.5 size-4 shrink-0 text-primary" />
+              {f}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
