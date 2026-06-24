@@ -1,276 +1,523 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" font-family="'Segoe UI',system-ui,Arial,sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 600">
+<defs>
 
-  <!-- Background -->
-  <rect width="1200" height="520" fill="#f5f0e8"/>
+  <!-- Room gradients (subtle warm light from above) -->
+  <linearGradient id="gLounge" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#eaf6e4"/><stop offset="100%" stop-color="#d4eccc"/>
+  </linearGradient>
+  <linearGradient id="gSuite" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#e8f0fa"/><stop offset="100%" stop-color="#d4e4f4"/>
+  </linearGradient>
+  <linearGradient id="gMeet" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#fef3dc"/><stop offset="100%" stop-color="#fce4b0"/>
+  </linearGradient>
+  <linearGradient id="gDesk" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#e6f6d8"/><stop offset="100%" stop-color="#d0edbc"/>
+  </linearGradient>
+  <linearGradient id="gComms" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#eae4f8"/><stop offset="100%" stop-color="#d8cef4"/>
+  </linearGradient>
+  <linearGradient id="gBooth" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#c8e8c0"/><stop offset="100%" stop-color="#a8d098"/>
+  </linearGradient>
 
-  <!-- Title bar -->
-  <rect x="0" y="0" width="1200" height="58" fill="#1c1c1e"/>
-  <text x="600" y="25" text-anchor="middle" font-size="14" font-weight="800" fill="#c8a832" letter-spacing="3">THE HUSTLE GROVE WORKSPACE</text>
-  <text x="600" y="45" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.5)" letter-spacing="1.5">21-24/28 UNIVERSITY AVENUE · CANBERRA ACT 2601 · LEVEL 4 · ~145 SQM</text>
-  <line x1="40" y1="57" x2="1160" y2="57" stroke="#c8a832" stroke-width="1.5" opacity="0.5"/>
+  <!-- Hatch for comms room -->
+  <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="6" stroke="#b8a8e0" stroke-width="1.2"/>
+  </pattern>
 
-  <!-- Floor background (unassigned/corridor) -->
-  <rect x="40" y="70" width="1120" height="340" fill="#c8c3ba"/>
+  <!-- Furniture shadow -->
+  <filter id="fs" x="-20%" y="-20%" width="140%" height="140%">
+    <feDropShadow dx="1.5" dy="2" stdDeviation="2.5" flood-color="#000" flood-opacity="0.28"/>
+  </filter>
+  <!-- Building shadow -->
+  <filter id="bs" x="-3%" y="-3%" width="106%" height="110%">
+    <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#000" flood-opacity="0.55"/>
+  </filter>
 
-  <!-- ═══ ROOM FILLS ═══ -->
+  <!-- Grid pattern aligned to building -->
+  <pattern id="grid" x="80" y="80" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M40,0 L0,0 0,40" fill="none" stroke="#fff" stroke-width="0.18" opacity="1"/>
+  </pattern>
 
-  <!-- Entry Lounge -->
-  <rect x="40"  y="70"  width="208" height="172" fill="#c4dfc0"/>
-  <!-- Soundproof Booth (inside lounge) -->
-  <rect x="46"  y="74"  width="56"  height="84"  fill="#98c090"/>
+</defs>
 
-  <!-- Suite B -->
-  <rect x="248" y="70"  width="156" height="172" fill="#bdd0e8"/>
-  <!-- Meeting Room -->
-  <rect x="404" y="70"  width="268" height="176" fill="#fbd9a8"/>
-  <!-- Suite C -->
-  <rect x="672" y="70"  width="88"  height="172" fill="#bdd0e8"/>
-  <!-- Suite D -->
-  <rect x="760" y="70"  width="180" height="172" fill="#bdd0e8"/>
-  <!-- Suite E -->
-  <rect x="940" y="70"  width="220" height="172" fill="#bdd0e8"/>
+<!-- ░░░ PAGE BACKGROUND ░░░ -->
+<rect width="1280" height="600" fill="#0d1610"/>
 
-  <!-- Suite A -->
-  <rect x="40"  y="242" width="208" height="168" fill="#bdd0e8"/>
-  <!-- Dedicated Desks -->
-  <rect x="248" y="242" width="416" height="168" fill="#c8e4b4"/>
-  <!-- Comms corridor strip -->
-  <rect x="664" y="242" width="216" height="28"  fill="#bfbab0"/>
-  <!-- Comms Room -->
-  <rect x="664" y="270" width="216" height="140" fill="#d4c8ec"/>
-  <!-- Suite F -->
-  <rect x="880" y="242" width="280" height="168" fill="#bdd0e8"/>
+<!-- ░░░ TITLE BLOCK ░░░ -->
+<!-- Gold top border -->
+<rect x="0" y="0" width="1280" height="3" fill="#c8a832"/>
+<!-- Title area -->
+<rect x="0" y="3" width="1280" height="68" fill="#111a12"/>
+<!-- HG Badge -->
+<circle cx="50" cy="38" r="22" fill="#1e3a18" stroke="#c8a832" stroke-width="1.5"/>
+<text x="50" y="43" text-anchor="middle" font-family="'Segoe UI',system-ui,Arial,sans-serif" font-size="11" font-weight="900" fill="#c8a832">HG</text>
+<!-- Title text -->
+<text x="84" y="30" font-family="'Segoe UI',system-ui,Arial,sans-serif" font-size="16" font-weight="800" fill="#c8a832" letter-spacing="3">THE HUSTLE GROVE WORKSPACE</text>
+<text x="84" y="52" font-family="'Segoe UI',system-ui,Arial,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.45)" letter-spacing="1.8">21-24/28 UNIVERSITY AVENUE · CANBERRA ACT 2601 · LEVEL 4</text>
+<!-- Right side info block -->
+<line x1="1130" y1="10" x2="1130" y2="65" stroke="#c8a832" stroke-width="0.8" opacity="0.4"/>
+<text x="1148" y="24" font-family="'Segoe UI',system-ui,Arial,sans-serif" font-size="8.5" font-weight="700" fill="#c8a832" letter-spacing="1.5">FLOOR PLAN</text>
+<text x="1148" y="38" font-family="'Segoe UI',system-ui,Arial,sans-serif" font-size="8" fill="rgba(255,255,255,0.4)" letter-spacing="0.5">~145 SQM TOTAL</text>
+<text x="1148" y="52" font-family="'Segoe UI',system-ui,Arial,sans-serif" font-size="8" fill="rgba(255,255,255,0.4)" letter-spacing="0.5">INDICATIVE ONLY</text>
+<!-- Bottom gold line -->
+<line x1="0" y1="71" x2="1280" y2="71" stroke="#c8a832" stroke-width="0.8" opacity="0.5"/>
 
+<!-- ░░░ BUILDING (with shadow) ░░░ -->
+<!-- Dark floor area = walls between rooms -->
+<rect x="80" y="80" width="1120" height="340" fill="#1a1e1a" filter="url(#bs)"/>
+<!-- Grid overlay on floor -->
+<rect x="80" y="80" width="1120" height="340" fill="url(#grid)" opacity="0.28"/>
 
-  <!-- ═══ FURNITURE ═══ -->
+<!-- ░░░ ROOM FILLS (inset 5px from wall center = 5px visible wall each side) ░░░ -->
 
-  <!-- Entry Lounge: sofa + coffee table + reception -->
-  <rect x="96"  y="144" width="120" height="48" rx="6" fill="#28405e" opacity="0.7"/>
-  <rect x="99"  y="147" width="55"  height="38" rx="4" fill="#304a6e" opacity="0.7"/>
-  <rect x="160" y="147" width="55"  height="38" rx="4" fill="#304a6e" opacity="0.7"/>
-  <rect x="116" y="112" width="84"  height="28" rx="3" fill="#806040" opacity="0.65"/>
-  <rect x="62"  y="210" width="156" height="18" rx="2" fill="#806040" opacity="0.75"/>
-  <rect x="62"  y="194" width="18"  height="34" rx="2" fill="#806040" opacity="0.75"/>
-  <!-- Plants -->
-  <circle cx="56"  cy="214" r="8" fill="#3d6b2a" opacity="0.85"/>
-  <circle cx="236" cy="214" r="8" fill="#3d6b2a" opacity="0.85"/>
-  <circle cx="56"  cy="82"  r="6" fill="#3d6b2a" opacity="0.85"/>
+<!-- BOTTOM ROW (z 0→4.3 = y 80→252) -->
+<!-- Entry Lounge: x 80→288, y 80→252 -->
+<rect x="85"  y="85"  width="198" height="162" fill="url(#gLounge)"/>
 
-  <!-- Soundproof Booth: desk -->
-  <rect x="52" y="88" width="44" height="20" rx="2" fill="#404040" opacity="0.6"/>
-  <rect x="66" y="110" width="16" height="12" rx="2" fill="#303040" opacity="0.5"/>
+<!-- Soundproof Booth (inside Lounge): x 86→142, y 84→164 -->
+<rect x="91"  y="90"  width="46"  height="70"  fill="url(#gBooth)"/>
 
-  <!-- Suite B: 3 desks + whiteboard -->
-  <rect x="262" y="86"  width="52" height="20" rx="2" fill="#2a3858" opacity="0.6"/>
-  <rect x="333" y="86"  width="52" height="20" rx="2" fill="#2a3858" opacity="0.6"/>
-  <rect x="297" y="204" width="52" height="20" rx="2" fill="#2a3858" opacity="0.6"/>
-  <rect x="270" y="108" width="36" height="12" rx="2" fill="#202840" opacity="0.45"/>
-  <rect x="341" y="108" width="36" height="12" rx="2" fill="#202840" opacity="0.45"/>
-  <rect x="305" y="192" width="36" height="12" rx="2" fill="#202840" opacity="0.45"/>
-  <rect x="258" y="150" width="84" height="18" rx="1" fill="#eeeae0" stroke="#999" stroke-width="0.8" opacity="0.9"/>
+<!-- Suite B: x 288→444, y 80→252 -->
+<rect x="293" y="85"  width="146" height="162" fill="url(#gSuite)"/>
 
-  <!-- Meeting Room: oval table + 10 chairs -->
-  <ellipse cx="538" cy="160" rx="96" ry="44" fill="#5a3010" opacity="0.75"/>
-  <rect x="455" y="108" width="22" height="13" rx="3" fill="#1e1008" opacity="0.65"/>
-  <rect x="486" y="102" width="22" height="13" rx="3" fill="#1e1008" opacity="0.65"/>
-  <rect x="520" y="100" width="22" height="13" rx="3" fill="#1e1008" opacity="0.65"/>
-  <rect x="554" y="102" width="22" height="13" rx="3" fill="#1e1008" opacity="0.65"/>
-  <rect x="585" y="108" width="22" height="13" rx="3" fill="#1e1008" opacity="0.65"/>
-  <rect x="455" y="199" width="22" height="13" rx="3" fill="#1e1008" opacity="0.65"/>
-  <rect x="486" y="205" width="22" height="13" rx="3" fill="#1e1008" opacity="0.65"/>
-  <rect x="520" y="207" width="22" height="13" rx="3" fill="#1e1008" opacity="0.65"/>
-  <rect x="554" y="205" width="22" height="13" rx="3" fill="#1e1008" opacity="0.65"/>
-  <rect x="585" y="199" width="22" height="13" rx="3" fill="#1e1008" opacity="0.65"/>
-  <!-- TV screen on left wall -->
-  <rect x="410" y="132" width="14" height="52" rx="2" fill="#0c0c14" opacity="0.9"/>
-  <rect x="412" y="134" width="10" height="48" rx="1" fill="#091430" opacity="0.8"/>
-  <!-- Plants -->
-  <circle cx="416" cy="80" r="6" fill="#3d6b2a" opacity="0.85"/>
-  <circle cx="660" cy="80" r="6" fill="#3d6b2a" opacity="0.85"/>
+<!-- Meeting Room: x 444→712, y 80→256 -->
+<rect x="449" y="85"  width="258" height="166" fill="url(#gMeet)"/>
 
-  <!-- Suite C: 2 desks -->
-  <rect x="683" y="86"  width="50" height="20" rx="2" fill="#2a3858" opacity="0.6"/>
-  <rect x="683" y="200" width="50" height="20" rx="2" fill="#2a3858" opacity="0.6"/>
+<!-- Suite C: x 712→800, y 80→252 -->
+<rect x="717" y="85"  width="78"  height="162" fill="url(#gSuite)"/>
 
-  <!-- Suite D: 3 desks + whiteboard -->
-  <rect x="773" y="86"  width="52" height="20" rx="2" fill="#2a3858" opacity="0.6"/>
-  <rect x="844" y="86"  width="52" height="20" rx="2" fill="#2a3858" opacity="0.6"/>
-  <rect x="808" y="204" width="52" height="20" rx="2" fill="#2a3858" opacity="0.6"/>
-  <rect x="770" y="150" width="80" height="18" rx="1" fill="#eeeae0" stroke="#999" stroke-width="0.8" opacity="0.9"/>
+<!-- Suite D: x 800→980, y 80→252 -->
+<rect x="805" y="85"  width="170" height="162" fill="url(#gSuite)"/>
 
-  <!-- Suite E: 3 desks -->
-  <rect x="954" y="86"  width="52" height="20" rx="2" fill="#2a3858" opacity="0.6"/>
-  <rect x="1054" y="86" width="52" height="20" rx="2" fill="#2a3858" opacity="0.6"/>
-  <rect x="1004" y="204" width="52" height="20" rx="2" fill="#2a3858" opacity="0.6"/>
+<!-- Suite E: x 980→1200, y 80→252 -->
+<rect x="985" y="85"  width="210" height="162" fill="url(#gSuite)"/>
 
-  <!-- Suite A: 3 desks -->
-  <rect x="58"  y="260" width="52" height="20" rx="2" fill="#2a3858" opacity="0.6"/>
-  <rect x="130" y="260" width="52" height="20" rx="2" fill="#2a3858" opacity="0.6"/>
-  <rect x="94"  y="372" width="52" height="20" rx="2" fill="#2a3858" opacity="0.6"/>
+<!-- TOP ROW (z 4.3→8.5 = y 252→420) -->
+<!-- Suite A: x 80→288, y 252→420 -->
+<rect x="85"  y="257" width="198" height="158" fill="url(#gSuite)"/>
 
-  <!-- Dedicated Desks: 7 × 2 rows -->
-  <rect x="264" y="260" width="42" height="17" rx="2" fill="#243018" opacity="0.65"/>
-  <rect x="322" y="260" width="42" height="17" rx="2" fill="#243018" opacity="0.65"/>
-  <rect x="380" y="260" width="42" height="17" rx="2" fill="#243018" opacity="0.65"/>
-  <rect x="438" y="260" width="42" height="17" rx="2" fill="#243018" opacity="0.65"/>
-  <rect x="496" y="260" width="42" height="17" rx="2" fill="#243018" opacity="0.65"/>
-  <rect x="554" y="260" width="42" height="17" rx="2" fill="#243018" opacity="0.65"/>
-  <rect x="612" y="260" width="42" height="17" rx="2" fill="#243018" opacity="0.65"/>
-  <rect x="264" y="373" width="42" height="17" rx="2" fill="#243018" opacity="0.65"/>
-  <rect x="322" y="373" width="42" height="17" rx="2" fill="#243018" opacity="0.65"/>
-  <rect x="380" y="373" width="42" height="17" rx="2" fill="#243018" opacity="0.65"/>
-  <rect x="438" y="373" width="42" height="17" rx="2" fill="#243018" opacity="0.65"/>
-  <rect x="496" y="373" width="42" height="17" rx="2" fill="#243018" opacity="0.65"/>
-  <rect x="554" y="373" width="42" height="17" rx="2" fill="#243018" opacity="0.65"/>
-  <rect x="612" y="373" width="42" height="17" rx="2" fill="#243018" opacity="0.65"/>
-  <!-- Plant in desk area -->
-  <circle cx="456" cy="326" r="9" fill="#3d6b2a" opacity="0.75"/>
+<!-- Dedicated Desks: x 288→704, y 252→420 -->
+<rect x="293" y="257" width="406" height="158" fill="url(#gDesk)"/>
 
-  <!-- Comms Room: server racks + desk -->
-  <rect x="672" y="283" width="30" height="48" rx="2" fill="#0c0c18" opacity="0.88"/>
-  <rect x="708" y="283" width="30" height="48" rx="2" fill="#0c0c18" opacity="0.88"/>
-  <rect x="744" y="283" width="30" height="48" rx="2" fill="#0c0c18" opacity="0.88"/>
-  <rect x="675" y="293" width="24" height="2" rx="1" fill="#00ee80"/>
-  <rect x="675" y="304" width="24" height="2" rx="1" fill="#ff6600"/>
-  <rect x="675" y="315" width="24" height="2" rx="1" fill="#00ee80"/>
-  <rect x="711" y="293" width="24" height="2" rx="1" fill="#ff6600"/>
-  <rect x="711" y="304" width="24" height="2" rx="1" fill="#00ee80"/>
-  <rect x="711" y="315" width="24" height="2" rx="1" fill="#00ee80"/>
-  <rect x="747" y="293" width="24" height="2" rx="1" fill="#00ee80"/>
-  <rect x="747" y="304" width="24" height="2" rx="1" fill="#ff6600"/>
-  <rect x="747" y="315" width="24" height="2" rx="1" fill="#00ee80"/>
-  <rect x="793" y="283" width="50" height="20" rx="2" fill="#2a3050" opacity="0.65"/>
+<!-- Comms corridor strip: x 704→920, y 252→272 — stays dark (corridor) -->
 
-  <!-- Suite F: 4 desks + round table -->
-  <rect x="896"  y="260" width="44" height="18" rx="2" fill="#2a3858" opacity="0.6"/>
-  <rect x="1104" y="260" width="44" height="18" rx="2" fill="#2a3858" opacity="0.6"/>
-  <rect x="896"  y="372" width="44" height="18" rx="2" fill="#2a3858" opacity="0.6"/>
-  <rect x="1104" y="372" width="44" height="18" rx="2" fill="#2a3858" opacity="0.6"/>
-  <circle cx="1020" cy="326" r="28" fill="#6a3c14" opacity="0.7"/>
-  <rect x="1007" y="292" width="26" height="11" rx="3" fill="#181028" opacity="0.65"/>
-  <rect x="1046" y="319" width="11" height="26" rx="3" fill="#181028" opacity="0.65"/>
-  <rect x="1007" y="355" width="26" height="11" rx="3" fill="#181028" opacity="0.65"/>
-  <rect x="975"  y="319" width="11" height="26" rx="3" fill="#181028" opacity="0.65"/>
-  <!-- Plants Suite F -->
-  <circle cx="892"  cy="254" r="6" fill="#3d6b2a" opacity="0.8"/>
-  <circle cx="1148" cy="254" r="6" fill="#3d6b2a" opacity="0.8"/>
+<!-- Comms Room: x 704→920, y 272→420 -->
+<rect x="709" y="277" width="206" height="138" fill="url(#gComms)"/>
+<rect x="709" y="277" width="206" height="138" fill="url(#hatch)" opacity="0.22"/>
+
+<!-- Suite F: x 920→1200, y 252→420 -->
+<rect x="925" y="257" width="270" height="158" fill="url(#gSuite)"/>
+
+<!-- ░░░ ROOM COLOUR HEADER BANDS ░░░ -->
+<!-- Thin coloured top strip per room for quick visual ID -->
+<rect x="85"  y="85"  width="198" height="5" rx="0" fill="#3d7a30" opacity="0.7"/><!-- Lounge -->
+<rect x="91"  y="90"  width="46"  height="4" fill="#2a6020" opacity="0.7"/><!-- Booth -->
+<rect x="293" y="85"  width="146" height="5" fill="#2a60a0" opacity="0.65"/><!-- Suite B -->
+<rect x="449" y="85"  width="258" height="5" fill="#c07820" opacity="0.7"/><!-- Meeting -->
+<rect x="717" y="85"  width="78"  height="5" fill="#2a60a0" opacity="0.65"/><!-- Suite C -->
+<rect x="805" y="85"  width="170" height="5" fill="#2a60a0" opacity="0.65"/><!-- Suite D -->
+<rect x="985" y="85"  width="210" height="5" fill="#2a60a0" opacity="0.65"/><!-- Suite E -->
+<rect x="85"  y="257" width="198" height="5" fill="#2a60a0" opacity="0.65"/><!-- Suite A -->
+<rect x="293" y="257" width="406" height="5" fill="#2a7820" opacity="0.65"/><!-- Desks -->
+<rect x="709" y="277" width="206" height="5" fill="#6030c0" opacity="0.55"/><!-- Comms -->
+<rect x="925" y="257" width="270" height="5" fill="#2a60a0" opacity="0.65"/><!-- Suite F -->
+
+<!-- ░░░ GOLD ACCENT LINES on major wall junctions ░░░ -->
+<line x1="288" y1="80"  x2="288" y2="252" stroke="#c8a832" stroke-width="0.9" opacity="0.5"/>
+<line x1="444" y1="80"  x2="444" y2="252" stroke="#c8a832" stroke-width="0.9" opacity="0.5"/>
+<line x1="712" y1="80"  x2="712" y2="256" stroke="#c8a832" stroke-width="0.9" opacity="0.5"/>
+<line x1="800" y1="80"  x2="800" y2="252" stroke="#c8a832" stroke-width="0.9" opacity="0.5"/>
+<line x1="980" y1="80"  x2="980" y2="252" stroke="#c8a832" stroke-width="0.9" opacity="0.5"/>
+<line x1="80"  y1="252" x2="1200" y2="252" stroke="#c8a832" stroke-width="0.9" opacity="0.38"/>
+
+<!-- ░░░ WINDOW GLAZING — thin cyan bars on exterior walls ░░░ -->
+<!-- North face -->
+<rect x="92"  y="80" width="186" height="4" fill="#70c4e8" opacity="0.75"/>
+<rect x="300" y="80" width="134" height="4" fill="#70c4e8" opacity="0.75"/>
+<rect x="455" y="80" width="248" height="4" fill="#70c4e8" opacity="0.75"/>
+<rect x="720" y="80" width="70"  height="4" fill="#70c4e8" opacity="0.75"/>
+<rect x="808" y="80" width="162" height="4" fill="#70c4e8" opacity="0.75"/>
+<rect x="988" y="80" width="202" height="4" fill="#70c4e8" opacity="0.75"/>
+<!-- South face -->
+<rect x="92"  y="416" width="186" height="4" fill="#70c4e8" opacity="0.75"/>
+<rect x="300" y="416" width="394" height="4" fill="#70c4e8" opacity="0.75"/>
+<rect x="930" y="416" width="260" height="4" fill="#70c4e8" opacity="0.75"/>
 
 
-  <!-- ═══ WALLS (drawn over furniture) ═══ -->
+<!-- ░░░ FURNITURE ░░░ -->
 
-  <!-- Outer perimeter -->
-  <rect x="40" y="70" width="1120" height="340" fill="none" stroke="#1c1c1e" stroke-width="4" stroke-linejoin="miter"/>
+<!-- ——— ENTRY LOUNGE ——— -->
+<!-- Sofa (U-shape suggested) -->
+<rect x="104" y="160" width="118" height="46" rx="8" fill="#1c3052" opacity="0.78" filter="url(#fs)"/>
+<rect x="107" y="163" width="53"  height="36" rx="6" fill="#243a60" opacity="0.78"/>
+<rect x="165" y="163" width="53"  height="36" rx="6" fill="#243a60" opacity="0.78"/>
+<rect x="104" y="163" width="12"  height="46" rx="4" fill="#1a2e4e" opacity="0.8"/><!-- left arm -->
+<rect x="210" y="163" width="12"  height="46" rx="4" fill="#1a2e4e" opacity="0.8"/><!-- right arm -->
+<!-- Coffee table — rounded rect -->
+<rect x="126" y="128" width="84" height="28" rx="6" fill="#7a5830" opacity="0.72" filter="url(#fs)"/>
+<rect x="130" y="132" width="76" height="20" rx="4" fill="#9a7040" opacity="0.5"/>
+<!-- Reception desk (L-shape) -->
+<rect x="92"  y="218" width="162" height="22" rx="3" fill="#7a5830" opacity="0.80" filter="url(#fs)"/>
+<rect x="92"  y="198" width="22"  height="42" rx="3" fill="#7a5830" opacity="0.80"/>
+<!-- Monitor -->
+<rect x="136" y="208" width="26" height="18" rx="2" fill="#0c1020" opacity="0.85"/>
+<rect x="138" y="210" width="22" height="14" rx="1" fill="#1a2840" opacity="0.8"/>
+<!-- Lounge chairs (D-shape = circle with flat back) -->
+<circle cx="116" cy="122" r="9" fill="#162838" opacity="0.55" filter="url(#fs)"/>
+<circle cx="210" cy="122" r="9" fill="#162838" opacity="0.55" filter="url(#fs)"/>
+<!-- Plants -->
+<circle cx="94"  cy="224" r="11" fill="#1e4e10" opacity="0.88" filter="url(#fs)"/>
+<circle cx="94"  cy="224" r="6"  fill="#2a6818" opacity="0.7"/>
+<line x1="94"  y1="213" x2="94"  y2="235" stroke="#0e2a08" stroke-width="1.5" opacity="0.55"/>
+<line x1="83"  y1="224" x2="105" y2="224" stroke="#0e2a08" stroke-width="1.5" opacity="0.55"/>
+<circle cx="278" cy="224" r="11" fill="#1e4e10" opacity="0.88" filter="url(#fs)"/>
+<circle cx="278" cy="224" r="6"  fill="#2a6818" opacity="0.7"/>
+<circle cx="94"  cy="94"  r="7"  fill="#1e4e10" opacity="0.85"/>
+<circle cx="278" cy="94"  r="7"  fill="#1e4e10" opacity="0.85"/>
 
-  <!-- x=5.2 (248): top half — full wall -->
-  <line x1="248" y1="70"  x2="248" y2="242" stroke="#1c1c1e" stroke-width="2.5"/>
-  <!-- x=5.2 (248): bottom half — door gap y=242–254 -->
-  <line x1="248" y1="254" x2="248" y2="410" stroke="#1c1c1e" stroke-width="2.5"/>
-  <path d="M248,242 A12,12 0 0,0 236,254" fill="none" stroke="#1c1c1e" stroke-width="1.2" stroke-dasharray="3,2"/>
+<!-- ——— SOUNDPROOF BOOTH ——— -->
+<rect x="96"  y="102" width="36" height="20" rx="2" fill="#282828" opacity="0.68" filter="url(#fs)"/>
+<circle cx="114" cy="134" r="7"  fill="#141414" opacity="0.58"/>
 
-  <!-- x=9.1 (404): top half only -->
-  <line x1="404" y1="70"  x2="404" y2="242" stroke="#1c1c1e" stroke-width="2.5"/>
+<!-- ——— SUITE B ——— -->
+<!-- 3 desks with monitor detail -->
+<rect x="304" y="100" width="52" height="22" rx="3" fill="#182440" opacity="0.70" filter="url(#fs)"/>
+<rect x="320" y="103" width="24" height="14" rx="1" fill="#0c1428" opacity="0.8"/>
+<circle cx="330" cy="134" r="8"  fill="#101828" opacity="0.55"/>
+<rect x="372" y="100" width="52" height="22" rx="3" fill="#182440" opacity="0.70" filter="url(#fs)"/>
+<rect x="388" y="103" width="24" height="14" rx="1" fill="#0c1428" opacity="0.8"/>
+<circle cx="398" cy="134" r="8"  fill="#101828" opacity="0.55"/>
+<rect x="320" y="208" width="52" height="22" rx="3" fill="#182440" opacity="0.70" filter="url(#fs)"/>
+<rect x="336" y="211" width="24" height="14" rx="1" fill="#0c1428" opacity="0.8"/>
+<circle cx="346" cy="198" r="8"  fill="#101828" opacity="0.55"/>
+<!-- Whiteboard -->
+<rect x="299" y="158" width="84" height="20" rx="2" fill="#f4f0e6" stroke="#9a9880" stroke-width="1" opacity="0.96" filter="url(#fs)"/>
+<line x1="307" y1="165" x2="377" y2="165" stroke="#c0bca8" stroke-width="0.9"/>
+<line x1="307" y1="171" x2="354" y2="171" stroke="#c0bca8" stroke-width="0.9"/>
+<!-- Plant -->
+<circle cx="430" cy="92"  r="7"  fill="#1e4e10" opacity="0.85"/>
 
-  <!-- x=15.8 (672): bottom half — full (top connects to dedicated desks) -->
-  <line x1="672" y1="70"  x2="672" y2="246" stroke="#1c1c1e" stroke-width="2.5"/>
-  <!-- x=15.6 (664): upper half — door gap y=242–254 -->
-  <line x1="664" y1="254" x2="664" y2="410" stroke="#1c1c1e" stroke-width="2.5"/>
-  <path d="M664,242 A12,12 0 0,1 676,254" fill="none" stroke="#1c1c1e" stroke-width="1.2" stroke-dasharray="3,2"/>
+<!-- ——— MEETING ROOM ——— -->
+<!-- Oval conference table with wood grain lines -->
+<ellipse cx="578" cy="168" rx="98" ry="46" fill="#3e2208" opacity="0.85" filter="url(#fs)"/>
+<ellipse cx="578" cy="168" rx="94" ry="42" fill="none" stroke="#6a3a14" stroke-width="2" opacity="0.5"/>
+<ellipse cx="578" cy="168" rx="78" ry="32" fill="none" stroke="#6a3a14" stroke-width="0.6" opacity="0.25"/>
+<ellipse cx="578" cy="168" rx="55" ry="20" fill="none" stroke="#6a3a14" stroke-width="0.6" opacity="0.2"/>
+<!-- 10 chairs around oval (computed parametrically) -->
+<!-- Top row (5): 210°,240°,270°,300°,330° ; rx_offset=112,ry_offset=60 -->
+<circle cx="481" cy="138" r="9" fill="#140a02" opacity="0.70" filter="url(#fs)"/>
+<circle cx="522" cy="116" r="9" fill="#140a02" opacity="0.70" filter="url(#fs)"/>
+<circle cx="578" cy="108" r="9" fill="#140a02" opacity="0.70" filter="url(#fs)"/>
+<circle cx="634" cy="116" r="9" fill="#140a02" opacity="0.70" filter="url(#fs)"/>
+<circle cx="675" cy="138" r="9" fill="#140a02" opacity="0.70" filter="url(#fs)"/>
+<!-- Bottom row (5): 30°,60°,90°,120°,150° -->
+<circle cx="675" cy="198" r="9" fill="#140a02" opacity="0.70" filter="url(#fs)"/>
+<circle cx="634" cy="220" r="9" fill="#140a02" opacity="0.70" filter="url(#fs)"/>
+<circle cx="578" cy="228" r="9" fill="#140a02" opacity="0.70" filter="url(#fs)"/>
+<circle cx="522" cy="220" r="9" fill="#140a02" opacity="0.70" filter="url(#fs)"/>
+<circle cx="481" cy="198" r="9" fill="#140a02" opacity="0.70" filter="url(#fs)"/>
+<!-- AV screen on west wall -->
+<rect x="450" y="140" width="14" height="58" rx="2" fill="#06080e" opacity="0.96" filter="url(#fs)"/>
+<rect x="452" y="142" width="10" height="54" rx="1" fill="#0a1220" opacity="0.90"/>
+<!-- Plants flanking room -->
+<circle cx="460" cy="92"  r="8"  fill="#1e4e10" opacity="0.85" filter="url(#fs)"/>
+<circle cx="460" cy="92"  r="4"  fill="#2a6818" opacity="0.7"/>
+<circle cx="698" cy="92"  r="8"  fill="#1e4e10" opacity="0.85" filter="url(#fs)"/>
+<circle cx="698" cy="92"  r="4"  fill="#2a6818" opacity="0.7"/>
 
-  <!-- x=18.0 (760): top half -->
-  <line x1="760" y1="70"  x2="760" y2="242" stroke="#1c1c1e" stroke-width="2.5"/>
-  <!-- x=18.0 (760): bottom half — gap y=242–270 (wider passage) -->
-  <line x1="760" y1="270" x2="760" y2="410" stroke="#1c1c1e" stroke-width="2.5"/>
+<!-- ——— SUITE C ——— -->
+<rect x="723" y="100" width="50" height="20" rx="3" fill="#182440" opacity="0.70" filter="url(#fs)"/>
+<rect x="737" y="103" width="20" height="12" rx="1" fill="#0c1428" opacity="0.8"/>
+<circle cx="748" cy="132" r="8"  fill="#101828" opacity="0.55"/>
+<rect x="723" y="208" width="50" height="20" rx="3" fill="#182440" opacity="0.70" filter="url(#fs)"/>
+<circle cx="748" cy="200" r="8"  fill="#101828" opacity="0.55"/>
 
-  <!-- x=22.5 (940): top half -->
-  <line x1="940" y1="70"  x2="940" y2="242" stroke="#1c1c1e" stroke-width="2.5"/>
+<!-- ——— SUITE D ——— -->
+<rect x="812" y="100" width="52" height="22" rx="3" fill="#182440" opacity="0.70" filter="url(#fs)"/>
+<rect x="826" y="103" width="24" height="14" rx="1" fill="#0c1428" opacity="0.8"/>
+<circle cx="838" cy="134" r="8"  fill="#101828" opacity="0.55"/>
+<rect x="884" y="100" width="52" height="22" rx="3" fill="#182440" opacity="0.70" filter="url(#fs)"/>
+<rect x="898" y="103" width="24" height="14" rx="1" fill="#0c1428" opacity="0.8"/>
+<circle cx="910" cy="134" r="8"  fill="#101828" opacity="0.55"/>
+<rect x="848" y="208" width="52" height="22" rx="3" fill="#182440" opacity="0.70" filter="url(#fs)"/>
+<circle cx="874" cy="200" r="8"  fill="#101828" opacity="0.55"/>
+<!-- Whiteboard -->
+<rect x="810" y="158" width="82" height="20" rx="2" fill="#f4f0e6" stroke="#9a9880" stroke-width="1" opacity="0.96" filter="url(#fs)"/>
+<line x1="818" y1="165" x2="886" y2="165" stroke="#c0bca8" stroke-width="0.9"/>
 
-  <!-- x=21.0 (880): bottom half — Suite F left wall -->
-  <line x1="880" y1="242" x2="880" y2="410" stroke="#1c1c1e" stroke-width="2.5"/>
+<!-- ——— SUITE E ——— -->
+<rect x="993" y="100" width="52" height="22" rx="3" fill="#182440" opacity="0.70" filter="url(#fs)"/>
+<rect x="1007" y="103" width="24" height="14" rx="1" fill="#0c1428" opacity="0.8"/>
+<circle cx="1019" cy="134" r="8" fill="#101828" opacity="0.55"/>
+<rect x="1097" y="100" width="52" height="22" rx="3" fill="#182440" opacity="0.70" filter="url(#fs)"/>
+<rect x="1111" y="103" width="24" height="14" rx="1" fill="#0c1428" opacity="0.8"/>
+<circle cx="1123" cy="134" r="8" fill="#101828" opacity="0.55"/>
+<rect x="1044" y="208" width="52" height="22" rx="3" fill="#182440" opacity="0.70" filter="url(#fs)"/>
+<circle cx="1070" cy="200" r="8" fill="#101828" opacity="0.55"/>
+<circle cx="1190" cy="92"  r="7" fill="#1e4e10" opacity="0.85"/>
 
-  <!-- Horizontal centre wall z=4.3 (y=242) -->
-  <line x1="40"  y1="242" x2="248" y2="242" stroke="#1c1c1e" stroke-width="2.5"/>
-  <line x1="248" y1="242" x2="404" y2="242" stroke="#1c1c1e" stroke-width="2.5"/>
-  <line x1="404" y1="246" x2="664" y2="246" stroke="#1c1c1e" stroke-width="2.5"/>
-  <!-- gap 664–676 for door -->
-  <line x1="676" y1="242" x2="760" y2="242" stroke="#1c1c1e" stroke-width="2.5"/>
-  <line x1="760" y1="242" x2="880" y2="242" stroke="#1c1c1e" stroke-width="2.5"/>
-  <line x1="880" y1="242" x2="1160" y2="242" stroke="#1c1c1e" stroke-width="2.5"/>
+<!-- ——— SUITE A ——— -->
+<rect x="98"  y="272" width="52" height="22" rx="3" fill="#182440" opacity="0.70" filter="url(#fs)"/>
+<rect x="112" y="275" width="24" height="14" rx="1" fill="#0c1428" opacity="0.8"/>
+<circle cx="124" cy="306" r="8"  fill="#101828" opacity="0.55"/>
+<rect x="170" y="272" width="52" height="22" rx="3" fill="#182440" opacity="0.70" filter="url(#fs)"/>
+<rect x="184" y="275" width="24" height="14" rx="1" fill="#0c1428" opacity="0.8"/>
+<circle cx="196" cy="306" r="8"  fill="#101828" opacity="0.55"/>
+<rect x="130" y="382" width="52" height="22" rx="3" fill="#182440" opacity="0.70" filter="url(#fs)"/>
+<circle cx="156" cy="374" r="8"  fill="#101828" opacity="0.55"/>
+<circle cx="94"  cy="264" r="7"  fill="#1e4e10" opacity="0.85"/>
 
-  <!-- Comms top wall z=5.0 (y=270) -->
-  <line x1="664" y1="270" x2="880" y2="270" stroke="#1c1c1e" stroke-width="2.5"/>
+<!-- ——— DEDICATED DESKS (14 workstations) ——— -->
+<!-- Aisle dashed line -->
+<line x1="297" y1="338" x2="695" y2="338" stroke="#4a8038" stroke-width="1.2" stroke-dasharray="6,4" opacity="0.55"/>
+<!-- Top row of 7 desks (face south, chairs below desk) -->
+<rect x="304" y="268" width="44" height="18" rx="2" fill="#182c10" opacity="0.72" filter="url(#fs)"/>
+<circle cx="326" cy="298" r="8" fill="#0e1e08" opacity="0.56"/>
+<rect x="362" y="268" width="44" height="18" rx="2" fill="#182c10" opacity="0.72" filter="url(#fs)"/>
+<circle cx="384" cy="298" r="8" fill="#0e1e08" opacity="0.56"/>
+<rect x="420" y="268" width="44" height="18" rx="2" fill="#182c10" opacity="0.72" filter="url(#fs)"/>
+<circle cx="442" cy="298" r="8" fill="#0e1e08" opacity="0.56"/>
+<rect x="478" y="268" width="44" height="18" rx="2" fill="#182c10" opacity="0.72" filter="url(#fs)"/>
+<circle cx="500" cy="298" r="8" fill="#0e1e08" opacity="0.56"/>
+<rect x="536" y="268" width="44" height="18" rx="2" fill="#182c10" opacity="0.72" filter="url(#fs)"/>
+<circle cx="558" cy="298" r="8" fill="#0e1e08" opacity="0.56"/>
+<rect x="594" y="268" width="44" height="18" rx="2" fill="#182c10" opacity="0.72" filter="url(#fs)"/>
+<circle cx="616" cy="298" r="8" fill="#0e1e08" opacity="0.56"/>
+<rect x="652" y="268" width="44" height="18" rx="2" fill="#182c10" opacity="0.72" filter="url(#fs)"/>
+<circle cx="674" cy="298" r="8" fill="#0e1e08" opacity="0.56"/>
+<!-- Bottom row of 7 desks (face north, chairs above desk) -->
+<rect x="304" y="382" width="44" height="18" rx="2" fill="#182c10" opacity="0.72" filter="url(#fs)"/>
+<circle cx="326" cy="374" r="8" fill="#0e1e08" opacity="0.56"/>
+<rect x="362" y="382" width="44" height="18" rx="2" fill="#182c10" opacity="0.72" filter="url(#fs)"/>
+<circle cx="384" cy="374" r="8" fill="#0e1e08" opacity="0.56"/>
+<rect x="420" y="382" width="44" height="18" rx="2" fill="#182c10" opacity="0.72" filter="url(#fs)"/>
+<circle cx="442" cy="374" r="8" fill="#0e1e08" opacity="0.56"/>
+<rect x="478" y="382" width="44" height="18" rx="2" fill="#182c10" opacity="0.72" filter="url(#fs)"/>
+<circle cx="500" cy="374" r="8" fill="#0e1e08" opacity="0.56"/>
+<rect x="536" y="382" width="44" height="18" rx="2" fill="#182c10" opacity="0.72" filter="url(#fs)"/>
+<circle cx="558" cy="374" r="8" fill="#0e1e08" opacity="0.56"/>
+<rect x="594" y="382" width="44" height="18" rx="2" fill="#182c10" opacity="0.72" filter="url(#fs)"/>
+<circle cx="616" cy="374" r="8" fill="#0e1e08" opacity="0.56"/>
+<rect x="652" y="382" width="44" height="18" rx="2" fill="#182c10" opacity="0.72" filter="url(#fs)"/>
+<circle cx="674" cy="374" r="8" fill="#0e1e08" opacity="0.56"/>
+<!-- Central plant in desk area -->
+<circle cx="494" cy="338" r="12" fill="#1e4e10" opacity="0.88" filter="url(#fs)"/>
+<circle cx="494" cy="338" r="6"  fill="#2a6818" opacity="0.7"/>
+<line x1="494" y1="326" x2="494" y2="350" stroke="#0e2a08" stroke-width="1.5" opacity="0.55"/>
+<line x1="482" y1="338" x2="506" y2="338" stroke="#0e2a08" stroke-width="1.5" opacity="0.55"/>
 
-  <!-- Soundproof Booth partition (thin) -->
-  <line x1="102" y1="74"  x2="102" y2="158" stroke="#1c1c1e" stroke-width="1.5"/>
-  <line x1="46"  y1="158" x2="102" y2="158" stroke="#1c1c1e" stroke-width="1.5"/>
+<!-- ——— COMMS ROOM ——— -->
+<!-- 3 server rack pairs -->
+<rect x="718" y="292" width="30" height="56" rx="2" fill="#06060e" opacity="0.92" filter="url(#fs)"/>
+<rect x="754" y="292" width="30" height="56" rx="2" fill="#06060e" opacity="0.92" filter="url(#fs)"/>
+<rect x="790" y="292" width="30" height="56" rx="2" fill="#06060e" opacity="0.92" filter="url(#fs)"/>
+<!-- LED status strips -->
+<rect x="721" y="302" width="24" height="2" fill="#00f080"/><rect x="721" y="310" width="24" height="2" fill="#ff6600"/>
+<rect x="721" y="318" width="24" height="2" fill="#00f080"/><rect x="721" y="326" width="24" height="2" fill="#00f080"/>
+<rect x="757" y="302" width="24" height="2" fill="#ff6600"/><rect x="757" y="310" width="24" height="2" fill="#00f080"/>
+<rect x="757" y="318" width="24" height="2" fill="#00f080"/><rect x="757" y="326" width="24" height="2" fill="#ff6600"/>
+<rect x="793" y="302" width="24" height="2" fill="#00f080"/><rect x="793" y="310" width="24" height="2" fill="#00f080"/>
+<rect x="793" y="318" width="24" height="2" fill="#ff6600"/><rect x="793" y="326" width="24" height="2" fill="#00f080"/>
+<!-- Comms desk -->
+<rect x="834" y="292" width="54" height="22" rx="3" fill="#1e2038" opacity="0.72" filter="url(#fs)"/>
+<rect x="848" y="295" width="24" height="14" rx="1" fill="#080e1c" opacity="0.85"/>
+<circle cx="861" cy="326" r="8"  fill="#10122a" opacity="0.58"/>
+
+<!-- ——— SUITE F ——— -->
+<rect x="940" y="270" width="46" height="20" rx="3" fill="#182440" opacity="0.70" filter="url(#fs)"/>
+<rect x="954" y="273" width="20" height="12" rx="1" fill="#0c1428" opacity="0.8"/>
+<circle cx="963" cy="302" r="8"  fill="#101828" opacity="0.55"/>
+<rect x="1154" y="270" width="36" height="20" rx="3" fill="#182440" opacity="0.70" filter="url(#fs)"/>
+<circle cx="1172" cy="302" r="8"  fill="#101828" opacity="0.55"/>
+<rect x="940" y="390" width="46" height="20" rx="3" fill="#182440" opacity="0.70" filter="url(#fs)"/>
+<circle cx="963" cy="382" r="8"  fill="#101828" opacity="0.55"/>
+<rect x="1154" y="390" width="36" height="20" rx="3" fill="#182440" opacity="0.70" filter="url(#fs)"/>
+<circle cx="1172" cy="382" r="8"  fill="#101828" opacity="0.55"/>
+<!-- Round meeting table -->
+<circle cx="1063" cy="340" r="34" fill="#3e2208" opacity="0.80" filter="url(#fs)"/>
+<circle cx="1063" cy="340" r="34" fill="none" stroke="#6a3a14" stroke-width="2" opacity="0.45"/>
+<circle cx="1063" cy="340" r="22" fill="none" stroke="#6a3a14" stroke-width="0.6" opacity="0.25"/>
+<!-- 4 chairs around table -->
+<circle cx="1063" cy="298" r="9"  fill="#100c20" opacity="0.70" filter="url(#fs)"/>
+<circle cx="1105" cy="340" r="9"  fill="#100c20" opacity="0.70" filter="url(#fs)"/>
+<circle cx="1063" cy="382" r="9"  fill="#100c20" opacity="0.70" filter="url(#fs)"/>
+<circle cx="1021" cy="340" r="9"  fill="#100c20" opacity="0.70" filter="url(#fs)"/>
+<!-- Plants -->
+<circle cx="932"  cy="263" r="8" fill="#1e4e10" opacity="0.85" filter="url(#fs)"/>
+<circle cx="1190" cy="263" r="8" fill="#1e4e10" opacity="0.85" filter="url(#fs)"/>
 
 
-  <!-- ═══ ROOM LABELS ═══ -->
+<!-- ░░░ WALLS — drawn over all furniture ░░░ -->
 
-  <!-- Entry Lounge -->
-  <text x="163" y="174" text-anchor="middle" font-size="10" font-weight="700" fill="#1a4020" letter-spacing="0.5">ENTRY LOUNGE</text>
-  <text x="163" y="187" text-anchor="middle" font-size="8"  fill="#2a5a30">Reception · Open access</text>
+<!-- OUTER PERIMETER -->
+<rect x="80" y="80" width="1120" height="340" fill="none" stroke="#c8a832" stroke-width="1.5" opacity="0.7"/>
+<rect x="84" y="84" width="1112" height="332" fill="none" stroke="#18181c" stroke-width="5" stroke-linejoin="miter"/>
 
-  <!-- Soundproof Booth -->
-  <text x="74" y="120" text-anchor="middle" font-size="7" font-weight="700" fill="#1a3820" transform="rotate(-90,74,120)">BOOTH</text>
+<!-- INNER VERTICAL WALLS -->
+<!-- x=5.2 (288): top half -->
+<line x1="288" y1="80"  x2="288" y2="252" stroke="#18181c" stroke-width="4"/>
+<!-- x=5.2 (288): bottom half — door gap y=252–268 -->
+<line x1="288" y1="268" x2="288" y2="420" stroke="#18181c" stroke-width="4"/>
+<path d="M288,252 A16,16 0 0,0 272,268" fill="none" stroke="#18181c" stroke-width="1.6" stroke-dasharray="4,2.5"/>
 
-  <!-- Suite B -->
-  <text x="326" y="160" text-anchor="middle" font-size="10" font-weight="700" fill="#18284a" letter-spacing="0.5">SUITE B</text>
-  <text x="326" y="173" text-anchor="middle" font-size="8"  fill="#2a3860">12.3 sqm · 3 desks</text>
+<!-- x=9.1 (444): top half only -->
+<line x1="444" y1="80"  x2="444" y2="252" stroke="#18181c" stroke-width="4"/>
 
-  <!-- Meeting Room -->
-  <text x="538" y="86"  text-anchor="middle" font-size="10" font-weight="700" fill="#3a1a08" letter-spacing="0.5">MEETING ROOM</text>
-  <text x="538" y="98"  text-anchor="middle" font-size="8"  fill="#4a2818">10 seats · AV equipped</text>
+<!-- x=15.8 (712): top half only -->
+<line x1="712" y1="80"  x2="712" y2="256" stroke="#18181c" stroke-width="4"/>
+<!-- x=15.6 (704): bottom half — door gap y=252–268 -->
+<line x1="704" y1="268" x2="704" y2="420" stroke="#18181c" stroke-width="4"/>
+<path d="M704,252 A16,16 0 0,1 720,268" fill="none" stroke="#18181c" stroke-width="1.6" stroke-dasharray="4,2.5"/>
 
-  <!-- Suite C -->
-  <text x="716" y="155" text-anchor="middle" font-size="9.5" font-weight="700" fill="#18284a">SUITE C</text>
-  <text x="716" y="168" text-anchor="middle" font-size="7.5" fill="#2a3860">8.9 sqm</text>
+<!-- x=18.0 (800): top half -->
+<line x1="800" y1="80"  x2="800" y2="252" stroke="#18181c" stroke-width="4"/>
+<!-- x=18.0 (800): bottom half — wider gap y=252–272 -->
+<line x1="800" y1="272" x2="800" y2="420" stroke="#18181c" stroke-width="4"/>
 
-  <!-- Suite D -->
-  <text x="850" y="157" text-anchor="middle" font-size="10" font-weight="700" fill="#18284a" letter-spacing="0.5">SUITE D</text>
-  <text x="850" y="170" text-anchor="middle" font-size="8"  fill="#2a3860">12.3 sqm · 3 desks</text>
+<!-- x=22.5 (980): top half -->
+<line x1="980" y1="80"  x2="980" y2="252" stroke="#18181c" stroke-width="4"/>
 
-  <!-- Suite E -->
-  <text x="1050" y="157" text-anchor="middle" font-size="10" font-weight="700" fill="#18284a" letter-spacing="0.5">SUITE E</text>
-  <text x="1050" y="170" text-anchor="middle" font-size="8"  fill="#2a3860">12.2 sqm · 3 desks</text>
+<!-- Suite F left wall x=21.0 (920) -->
+<line x1="920" y1="252" x2="920" y2="420" stroke="#18181c" stroke-width="4"/>
 
-  <!-- Suite A -->
-  <text x="144" y="322" text-anchor="middle" font-size="10" font-weight="700" fill="#18284a" letter-spacing="0.5">SUITE A</text>
-  <text x="144" y="335" text-anchor="middle" font-size="8"  fill="#2a3860">9.9 sqm · 3 desks</text>
+<!-- HORIZONTAL CENTRE WALL (y=252) -->
+<line x1="80"  y1="252" x2="288" y2="252" stroke="#18181c" stroke-width="4"/>
+<line x1="288" y1="252" x2="444" y2="252" stroke="#18181c" stroke-width="4"/>
+<line x1="444" y1="256" x2="704" y2="256" stroke="#18181c" stroke-width="4"/>
+<line x1="720" y1="252" x2="800" y2="252" stroke="#18181c" stroke-width="4"/><!-- gap 704-720 door -->
+<line x1="800" y1="252" x2="920" y2="252" stroke="#18181c" stroke-width="4"/>
+<line x1="920" y1="252" x2="1200" y2="252" stroke="#18181c" stroke-width="4"/>
 
-  <!-- Dedicated Desks -->
-  <text x="456" y="316" text-anchor="middle" font-size="11" font-weight="700" fill="#1c3010" letter-spacing="0.5">14 DEDICATED DESKS</text>
-  <text x="456" y="330" text-anchor="middle" font-size="8.5" fill="#2a4020">Open plan · ~40 sqm · Flex membership</text>
+<!-- Comms top wall (y=272) -->
+<line x1="704" y1="272" x2="920" y2="272" stroke="#18181c" stroke-width="4"/>
 
-  <!-- Comms Room -->
-  <text x="772" y="350" text-anchor="middle" font-size="9"  font-weight="700" fill="#281840">COMMS ROOM</text>
-  <text x="772" y="363" text-anchor="middle" font-size="7.5" fill="#382860">Servers · Restricted</text>
+<!-- Soundproof booth (thin partition) -->
+<line x1="142" y1="85"  x2="142" y2="162" stroke="#18181c" stroke-width="2.5"/>
+<line x1="86"  y1="162" x2="142" y2="162" stroke="#18181c" stroke-width="2.5"/>
+<path d="M142,128 A14,14 0 0,1 156,142" fill="none" stroke="#18181c" stroke-width="1.4" stroke-dasharray="3.5,2.5"/>
 
-  <!-- Suite F -->
-  <text x="1020" y="298" text-anchor="middle" font-size="10" font-weight="700" fill="#18284a" letter-spacing="0.5">SUITE F</text>
-  <text x="1020" y="311" text-anchor="middle" font-size="8"  fill="#2a3860">15 sqm · 4 desks</text>
+<!-- Gold perimeter outer outline -->
+<rect x="80" y="80" width="1120" height="340" fill="none" stroke="#c8a832" stroke-width="1" opacity="0.5"/>
 
 
-  <!-- ═══ LEGEND ═══ -->
-  <rect x="40" y="426" width="1120" height="74" rx="6" fill="rgba(28,28,30,0.05)" stroke="#c8c3ba" stroke-width="1"/>
+<!-- ░░░ ROOM LABELS ░░░ -->
+<g font-family="'Segoe UI',system-ui,Arial,sans-serif">
 
-  <rect x="56"  y="441" width="14" height="11" rx="2" fill="#c4dfc0" stroke="#1c1c1e" stroke-width="0.8"/>
-  <text x="76"  y="452" font-size="9.5" fill="#444">Entry Lounge</text>
+<!-- Entry Lounge -->
+<text x="183" y="178" text-anchor="middle" font-size="7.5" font-weight="600" fill="#1e5020" letter-spacing="1.8">RECEPTION</text>
+<text x="183" y="194" text-anchor="middle" font-size="13"   font-weight="800" fill="#0e2810">Entry Lounge</text>
+<text x="183" y="210" text-anchor="middle" font-size="9"    fill="#2a5830">Open access</text>
 
-  <rect x="176" y="441" width="14" height="11" rx="2" fill="#bdd0e8" stroke="#1c1c1e" stroke-width="0.8"/>
-  <text x="196" y="452" font-size="9.5" fill="#444">Private Suites (A–F)</text>
+<!-- Booth -->
+<text x="114" y="124" text-anchor="middle" font-size="7.5" font-weight="700" fill="#1a3c18" transform="rotate(-90,114,124)">BOOTH</text>
 
-  <rect x="336" y="441" width="14" height="11" rx="2" fill="#fbd9a8" stroke="#1c1c1e" stroke-width="0.8"/>
-  <text x="356" y="452" font-size="9.5" fill="#444">Meeting Room · 10 pax</text>
+<!-- Suite B -->
+<text x="366" y="155" text-anchor="middle" font-size="7"   font-weight="600" fill="#1a2c4a" letter-spacing="1.6">PRIVATE OFFICE</text>
+<text x="366" y="171" text-anchor="middle" font-size="13"   font-weight="800" fill="#0c1c38">Suite B</text>
+<text x="366" y="187" text-anchor="middle" font-size="9"    fill="#283858">12.3 sqm · 3 desks</text>
 
-  <rect x="516" y="441" width="14" height="11" rx="2" fill="#c8e4b4" stroke="#1c1c1e" stroke-width="0.8"/>
-  <text x="536" y="452" font-size="9.5" fill="#444">14 Dedicated Desks</text>
+<!-- Meeting Room -->
+<text x="578" y="88"  text-anchor="middle" font-size="7"   font-weight="600" fill="#3e2008" letter-spacing="1.6">CONFERENCE</text>
+<text x="578" y="104" text-anchor="middle" font-size="13"   font-weight="800" fill="#2c1408">Meeting Room</text>
+<text x="578" y="120" text-anchor="middle" font-size="9"    fill="#4a2c18">10 seats · AV display</text>
 
-  <rect x="680" y="441" width="14" height="11" rx="2" fill="#d4c8ec" stroke="#1c1c1e" stroke-width="0.8"/>
-  <text x="700" y="452" font-size="9.5" fill="#444">Comms Room</text>
+<!-- Suite C -->
+<text x="756" y="152" text-anchor="middle" font-size="7"   font-weight="600" fill="#1a2c4a" letter-spacing="1.4">PRIVATE</text>
+<text x="756" y="168" text-anchor="middle" font-size="12"   font-weight="800" fill="#0c1c38">Suite C</text>
+<text x="756" y="183" text-anchor="middle" font-size="8"    fill="#283858">8.9 sqm</text>
 
-  <rect x="808" y="441" width="14" height="11" rx="2" fill="#98c090" stroke="#1c1c1e" stroke-width="0.8"/>
-  <text x="828" y="452" font-size="9.5" fill="#444">Soundproof Booth</text>
+<!-- Suite D -->
+<text x="890" y="152" text-anchor="middle" font-size="7"   font-weight="600" fill="#1a2c4a" letter-spacing="1.6">PRIVATE OFFICE</text>
+<text x="890" y="168" text-anchor="middle" font-size="13"   font-weight="800" fill="#0c1c38">Suite D</text>
+<text x="890" y="184" text-anchor="middle" font-size="9"    fill="#283858">12.3 sqm · 3 desks</text>
 
-  <text x="56" y="482" font-size="8.5" fill="#999">Floor plan is indicative only · All measurements approximate · Not to scale</text>
+<!-- Suite E -->
+<text x="1090" y="152" text-anchor="middle" font-size="7"   font-weight="600" fill="#1a2c4a" letter-spacing="1.6">PRIVATE OFFICE</text>
+<text x="1090" y="168" text-anchor="middle" font-size="13"   font-weight="800" fill="#0c1c38">Suite E</text>
+<text x="1090" y="184" text-anchor="middle" font-size="9"    fill="#283858">12.2 sqm · 3 desks</text>
+
+<!-- Suite A -->
+<text x="183" y="328" text-anchor="middle" font-size="7"   font-weight="600" fill="#1a2c4a" letter-spacing="1.6">PRIVATE OFFICE</text>
+<text x="183" y="344" text-anchor="middle" font-size="13"   font-weight="800" fill="#0c1c38">Suite A</text>
+<text x="183" y="360" text-anchor="middle" font-size="9"    fill="#283858">9.9 sqm · 3 desks</text>
+
+<!-- Dedicated Desks -->
+<text x="494" y="322" text-anchor="middle" font-size="7"   font-weight="600" fill="#1c3010" letter-spacing="1.6">OPEN PLAN</text>
+<text x="494" y="338" text-anchor="middle" font-size="14"   font-weight="800" fill="#102010">14 Dedicated Desks</text>
+<text x="494" y="356" text-anchor="middle" font-size="9"    fill="#2a3e1a">~40 sqm · Flex membership</text>
+
+<!-- Comms -->
+<text x="812" y="344" text-anchor="middle" font-size="7"   font-weight="600" fill="#2c1c48" letter-spacing="1.4">INFRASTRUCTURE</text>
+<text x="812" y="360" text-anchor="middle" font-size="12"   font-weight="800" fill="#1e1038">Comms Room</text>
+<text x="812" y="376" text-anchor="middle" font-size="8.5"  fill="#382858">Restricted access</text>
+
+<!-- Suite F -->
+<text x="1063" y="268" text-anchor="middle" font-size="7"   font-weight="600" fill="#1a2c4a" letter-spacing="1.6">PRIVATE OFFICE</text>
+<text x="1063" y="284" text-anchor="middle" font-size="13"   font-weight="800" fill="#0c1c38">Suite F</text>
+<text x="1063" y="300" text-anchor="middle" font-size="9"    fill="#283858">15 sqm · 4 desks</text>
+
+</g>
+
+
+<!-- ░░░ NORTH ARROW ░░░ -->
+<g transform="translate(1198,108)">
+  <circle cx="0" cy="0" r="22" fill="rgba(24,30,22,0.9)" stroke="#c8a832" stroke-width="1.2"/>
+  <path d="M0,-17 L7,5 L0,1 L-7,5 Z" fill="#c8a832"/>
+  <path d="M0,17 L7,5 L0,1 L-7,5 Z" fill="rgba(200,168,50,0.25)"/>
+  <text x="0" y="-24" text-anchor="middle" font-family="'Segoe UI',system-ui,Arial,sans-serif" font-size="10" font-weight="800" fill="#c8a832">N</text>
+</g>
+
+
+<!-- ░░░ BOTTOM INFO BAR ░░░ -->
+<rect x="0" y="430" width="1280" height="170" fill="#0e1610"/>
+<line x1="0" y1="430" x2="1280" y2="430" stroke="#c8a832" stroke-width="0.8" opacity="0.45"/>
+
+<!-- Scale bar -->
+<g transform="translate(80,452)" font-family="'Segoe UI',system-ui,Arial,sans-serif">
+  <text x="0" y="-5" font-size="8.5" fill="#c8a832" letter-spacing="1" font-weight="600">SCALE</text>
+  <rect x="0"   y="0" width="40" height="8" fill="#c8a832"/>
+  <rect x="40"  y="0" width="40" height="8" fill="#0e1610" stroke="#c8a832" stroke-width="0.8"/>
+  <rect x="80"  y="0" width="40" height="8" fill="#c8a832"/>
+  <rect x="120" y="0" width="40" height="8" fill="#0e1610" stroke="#c8a832" stroke-width="0.8"/>
+  <rect x="160" y="0" width="40" height="8" fill="#c8a832"/>
+  <text x="0"   y="20" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.5)">0</text>
+  <text x="80"  y="20" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.5)">2m</text>
+  <text x="160" y="20" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.5)">4m</text>
+</g>
+
+<!-- Legend -->
+<g transform="translate(80,500)" font-family="'Segoe UI',system-ui,Arial,sans-serif">
+  <!-- Row 1 -->
+  <rect x="0"   y="0" width="14" height="12" rx="2" fill="#c4e0ba" stroke="#c8a832" stroke-width="0.7"/>
+  <text x="20"  y="11" font-size="9.5" fill="rgba(255,255,255,0.7)">Entry Lounge</text>
+
+  <rect x="128" y="0" width="14" height="12" rx="2" fill="#d0e4f4" stroke="#c8a832" stroke-width="0.7"/>
+  <text x="148" y="11" font-size="9.5" fill="rgba(255,255,255,0.7)">Private Suites (A–F)</text>
+
+  <rect x="310" y="0" width="14" height="12" rx="2" fill="#fce8b8" stroke="#c8a832" stroke-width="0.7"/>
+  <text x="330" y="11" font-size="9.5" fill="rgba(255,255,255,0.7)">Meeting Room · 10 pax</text>
+
+  <rect x="498" y="0" width="14" height="12" rx="2" fill="#cceab8" stroke="#c8a832" stroke-width="0.7"/>
+  <text x="518" y="11" font-size="9.5" fill="rgba(255,255,255,0.7)">14 Dedicated Desks</text>
+
+  <rect x="670" y="0" width="14" height="12" rx="2" fill="#dcd0f4" stroke="#c8a832" stroke-width="0.7"/>
+  <text x="690" y="11" font-size="9.5" fill="rgba(255,255,255,0.7)">Comms Room</text>
+
+  <rect x="800" y="0" width="14" height="12" rx="2" fill="#b0d8a8" stroke="#c8a832" stroke-width="0.7"/>
+  <text x="820" y="11" font-size="9.5" fill="rgba(255,255,255,0.7)">Soundproof Booth</text>
+
+  <!-- Row 2 -->
+  <rect x="0"   y="24" width="28" height="7" rx="1" fill="#70c4e8" opacity="0.8"/>
+  <text x="36"  y="34" font-size="9" fill="rgba(255,255,255,0.5)">Glazing / windows</text>
+
+  <path d="M166,34 A13,13 0 0,1 179,21" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.4" stroke-dasharray="3.5,2.5"/>
+  <line x1="166" y1="21" x2="166" y2="34" stroke="rgba(255,255,255,0.6)" stroke-width="1.4"/>
+  <text x="186"  y="34" font-size="9" fill="rgba(255,255,255,0.5)">Door opening</text>
+</g>
+
+<!-- Copyright -->
+<text x="640" y="582" text-anchor="middle" font-family="'Segoe UI',system-ui,Arial,sans-serif" font-size="8" fill="rgba(255,255,255,0.25)" letter-spacing="0.5">© THE HUSTLE GROVE WORKSPACE · ALL MEASUREMENTS INDICATIVE ONLY</text>
 
 </svg>
