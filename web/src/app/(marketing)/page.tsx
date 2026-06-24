@@ -70,7 +70,7 @@ export default function HomePage() {
         <div className="container-px">
           <Reveal className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <SectionHeading
-              eyebrow="Our space · 21-24/28 University Ave, Canberra"
+              eyebrow="Our space · Level 4, University Ave"
               title={<>Tour the floor before you visit</>}
               description="Explore every workspace zone in our interactive 3D floor plan. Private suites, dedicated desks, meeting room and more — all on one level."
               className="max-w-2xl"
@@ -140,26 +140,6 @@ export default function HomePage() {
               <AmenityCard amenity={amenity} />
             </Reveal>
           ))}
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="bg-sand/60 py-20 md:py-28">
-        <div className="container-px">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Loved by members"
-              title={<>Trusted by Canberra&apos;s growing teams</>}
-              description="Don't just take our word for it — here's what members say about working at Hustle Grove."
-            />
-          </Reveal>
-          <div className="mt-12 grid gap-6 md:grid-cols-2">
-            {testimonials.map((testimonial, i) => (
-              <Reveal key={testimonial.author} delay={(i % 2) * 100}>
-                <TestimonialCard testimonial={testimonial} />
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
 
