@@ -6,7 +6,6 @@ import { solutions } from "@/data/solutions";
 import { featuredAmenities } from "@/data/amenities";
 import { testimonials } from "@/data/testimonials";
 import { Hero } from "@/components/marketing/hero";
-import { LazyIframe } from "@/components/marketing/lazy-iframe";
 import { StatsBand } from "@/components/marketing/stats-band";
 import { DashboardPreview } from "@/components/marketing/dashboard-preview";
 import { Reveal } from "@/components/marketing/reveal";
@@ -88,11 +87,11 @@ export default function HomePage() {
               <div className="flex items-center justify-between border-b border-border/60 bg-card px-5 py-3.5">
                 <div className="flex items-center gap-2.5">
                   <Building2 className="size-4 text-primary" />
-                  <span className="text-sm font-semibold text-foreground">Interactive 3D Floor Plan</span>
+                  <span className="text-sm font-semibold text-foreground">2D Floor Plan</span>
                   <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">~145 sqm</span>
                 </div>
                 <a
-                  href="/floor-plan-3d.html"
+                  href="/floor-plan-2d.svg"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs font-medium text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
@@ -100,15 +99,15 @@ export default function HomePage() {
                   Open fullscreen ↗
                 </a>
               </div>
-              <LazyIframe
-                src="/floor-plan-3d.html"
-                title="Hustle Grove 3D Floor Plan"
-                height={460}
+              <img
+                src="/floor-plan-2d.svg"
+                alt="Hustle Grove 2D Floor Plan"
                 className="w-full"
+                loading="lazy"
               />
             </div>
             <p className="mt-3 text-center text-xs text-muted-foreground">
-              Drag to rotate · Scroll to zoom · Hover a room for details
+              Level 4 · 6 private suites · 14 dedicated desks · 1 meeting room
             </p>
           </Reveal>
 
