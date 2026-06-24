@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { ShieldCheck, ArrowRight, ArrowLeft, Loader2 } from "lucide-react";
 
 import { useAuth } from "@/lib/auth/auth-context";
-import { homePathFor, isStaff } from "@/lib/auth/roles";
+import { isStaff } from "@/lib/auth/roles";
 import { signInWithSupabase, signOutSupabase } from "@/lib/auth/supabase-auth";
 import { FEATURES } from "@/lib/features";
 import { Logo } from "@/components/layout/logo";
@@ -17,18 +17,25 @@ import { Button } from "@/components/ui/button";
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const { setSession, isAuthenticated, loading, user } = useAuth();
+  const { setSession, isAuthenticated, loading, user, logout } = useAuth();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [submitting, setSubmitting] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
-  // Already signed in → bounce to the right home.
+  const isAdminUser = isStaff(user?.roles);
+
   React.useEffect(() => {
-    if (!loading && isAuthenticated) {
-      router.replace(homePathFor(user?.roles));
+    if (loading) return;
+    if (isAuthenticated && isAdminUser) {
+      // Already signed in as staff → go straight to the portal.
+      router.replace("/admin");
+    } else if (isAuthenticated && !isAdminUser) {
+      // Stale non-admin token (e.g. member session) — clear it so the
+      // login form appears instead of bouncing through /dashboard → /.
+      logout();
     }
-  }, [loading, isAuthenticated, user, router]);
+  }, [loading, isAuthenticated, isAdminUser, router, logout]);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -61,7 +68,7 @@ export default function AdminLoginPage() {
     router.replace("/admin");
   };
 
-  if (loading || isAuthenticated) {
+  if (loading || (isAuthenticated && isAdminUser)) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-sidebar">
         <Loader2 className="size-7 animate-spin text-white" />
