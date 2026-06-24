@@ -8,7 +8,6 @@ import {
   MapPin,
   CreditCard,
   LayoutDashboard,
-  Building2,
   Phone,
   Info,
   CalendarCheck,
@@ -18,7 +17,6 @@ import {
 
 import { cn } from "@/lib/utils";
 import { FEATURES } from "@/lib/features";
-import { locations } from "@/data/locations";
 import { Dialog } from "@/components/ui/dialog";
 import { useLeadModal } from "@/components/lead/lead-modal-provider";
 
@@ -74,28 +72,18 @@ export function CommandPalette() {
       { id: "a-sales", group: "Actions", label: "Contact Sales", icon: Phone, action: () => openLead("sales") },
     ];
     const nav: Item[] = [
-      { id: "n-home", group: "Navigate", label: "Home", icon: Home, href: "/" },
-      { id: "n-locations", group: "Navigate", label: "Locations", icon: MapPin, href: "/locations" },
-      { id: "n-pricing", group: "Navigate", label: "Membership Plans", icon: CreditCard, href: "/pricing" },
-      { id: "n-rooms", group: "Navigate", label: "Meeting Rooms", icon: CalendarCheck, href: "/meeting-rooms" },
-{ id: "n-resources", group: "Navigate", label: "Resources", icon: FileText, href: "/resources" },
-      { id: "n-about", group: "Navigate", label: "About", icon: Info, href: "/about" },
-      { id: "n-contact", group: "Navigate", label: "Contact", icon: Phone, href: "/contact" },
+      { id: "n-home",      group: "Navigate", label: "Home",             icon: Home,          href: "/" },
+      { id: "n-locations", group: "Navigate", label: "Our Space",        icon: MapPin,        href: "/locations" },
+      { id: "n-pricing",   group: "Navigate", label: "Membership Plans", icon: CreditCard,    href: "/pricing" },
+      { id: "n-rooms",     group: "Navigate", label: "Meeting Rooms",    icon: CalendarCheck, href: "/meeting-rooms" },
+      { id: "n-resources", group: "Navigate", label: "Resources",        icon: FileText,      href: "/resources" },
+      { id: "n-about",     group: "Navigate", label: "About",            icon: Info,          href: "/about" },
+      { id: "n-contact",   group: "Navigate", label: "Contact",          icon: Phone,         href: "/contact" },
       ...(FEATURES.memberAccess
         ? [{ id: "n-dash", group: "Navigate", label: "Member Dashboard", icon: LayoutDashboard, href: "/dashboard" } as Item]
         : []),
-      { id: "n-admin", group: "Navigate", label: "Admin Portal", icon: LayoutDashboard, href: "/admin" },
     ];
-    const locs: Item[] = locations.map((l) => ({
-      id: `l-${l.slug}`,
-      group: "Locations",
-      label: l.name,
-      hint: `${l.city}, ${l.region}`,
-      icon: Building2,
-      href: `/locations/${l.slug}`,
-      keywords: `${l.city} ${l.region}`,
-    }));
-    return [...actions, ...nav, ...locs];
+    return [...actions, ...nav];
   }, [openLead]);
 
   const filtered = React.useMemo(() => {
