@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Building2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import { FEATURES } from "@/lib/features";
 import { solutions } from "@/data/solutions";
@@ -83,27 +83,13 @@ export default function HomePage() {
           </Reveal>
 
           <Reveal className="mt-10">
-            <div className="overflow-hidden rounded-3xl border border-border/70 bg-muted shadow-xl shadow-black/5">
-              <div className="flex items-center justify-between border-b border-border/60 bg-card px-5 py-3.5">
-                <div className="flex items-center gap-2.5">
-                  <Building2 className="size-4 text-primary" />
-                  <span className="text-sm font-semibold text-foreground">2D Floor Plan</span>
-                  <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">~145 sqm</span>
-                </div>
-                <a
-                  href="/floor-plan-2d.png"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs font-medium text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
-                >
-                  Open fullscreen ↗
-                </a>
-              </div>
+            <div className="overflow-hidden rounded-3xl border border-border/70 shadow-2xl shadow-black/20">
               <img
                 src="/floor-plan-2d.png"
-                alt="Hustle Grove 2D Floor Plan"
-                className="w-full"
+                alt="Hustle Grove 2D Floor Plan — Level 4, University Ave Canberra"
+                className="w-full block"
                 loading="lazy"
+                style={{ display: "block" }}
               />
             </div>
             <p className="mt-3 text-center text-xs text-muted-foreground">
