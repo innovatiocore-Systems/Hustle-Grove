@@ -62,12 +62,6 @@ export interface Testimonial {
   avatar: string;
 }
 
-export interface TeamMember {
-  name: string;
-  role: string;
-  bio: string;
-  avatar: string;
-}
 
 export interface Stat {
   label: string;

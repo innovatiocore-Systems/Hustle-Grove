@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 
 import { img } from "@/lib/images";
-import { companyStats, values, team } from "@/data/company";
+import { companyStats, values } from "@/data/company";
 import { PageHeader } from "@/components/marketing/page-header";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { StatCard } from "@/components/marketing/stat-card";
@@ -117,41 +117,6 @@ export default function AboutPage() {
         <div className="container-px grid grid-cols-2 gap-8 md:grid-cols-4">
           {companyStats.map((stat) => (
             <StatCard key={stat.label} stat={stat} />
-          ))}
-        </div>
-      </section>
-
-      {/* Team */}
-      <section className="container-px py-20 md:py-28">
-        <SectionHeading
-          eyebrow="Leadership"
-          title={<>Meet the team behind Hustle Grove</>}
-          description="A team of operators, designers and hospitality leaders obsessed with member experience."
-        />
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {team.map((member, i) => (
-            <Reveal
-              key={member.name}
-              delay={i * 90}
-              className="group overflow-hidden rounded-2xl border border-border/70 bg-card"
-            >
-              <div className="relative aspect-[4/5] overflow-hidden">
-                <Image
-                  src={member.avatar}
-                  alt={member.name}
-                  fill
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-              <div className="p-5">
-                <h3 className="font-semibold text-foreground">{member.name}</h3>
-                <p className="text-sm font-medium text-primary">{member.role}</p>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {member.bio}
-                </p>
-              </div>
-            </Reveal>
           ))}
         </div>
       </section>
