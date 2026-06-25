@@ -88,7 +88,6 @@ export default function PricingPage() {
           </div>
           <p className="mt-4 text-xs text-muted-foreground">
             All suites are fully furnished with ergonomic workstations, high-speed Wi-Fi and 24/7 secure access.
-            Save 15% with an annual agreement.
           </p>
         </div>
       </section>
