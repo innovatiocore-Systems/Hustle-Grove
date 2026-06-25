@@ -52,13 +52,12 @@ export default function HomePage() {
           </Reveal>
 
           <Reveal className="mt-10">
-            <div className="overflow-hidden rounded-3xl border border-border/70 shadow-2xl shadow-black/20">
+            <div className="group overflow-hidden rounded-3xl border border-border/70 shadow-2xl shadow-black/20">
               <img
                 src="/floor-plan-2d.png"
                 alt="Hustle Grove 2D Floor Plan — Level 4, University Ave Canberra"
-                className="w-full block"
+                className="block w-full transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                 loading="lazy"
-                style={{ display: "block" }}
               />
             </div>
             <p className="mt-3 text-center text-xs text-muted-foreground">

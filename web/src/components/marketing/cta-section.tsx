@@ -9,8 +9,8 @@ export function CtaSection() {
     <section className="container-px py-20 md:py-28">
       <div className="relative overflow-hidden rounded-3xl bg-sidebar px-8 py-16 md:px-16 md:py-20">
         {/* Decorative glow */}
-        <div className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-violet/30 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-24 -left-24 size-72 rounded-full bg-primary/30 blur-3xl" />
+        <div className="animate-glow pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-violet/30 blur-3xl" />
+        <div className="animate-glow anim-delay-500 pointer-events-none absolute -bottom-24 -left-24 size-72 rounded-full bg-primary/30 blur-3xl" />
 
         <div className="relative mx-auto max-w-2xl text-center">
           <span className="eyebrow justify-center text-white/70">
