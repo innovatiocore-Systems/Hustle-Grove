@@ -12,7 +12,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { LeadButton } from "@/components/lead/lead-button";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 
-const links = [
+const BASE_LINKS = [
   { label: "Home", href: "/" },
   { label: "Locations", href: "/locations" },
   { label: "Memberships", href: "/pricing" },
@@ -25,7 +25,7 @@ function openCommandPalette() {
   window.dispatchEvent(new Event("open-command-palette"));
 }
 
-export function Navbar() {
+export function Navbar({ resourcesVisible = true }: { resourcesVisible?: boolean }) {
   const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
@@ -42,6 +42,10 @@ export function Navbar() {
     setPrevPathname(pathname);
     setOpen(false);
   }
+
+  const links = resourcesVisible
+    ? BASE_LINKS
+    : BASE_LINKS.filter((l) => l.href !== "/resources");
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);

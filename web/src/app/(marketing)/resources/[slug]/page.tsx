@@ -4,6 +4,9 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ChevronRight, ArrowLeft } from "lucide-react";
 
+import { redirect } from "next/navigation";
+
+import { getSiteSettings } from "@/lib/settings/server";
 import { getArticles, getArticleBySlug, getAllSlugs } from "@/lib/articles/server";
 import { Badge } from "@/components/ui/badge";
 import { BlogCard } from "@/components/marketing/blog-card";
@@ -32,6 +35,9 @@ export default async function ArticleDetailPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  const { resourcesVisible } = await getSiteSettings();
+  if (!resourcesVisible) redirect("/");
+
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
   if (!article) notFound();

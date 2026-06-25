@@ -1,7 +1,6 @@
 import { Heart, Sparkles, ShieldCheck, Leaf } from "lucide-react";
 
-import type { Stat, Value, TeamMember } from "@/lib/types";
-import { avatar } from "@/lib/images";
+import type { Stat, Value } from "@/lib/types";
 
 export const companyStats: Stat[] = [
   { label: "Location", value: "Canberra", description: "Level 4, University Ave CBD" },
@@ -37,29 +36,3 @@ export const values: Value[] = [
   },
 ];
 
-export const team: TeamMember[] = [
-  {
-    name: "Sofia Alvarez",
-    role: "Founder & CEO",
-    bio: "Former architect on a mission to make premium workspace accessible to every team.",
-    avatar: avatar("1544005313-94ddf0286df2"),
-  },
-  {
-    name: "James Whitfield",
-    role: "Chief Operating Officer",
-    bio: "Twenty years scaling hospitality brands, now obsessed with member experience.",
-    avatar: avatar("1472099645785-5658abf4ff4e"),
-  },
-  {
-    name: "Aisha Khan",
-    role: "Head of Design",
-    bio: "Leads our studio, turning raw buildings into spaces people love to work in.",
-    avatar: avatar("1438761681033-6461ffad8d80"),
-  },
-  {
-    name: "Liam O'Connor",
-    role: "VP of Real Estate",
-    bio: "Finds and secures landmark buildings in the neighbourhoods our members want.",
-    avatar: avatar("1506794778202-cad84cf45f1d"),
-  },
-];

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 
+import { getSiteSettings } from "@/lib/settings/server";
 import { getArticles } from "@/lib/articles/server";
 import { articleCategories } from "@/data/articles";
 import { Badge } from "@/components/ui/badge";
@@ -18,6 +20,9 @@ export const metadata: Metadata = {
 };
 
 export default async function ResourcesPage() {
+  const { resourcesVisible } = await getSiteSettings();
+  if (!resourcesVisible) redirect("/");
+
   const articles = await getArticles();
   const featured = articles.filter((a) => a.featured).slice(0, 2);
   const rest = articles.filter((a) => !a.featured);

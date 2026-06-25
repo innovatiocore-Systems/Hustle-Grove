@@ -159,6 +159,7 @@ export type Database = {
           popup_enabled: boolean
           popup_message: string
           popup_title: string
+          resources_visible: boolean
           updated_at: string
         }
         Insert: {
@@ -170,6 +171,7 @@ export type Database = {
           popup_enabled?: boolean
           popup_message?: string
           popup_title?: string
+          resources_visible?: boolean
           updated_at?: string
         }
         Update: {
@@ -181,6 +183,7 @@ export type Database = {
           popup_enabled?: boolean
           popup_message?: string
           popup_title?: string
+          resources_visible?: boolean
           updated_at?: string
         }
         Relationships: []

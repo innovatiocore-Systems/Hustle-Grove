@@ -16,19 +16,15 @@ interface SiteSettingsRow {
   popup_enabled: boolean | null;
   popup_title: string | null;
   popup_message: string | null;
+  resources_visible: boolean | null;
 }
 
-/**
- * Reads the singleton site settings server-side (public RLS read). Cached and
- * tagged so marketing pages stay static/ISR; a save invalidates the tag.
- * Always resolves — falls back to the static defaults on any failure.
- */
 export async function getSiteSettings(): Promise<SiteSettings> {
   if (!url || !anonKey) return DEFAULT_SITE_SETTINGS;
 
   try {
     const res = await fetch(
-      `${url}/rest/v1/site_settings?select=name,address,logo_url,logo_size,popup_enabled,popup_title,popup_message&limit=1`,
+      `${url}/rest/v1/site_settings?select=name,address,logo_url,logo_size,popup_enabled,popup_title,popup_message,resources_visible&limit=1`,
       {
         headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}` },
         next: { revalidate: 30, tags: [SITE_SETTINGS_TAG] },
@@ -48,6 +44,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       popupEnabled: row.popup_enabled ?? false,
       popupTitle: row.popup_title ?? "",
       popupMessage: row.popup_message ?? "",
+      resourcesVisible: row.resources_visible ?? true,
     };
   } catch {
     return DEFAULT_SITE_SETTINGS;

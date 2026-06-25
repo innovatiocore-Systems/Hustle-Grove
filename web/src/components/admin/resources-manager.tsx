@@ -23,7 +23,9 @@ import {
   type ArticleRow,
   type ArticleInput,
 } from "@/lib/articles/api";
+import { updateResourcesVisibility } from "@/lib/settings/api";
 import { revalidateArticles } from "@/lib/articles/actions";
+import { revalidateSiteSettings } from "@/lib/settings/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -71,7 +73,13 @@ const EMPTY_FORM: ArticleInput = {
   published: true,
 };
 
-export function ResourcesManager() {
+export function ResourcesManager({
+  initialResourcesVisible = true,
+}: {
+  initialResourcesVisible?: boolean;
+}) {
+  const [resourcesVisible, setResourcesVisible] = React.useState(initialResourcesVisible);
+  const [togglingVisibility, setTogglingVisibility] = React.useState(false);
   const [articles, setArticles] = React.useState<ArticleRow[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
@@ -100,6 +108,22 @@ export function ResourcesManager() {
   React.useEffect(() => {
     load();
   }, [load]);
+
+  async function handleToggleVisibility() {
+    setTogglingVisibility(true);
+    try {
+      const next = !resourcesVisible;
+      const result = await updateResourcesVisibility(next);
+      if (!result.ok) throw new Error(result.message);
+      setResourcesVisible(next);
+      await revalidateSiteSettings();
+      toast.success(next ? "Resources section is now visible." : "Resources section is now hidden.");
+    } catch (e) {
+      toast.error((e as Error).message);
+    } finally {
+      setTogglingVisibility(false);
+    }
+  }
 
   const filtered = React.useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -216,6 +240,40 @@ export function ResourcesManager() {
 
   return (
     <div className="space-y-6">
+      {/* Visibility toggle */}
+      <div className="flex items-center justify-between rounded-2xl border border-border/70 bg-card px-6 py-5">
+        <div>
+          <p className="font-semibold text-foreground">Resources visibility</p>
+          <p className="mt-0.5 text-sm text-muted-foreground">
+            {resourcesVisible
+              ? "Resources are visible on the website — navbar, footer, and all pages."
+              : "Resources are hidden from the website. Direct URLs redirect to home."}
+          </p>
+        </div>
+        <button
+          onClick={handleToggleVisibility}
+          disabled={togglingVisibility}
+          className={cn(
+            "relative inline-flex h-7 w-12 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+            resourcesVisible ? "bg-primary" : "bg-muted"
+          )}
+          role="switch"
+          aria-checked={resourcesVisible}
+          aria-label="Toggle resources visibility"
+        >
+          {togglingVisibility ? (
+            <Loader2 className="absolute left-1/2 size-4 -translate-x-1/2 animate-spin text-white" />
+          ) : (
+            <span
+              className={cn(
+                "pointer-events-none block size-5 rounded-full bg-white shadow-lg transition-transform",
+                resourcesVisible ? "translate-x-5" : "translate-x-0"
+              )}
+            />
+          )}
+        </button>
+      </div>
+
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>

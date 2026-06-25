@@ -14,7 +14,9 @@ export async function Footer() {
   const columns = footerNav.map((col) => ({
     ...col,
     links: col.links.filter(
-      (link) => FEATURES.memberAccess || !link.href.startsWith("/dashboard")
+      (link) =>
+        (FEATURES.memberAccess || !link.href.startsWith("/dashboard")) &&
+        (settings.resourcesVisible || link.href !== "/resources")
     ),
   }));
 
