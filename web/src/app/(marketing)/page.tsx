@@ -6,6 +6,7 @@ import { featuredAmenities } from "@/data/amenities";
 import { testimonials } from "@/data/testimonials";
 import { Hero } from "@/components/marketing/hero";
 import { StatsBand } from "@/components/marketing/stats-band";
+import { ZoomableImage } from "@/components/marketing/zoomable-image";
 import { DashboardPreview } from "@/components/marketing/dashboard-preview";
 import { Reveal } from "@/components/marketing/reveal";
 import { SectionHeading } from "@/components/marketing/section-heading";
@@ -52,15 +53,12 @@ export default function HomePage() {
           </Reveal>
 
           <Reveal className="mt-10">
-            <div className="overflow-hidden rounded-3xl border border-border/70 shadow-2xl shadow-black/20">
-              <img
-                src="/floor-plan-2d.png"
-                alt="Hustle Grove 2D Floor Plan — Level 4, University Ave Canberra"
-                className="w-full block"
-                loading="lazy"
-                style={{ display: "block" }}
-              />
-            </div>
+            <ZoomableImage
+              src="/floor-plan-2d.png"
+              alt="Hustle Grove 2D Floor Plan — Level 4, University Ave Canberra"
+              wrapperClassName="overflow-hidden rounded-3xl border border-border/70 shadow-2xl shadow-black/20"
+              className="block w-full transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+            />
             <p className="mt-3 text-center text-xs text-muted-foreground">
               Level 4 · 6 private suites · 14 dedicated desks · 1 meeting room
             </p>

@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 
-import { img } from "@/lib/images";
 import { companyStats, values } from "@/data/company";
 import { PageHeader } from "@/components/marketing/page-header";
 import { SectionHeading } from "@/components/marketing/section-heading";
@@ -26,40 +24,29 @@ export default function AboutPage() {
 
       {/* Story */}
       <section className="container-px py-20 md:py-28">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-xl shadow-foreground/5">
-            <Image
-              src={img("1600508774634-4e11d34730e2", 1100, 850)}
-              alt="The Hustle Grove Workspaces team in a bright office lounge"
-              fill
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
-            />
-          </div>
-          <div>
-            <SectionHeading
-              eyebrow="Our story"
-              title={<>Built for Canberra&apos;s best teams</>}
-            />
-            <div className="mt-6 space-y-4 text-base leading-relaxed text-muted-foreground">
-              <p>
-                We launched Hustle Grove with a single conviction: premium,
-                flexible workspace shouldn&apos;t be a privilege reserved for
-                large corporates. It should be available to every ambitious team
-                — from day one.
-              </p>
-              <p>
-                Today our Level 4 space at 28 University Avenue sits at the heart
-                of Canberra&apos;s CBD. We&apos;ve obsessed over every detail —
-                natural light, considered design, real hospitality — so that the
-                moment you walk in, it feels like somewhere you&apos;d genuinely
-                want to work.
-              </p>
-              <p>
-                Our mission is simple: give every team a workspace worth showing
-                up for, on terms that flex with them.
-              </p>
-            </div>
+        <div className="mx-auto max-w-3xl">
+          <SectionHeading
+            eyebrow="Our story"
+            title={<>Built for Canberra&apos;s best teams</>}
+          />
+          <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted-foreground">
+            <p>
+              We launched Hustle Grove with a single conviction: premium,
+              flexible workspace shouldn&apos;t be a privilege reserved for
+              large corporates. It should be available to every ambitious team
+              — from day one.
+            </p>
+            <p>
+              Today our Level 4 space at 28 University Avenue sits at the heart
+              of Canberra&apos;s CBD. We&apos;ve obsessed over every detail —
+              natural light, considered design, real hospitality — so that the
+              moment you walk in, it feels like somewhere you&apos;d genuinely
+              want to work.
+            </p>
+            <p>
+              Our mission is simple: give every team a workspace worth showing
+              up for, on terms that flex with them.
+            </p>
           </div>
         </div>
       </section>

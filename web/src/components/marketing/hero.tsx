@@ -13,6 +13,7 @@ import {
 import { cn } from "@/lib/utils";
 import { img } from "@/lib/images";
 import { buttonVariants } from "@/components/ui/button";
+import { AnimatedBackground } from "@/components/marketing/animated-background";
 
 const featureCard = [
   { icon: Home, title: "Move-in Ready", sub: "Furnished spaces" },
@@ -25,18 +26,19 @@ const featureCard = [
 export function Hero() {
   return (
     <section className="relative overflow-hidden">
+      <AnimatedBackground />
       <div className="pointer-events-none absolute inset-0 bg-hero-wash" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-dot-grid opacity-60 [mask-image:linear-gradient(to_bottom,black,transparent)]" />
 
       <div className="relative container-px grid items-center gap-10 py-14 md:py-16 lg:grid-cols-[1fr_1.15fr] lg:gap-6 lg:py-20">
         {/* Left — copy */}
         <div className="max-w-xl">
-          <span className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/8 px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-primary">
+          <span className="animate-fade-up inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/8 px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-primary">
             <Sparkles className="size-3.5" />
             Premium Workspaces
           </span>
 
-          <h1 className="mt-6 font-display text-5xl leading-[0.98] text-foreground sm:text-6xl md:text-7xl">
+          <h1 className="animate-fade-up anim-delay-100 mt-6 font-display text-5xl leading-[0.98] text-foreground sm:text-6xl md:text-7xl">
             Hustle your way.
             <br />
             Grove{" "}
@@ -60,15 +62,18 @@ export function Hero() {
             <span className="text-violet">.</span>
           </h1>
 
-          <p className="mt-7 max-w-md text-lg leading-relaxed text-muted-foreground">
+          <p className="animate-fade-up anim-delay-200 mt-7 max-w-md text-lg leading-relaxed text-muted-foreground">
             Flexible offices, dedicated desks, and inspiring meeting rooms
             designed for modern teams to do their best work.
           </p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link href="/contact" className={cn(buttonVariants({ size: "lg" }))}>
+          <div className="animate-fade-up anim-delay-300 mt-8 flex flex-col gap-3 sm:flex-row">
+            <Link
+              href="/contact"
+              className={cn(buttonVariants({ size: "lg" }), "group")}
+            >
               Book a Tour
-              <ArrowRight className="size-4" />
+              <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
             <Link
               href="/locations"
@@ -82,7 +87,7 @@ export function Hero() {
         </div>
 
         {/* Right — dark panel + floating feature card */}
-        <div className="relative lg:pr-6">
+        <div className="animate-fade-up anim-delay-200 relative lg:pr-6">
           {/* Dot decoration top-right */}
           <div
             aria-hidden
@@ -117,7 +122,7 @@ export function Hero() {
                 width={340}
                 height={340}
                 priority
-                className="object-contain drop-shadow-2xl"
+                className="animate-float object-contain drop-shadow-2xl"
               />
             </div>
 
@@ -135,8 +140,8 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Floating feature card — right edge */}
-          <div className="absolute -bottom-6 right-0 z-20 w-60 rounded-2xl border border-border/70 bg-background/96 p-3 shadow-2xl backdrop-blur-sm sm:-bottom-auto sm:right-0 sm:top-1/2 sm:-translate-y-1/2 lg:-right-2">
+          {/* Floating feature card — right edge (tablet/desktop only) */}
+          <div className="absolute right-0 top-1/2 z-20 hidden w-60 -translate-y-1/2 rounded-2xl border border-border/70 bg-background/96 p-3 shadow-2xl backdrop-blur-sm sm:block lg:-right-2">
             <div className="divide-y divide-border/60">
               {featureCard.map((item) => {
                 const Icon = item.icon;
@@ -157,6 +162,31 @@ export function Hero() {
                 );
               })}
             </div>
+          </div>
+
+          {/* Mobile feature grid — clean 2×2, no overlap (replaces floating card) */}
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:hidden">
+            {featureCard.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={item.title}
+                  className="flex items-center gap-2.5 rounded-xl border border-border/70 bg-card p-3"
+                >
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <Icon className="size-4" />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block truncate text-xs font-semibold text-foreground">
+                      {item.title}
+                    </span>
+                    <span className="block truncate text-[0.7rem] text-muted-foreground">
+                      {item.sub}
+                    </span>
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
