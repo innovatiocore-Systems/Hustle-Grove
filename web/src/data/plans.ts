@@ -4,8 +4,7 @@ export interface Plan {
   slug: string;
   name: string;
   tagline: string;
-  priceMonthly: number | null; // null = custom pricing
-  priceAnnual: number | null;  // effective monthly price billed annually
+  priceMonthly: number | null;
   unit: string;
   popular?: boolean;
   features: string[];
@@ -19,7 +18,6 @@ export const plans: Plan[] = [
     name: "Hot Desk",
     tagline: "Flexible access — daily, weekly or monthly",
     priceMonthly: 299,
-    priceAnnual: 254,
     unit: "per person / month",
     features: [],
     ctaLabel: "Get started",
@@ -30,7 +28,6 @@ export const plans: Plan[] = [
     name: "Dedicated Desk",
     tagline: "Your own permanent desk, always ready",
     priceMonthly: 499,
-    priceAnnual: 424,
     unit: "per desk / month",
     popular: true,
     features: [],
@@ -42,7 +39,6 @@ export const plans: Plan[] = [
     name: "Private Office",
     tagline: "Lockable suite for your team",
     priceMonthly: 1250,
-    priceAnnual: 1062,
     unit: "from per suite / month",
     features: [],
     ctaLabel: "Enquire now",
@@ -53,7 +49,6 @@ export const plans: Plan[] = [
     name: "Virtual Office",
     tagline: "A professional address without a desk",
     priceMonthly: 79,
-    priceAnnual: 67,
     unit: "per month",
     features: [],
     ctaLabel: "Get started",
@@ -94,7 +89,6 @@ export const comparison: {
     rows: [
       { feature: "Day pass available",  values: ["$35 / day", false, false, false] },
       { feature: "Weekly pass",         values: ["$129 / wk", false, false, false] },
-      { feature: "Save 15% (annual)",   values: [true, true, true, true] },
     ],
   },
 ];

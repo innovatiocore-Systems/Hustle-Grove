@@ -5,15 +5,7 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { LeadButton } from "@/components/lead/lead-button";
 
-export function PricingCard({
-  plan,
-  billing,
-}: {
-  plan: Plan;
-  billing: "monthly" | "annual";
-}) {
-  const price = billing === "monthly" ? plan.priceMonthly : plan.priceAnnual;
-
+export function PricingCard({ plan }: { plan: Plan }) {
   return (
     <div
       className={cn(
@@ -33,11 +25,13 @@ export function PricingCard({
       <p className="mt-1 text-sm text-muted-foreground">{plan.tagline}</p>
 
       <div className="mt-5 flex items-end gap-1.5">
-        {price === null ? (
+        {plan.priceMonthly === null ? (
           <span className="font-display text-4xl text-foreground">Custom</span>
         ) : (
           <>
-            <span className="font-display text-4xl text-foreground">${price}</span>
+            <span className="font-display text-4xl text-foreground">
+              ${plan.priceMonthly}
+            </span>
             <span className="pb-1 text-sm text-muted-foreground">/mo</span>
           </>
         )}
@@ -55,7 +49,10 @@ export function PricingCard({
       {plan.features.length > 0 && (
         <ul className="mt-6 space-y-3 border-t border-border/70 pt-6">
           {plan.features.map((f) => (
-            <li key={f} className="flex items-start gap-2.5 text-sm text-muted-foreground">
+            <li
+              key={f}
+              className="flex items-start gap-2.5 text-sm text-muted-foreground"
+            >
               <Check className="mt-0.5 size-4 shrink-0 text-primary" />
               {f}
             </li>
