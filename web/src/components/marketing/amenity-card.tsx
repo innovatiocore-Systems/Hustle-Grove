@@ -3,8 +3,8 @@ import type { Amenity } from "@/lib/types";
 export function AmenityCard({ amenity }: { amenity: Amenity }) {
   const Icon = amenity.icon;
   return (
-    <div className="glass-card glass-interactive group flex gap-4 rounded-2xl p-6">
-      <span className="icon-chip flex size-12 shrink-0 items-center justify-center rounded-2xl text-primary ring-1 ring-primary/15 transition-all duration-300 group-hover:scale-110 group-hover:ring-primary/30">
+    <div className="hover-lift group flex gap-4 rounded-2xl border border-border/70 bg-card p-6 hover:border-primary/30">
+      <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/8 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
         <Icon className="size-5" />
       </span>
       <div>

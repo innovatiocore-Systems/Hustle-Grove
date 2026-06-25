@@ -216,65 +216,6 @@
       ),
       linear-gradient(125deg, oklch(0.2 0.025 138), oklch(0.15 0.012 135));
   }
-
-  /* Frosted-glass surface: translucent fill, blur, hairline border, layered
-     shadow + top sheen. The workhorse of the premium-glass look. */
-  .glass-card {
-    background: color-mix(in oklch, var(--card) 64%, transparent);
-    -webkit-backdrop-filter: blur(16px) saturate(1.4);
-    backdrop-filter: blur(16px) saturate(1.4);
-    border: 1px solid color-mix(in oklch, var(--border) 70%, transparent);
-    box-shadow:
-      inset 0 1px 0 0 oklch(1 0 0 / 0.55),
-      0 24px 50px -30px oklch(0.25 0.03 145 / 0.45);
-  }
-  /* Interactive glass: lifts + brand-tinted border + deeper shadow on hover. */
-  .glass-interactive {
-    transition:
-      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-      box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-      border-color 0.35s ease;
-  }
-  .glass-interactive:hover {
-    transform: translateY(-5px);
-    border-color: color-mix(in oklch, var(--primary) 38%, transparent);
-    box-shadow:
-      inset 0 1px 0 0 oklch(1 0 0 / 0.65),
-      0 34px 64px -28px oklch(0.25 0.03 145 / 0.55);
-  }
-
-  /* Gradient icon chip — green→gold tint behind feature/amenity icons. */
-  .icon-chip {
-    background-image: linear-gradient(
-      135deg,
-      color-mix(in oklch, var(--primary) 22%, transparent),
-      color-mix(in oklch, var(--violet) 22%, transparent)
-    );
-  }
-
-  /* Soft radial mesh tint to sit behind glass card grids for depth. */
-  .bg-mesh-soft {
-    background:
-      radial-gradient(
-        42% 55% at 12% 8%,
-        color-mix(in oklch, var(--primary) 9%, transparent),
-        transparent 70%
-      ),
-      radial-gradient(
-        38% 48% at 88% 28%,
-        color-mix(in oklch, var(--violet) 9%, transparent),
-        transparent 70%
-      );
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .glass-interactive {
-      transition: none;
-    }
-    .glass-interactive:hover {
-      transform: none;
-    }
-  }
 }
 
 @layer utilities {
