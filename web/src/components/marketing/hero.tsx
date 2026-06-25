@@ -141,13 +141,13 @@ export function Hero() {
           </div>
 
           {/* Floating feature card — right edge (tablet/desktop only) */}
-          <div className="absolute right-0 top-1/2 z-20 hidden w-60 -translate-y-1/2 rounded-2xl border border-border/70 bg-background/96 p-3 shadow-2xl backdrop-blur-sm sm:block lg:-right-2">
-            <div className="divide-y divide-border/60">
+          <div className="glass-card absolute right-0 top-1/2 z-20 hidden w-60 -translate-y-1/2 rounded-2xl p-3 sm:block lg:-right-2">
+            <div className="divide-y divide-border/50">
               {featureCard.map((item) => {
                 const Icon = item.icon;
                 return (
                   <div key={item.title} className="flex items-center gap-3 p-2.5">
-                    <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <span className="icon-chip flex size-9 shrink-0 items-center justify-center rounded-xl text-primary ring-1 ring-primary/15">
                       <Icon className="size-5" />
                     </span>
                     <span>

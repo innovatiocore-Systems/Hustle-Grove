@@ -23,7 +23,7 @@ export function SectionHeading({
     >
       {eyebrow && (
         <span className="eyebrow">
-          <span className="h-px w-6 bg-primary" />
+          <span className="h-px w-8 bg-gradient-to-r from-primary to-violet" />
           {eyebrow}
         </span>
       )}

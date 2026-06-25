@@ -52,13 +52,15 @@ export default function HomePage() {
           </Reveal>
 
           <Reveal className="mt-10">
-            <div className="group overflow-hidden rounded-3xl border border-border/70 shadow-2xl shadow-black/20">
-              <img
-                src="/floor-plan-2d.png"
-                alt="Hustle Grove 2D Floor Plan — Level 4, University Ave Canberra"
-                className="block w-full transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                loading="lazy"
-              />
+            <div className="glass-card group overflow-hidden rounded-[1.75rem] p-2">
+              <div className="overflow-hidden rounded-3xl">
+                <img
+                  src="/floor-plan-2d.png"
+                  alt="Hustle Grove 2D Floor Plan — Level 4, University Ave Canberra"
+                  className="block w-full transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  loading="lazy"
+                />
+              </div>
             </div>
             <p className="mt-3 text-center text-xs text-muted-foreground">
               Level 4 · 6 private suites · 14 dedicated desks · 1 meeting room
@@ -75,7 +77,8 @@ export default function HomePage() {
       </section>
 
       {/* Amenities */}
-      <section className="container-px py-20 md:py-28">
+      <section className="bg-mesh-soft relative py-20 md:py-28">
+        <div className="container-px">
         <Reveal>
           <SectionHeading
             eyebrow="Amenities"
@@ -91,6 +94,7 @@ export default function HomePage() {
               <AmenityCard amenity={amenity} />
             </Reveal>
           ))}
+        </div>
         </div>
       </section>
 
