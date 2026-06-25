@@ -13,6 +13,7 @@ import {
 import { cn } from "@/lib/utils";
 import { img } from "@/lib/images";
 import { buttonVariants } from "@/components/ui/button";
+import { AnimatedBackground } from "@/components/marketing/animated-background";
 
 const featureCard = [
   { icon: Home, title: "Move-in Ready", sub: "Furnished spaces" },
@@ -25,6 +26,7 @@ const featureCard = [
 export function Hero() {
   return (
     <section className="relative overflow-hidden">
+      <AnimatedBackground />
       <div className="pointer-events-none absolute inset-0 bg-hero-wash" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-dot-grid opacity-60 [mask-image:linear-gradient(to_bottom,black,transparent)]" />
 
