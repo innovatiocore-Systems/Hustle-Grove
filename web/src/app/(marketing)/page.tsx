@@ -6,7 +6,6 @@ import { featuredAmenities } from "@/data/amenities";
 import { testimonials } from "@/data/testimonials";
 import { Hero } from "@/components/marketing/hero";
 import { StatsBand } from "@/components/marketing/stats-band";
-import { WorkspaceMarquee } from "@/components/marketing/workspace-marquee";
 import { DashboardPreview } from "@/components/marketing/dashboard-preview";
 import { Reveal } from "@/components/marketing/reveal";
 import { SectionHeading } from "@/components/marketing/section-heading";
@@ -25,9 +24,6 @@ export default function HomePage() {
       <Reveal>
         <StatsBand />
       </Reveal>
-
-      {/* Workspace amenities ticker */}
-      <WorkspaceMarquee />
 
       {/* Member dashboard preview — hidden while member access is disabled */}
       {FEATURES.memberAccess && (
