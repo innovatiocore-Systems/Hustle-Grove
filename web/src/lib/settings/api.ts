@@ -64,6 +64,22 @@ export async function updateSiteSettings(input: {
   return { ok: true };
 }
 
+/** Toggle Resources section visibility (admin-only via RLS). */
+export async function updateResourcesVisibility(
+  visible: boolean
+): Promise<SettingsResult> {
+  const authed = await getAuthedClient();
+  if (!authed.ok) return { ok: false, message: authed.message };
+
+  const { error } = await authed.supabase
+    .from("site_settings")
+    .update({ resources_visible: visible, updated_at: new Date().toISOString() })
+    .eq("id", true);
+
+  if (error) return { ok: false, message: error.message };
+  return { ok: true };
+}
+
 /** Upload a logo image to the public `branding` bucket; returns its URL. */
 export async function uploadLogo(
   file: File
