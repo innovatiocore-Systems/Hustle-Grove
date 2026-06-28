@@ -3,7 +3,6 @@ import { ArrowRight } from "lucide-react";
 
 import { FEATURES } from "@/lib/features";
 import { featuredAmenities } from "@/data/amenities";
-import { testimonials } from "@/data/testimonials";
 import { Hero } from "@/components/marketing/hero";
 import { StatsBand } from "@/components/marketing/stats-band";
 import { ZoomableImage } from "@/components/marketing/zoomable-image";
@@ -11,7 +10,6 @@ import { DashboardPreview } from "@/components/marketing/dashboard-preview";
 import { Reveal } from "@/components/marketing/reveal";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { AmenityCard } from "@/components/marketing/amenity-card";
-import { TestimonialCard } from "@/components/marketing/testimonial-card";
 import { CtaSection } from "@/components/marketing/cta-section";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";

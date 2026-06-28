@@ -105,9 +105,25 @@ export function ResourcesManager({
     }
   }, []);
 
+  // Initial fetch — kept self-contained so state is only set after the
+  // request resolves (avoids react-hooks/set-state-in-effect). `load` stays
+  // available for the ErrorState retry button below.
   React.useEffect(() => {
-    load();
-  }, [load]);
+    let active = true;
+    listArticles()
+      .then((data) => {
+        if (active) setArticles(data);
+      })
+      .catch((e) => {
+        if (active) setError((e as Error).message);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   async function handleToggleVisibility() {
     setTogglingVisibility(true);
