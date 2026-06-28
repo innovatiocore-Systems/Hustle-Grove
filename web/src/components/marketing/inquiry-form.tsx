@@ -71,6 +71,8 @@ export function InquiryForm({
   defaultInterest,
   submitLabel = "Send inquiry",
   room,
+  embedded = false,
+  onSuccess,
 }: {
   title?: string;
   description?: string;
@@ -78,6 +80,10 @@ export function InquiryForm({
   submitLabel?: string;
   /** When provided, the form attaches to a specific room and shows a date/time picker. */
   room?: RoomContext;
+  /** Render without the card chrome/heading — e.g. inside a modal that supplies its own header. */
+  embedded?: boolean;
+  /** Called after a successful submission (e.g. to close a modal). */
+  onSuccess?: () => void;
 }) {
   const [day, setDay] = React.useState(0);
   const [slot, setSlot] = React.useState<string | null>(null);
@@ -125,14 +131,15 @@ export function InquiryForm({
     });
     reset({ interest: defaultInterest ?? "" });
     setSlot(null);
+    onSuccess?.();
   };
 
-  return (
-    <div className="rounded-2xl border border-border/70 bg-card p-6 md:p-8">
-      <h3 className="font-display text-2xl text-foreground">{title}</h3>
-      <p className="mt-2 text-sm text-muted-foreground">{description}</p>
-
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4" noValidate>
+  const formContent = (
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className={cn("space-y-4", embedded ? "p-6" : "mt-6")}
+      noValidate
+    >
         {room && (
           <div className="rounded-xl border border-border/70 bg-muted/30 p-4">
             <Label>Preferred date &amp; time</Label>
@@ -241,7 +248,16 @@ export function InquiryForm({
           {isSubmitting ? "Sending…" : submitLabel}
           {!isSubmitting && <Send className="size-4" />}
         </Button>
-      </form>
+    </form>
+  );
+
+  if (embedded) return formContent;
+
+  return (
+    <div className="rounded-2xl border border-border/70 bg-card p-6 md:p-8">
+      <h3 className="font-display text-2xl text-foreground">{title}</h3>
+      <p className="mt-2 text-sm text-muted-foreground">{description}</p>
+      {formContent}
     </div>
   );
 }

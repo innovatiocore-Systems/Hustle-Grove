@@ -1,80 +1,33 @@
 "use client";
 
 import * as React from "react";
-import { toast } from "sonner";
-import { Send } from "lucide-react";
 
-import { locations } from "@/data/locations";
-import { createInquiry } from "@/lib/inquiries/api";
 import { Dialog, DialogHeader } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select } from "@/components/ui/select";
+import { InquiryForm } from "@/components/marketing/inquiry-form";
 
-export type LeadType = "tour" | "proposal" | "sales" | "brochure";
-
-type Field = {
-  name: string;
-  label: string;
-  type: "text" | "email" | "tel" | "date" | "select" | "textarea";
-  placeholder?: string;
-  required?: boolean;
-  full?: boolean;
-  options?: string[];
-};
-
-const locationNames = locations.map((l) => l.name);
+export type LeadType = "tour" | "proposal" | "sales";
 
 const configs: Record<
   LeadType,
-  { title: string; description: string; submit: string; fields: Field[] }
+  { title: string; description: string; submit: string; defaultInterest?: string }
 > = {
   tour: {
     title: "Book a Tour",
-    description: "Pick a location and time — we'll confirm within one business day.",
+    description:
+      "Tell us about your team and we'll arrange a time to show you around — we'll confirm within one business day.",
     submit: "Request tour",
-    fields: [
-      { name: "name", label: "Full name", type: "text", required: true },
-      { name: "email", label: "Work email", type: "email", required: true },
-      { name: "location", label: "Location", type: "select", options: locationNames, full: true },
-      { name: "date", label: "Preferred date", type: "date" },
-      { name: "phone", label: "Phone", type: "tel" },
-      { name: "message", label: "Anything we should know?", type: "textarea", full: true },
-    ],
   },
   proposal: {
     title: "Request a Proposal",
     description: "Tell us about your team and we'll send a tailored proposal.",
     submit: "Request proposal",
-    fields: [
-      { name: "name", label: "Full name", type: "text", required: true },
-      { name: "email", label: "Work email", type: "email", required: true },
-      { name: "company", label: "Company", type: "text", required: true },
-      { name: "team", label: "Team size", type: "text", placeholder: "e.g. 25" },
-      { name: "message", label: "Requirements", type: "textarea", full: true },
-    ],
+    defaultInterest: "Enterprise / Custom",
   },
   sales: {
     title: "Contact Sales",
-    description: "Talk to our enterprise team about a custom workspace.",
+    description: "Talk to our team about a custom workspace for your business.",
     submit: "Contact sales",
-    fields: [
-      { name: "name", label: "Full name", type: "text", required: true },
-      { name: "email", label: "Work email", type: "email", required: true },
-      { name: "company", label: "Company", type: "text" },
-      { name: "message", label: "How can we help?", type: "textarea", full: true },
-    ],
-  },
-  brochure: {
-    title: "Download Brochure",
-    description: "Get our workspace brochure delivered straight to your inbox.",
-    submit: "Send me the brochure",
-    fields: [
-      { name: "name", label: "Full name", type: "text", required: true },
-      { name: "email", label: "Email", type: "email", required: true },
-    ],
+    defaultInterest: "Enterprise / Custom",
   },
 };
 
@@ -88,66 +41,17 @@ export function useLeadModal() {
 
 export function LeadModalProvider({ children }: { children: React.ReactNode }) {
   const [type, setType] = React.useState<LeadType | null>(null);
-  const [submitting, setSubmitting] = React.useState(false);
   const config = type ? configs[type] : null;
 
   const open = React.useCallback((t: LeadType) => setType(t), []);
   const close = React.useCallback(() => setType(null), []);
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    const str = (key: string) => (data.get(key) as string | null)?.trim() ?? "";
-    setSubmitting(true);
-
-    // The brochure is a simple download — everything else is a real lead and is
-    // persisted as an inquiry the admin team can action.
-    if (type === "brochure") {
-      await new Promise((r) => setTimeout(r, 500));
-      setSubmitting(false);
-      close();
-      toast.success("Brochure on its way!", {
-        description: `We've emailed it to ${str("email")}.`,
-      });
-      return;
-    }
-
-    const parts = [
-      config ? `[${config.title}]` : null,
-      str("team") ? `Team size: ${str("team")}` : null,
-      str("message"),
-    ].filter(Boolean);
-
-    const res = await createInquiry({
-      fullName: str("name"),
-      email: str("email"),
-      phone: str("phone"),
-      company: str("company"),
-      roomName: config?.title ?? "",
-      location: str("location"),
-      requestedDate: str("date"),
-      requestedTime: "",
-      message: parts.join(" — "),
-    });
-
-    setSubmitting(false);
-    close();
-
-    if (!res.ok) {
-      toast.error("Couldn't send your request", {
-        description: res.error ?? "Please try again in a moment.",
-      });
-      return;
-    }
-
-    toast.success("Thanks — we've received your request.", {
-      description: "Our team will be in touch within one business day.",
-    });
-  };
-
   return (
     <LeadContext.Provider value={{ open }}>
       {children}
+      {/* Every lead CTA opens the same shared InquiryForm so the inquiry
+          experience is uniform across the site — only the heading and submit
+          label change per intent. */}
       <Dialog open={!!config} onClose={close}>
         {config && (
           <>
@@ -156,48 +60,12 @@ export function LeadModalProvider({ children }: { children: React.ReactNode }) {
               description={config.description}
               onClose={close}
             />
-            <form onSubmit={onSubmit} className="space-y-4 p-6">
-              <div className="grid gap-4 sm:grid-cols-2">
-                {config.fields.map((f) => (
-                  <div key={f.name} className={f.full ? "sm:col-span-2" : undefined}>
-                    <Label htmlFor={f.name}>{f.label}</Label>
-                    {f.type === "textarea" ? (
-                      <Textarea
-                        id={f.name}
-                        name={f.name}
-                        required={f.required}
-                        placeholder={f.placeholder}
-                        className="mt-1.5 min-h-24"
-                      />
-                    ) : f.type === "select" ? (
-                      <Select id={f.name} name={f.name} className="mt-1.5" defaultValue="">
-                        <option value="" disabled>
-                          Select a location
-                        </option>
-                        {f.options?.map((o) => (
-                          <option key={o} value={o}>
-                            {o}
-                          </option>
-                        ))}
-                      </Select>
-                    ) : (
-                      <Input
-                        id={f.name}
-                        name={f.name}
-                        type={f.type}
-                        required={f.required}
-                        placeholder={f.placeholder}
-                        className="mt-1.5"
-                      />
-                    )}
-                  </div>
-                ))}
-              </div>
-              <Button type="submit" size="lg" className="w-full" disabled={submitting}>
-                {submitting ? "Sending…" : config.submit}
-                {!submitting && <Send className="size-4" />}
-              </Button>
-            </form>
+            <InquiryForm
+              embedded
+              submitLabel={config.submit}
+              defaultInterest={config.defaultInterest}
+              onSuccess={close}
+            />
           </>
         )}
       </Dialog>
