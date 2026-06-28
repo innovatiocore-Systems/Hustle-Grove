@@ -17,7 +17,7 @@ export default function BookingsPage() {
           </p>
         </div>
         <Link
-          href="/meeting-rooms"
+          href="/dashboard/workspaces"
           className={cn(buttonVariants(), "w-full sm:w-auto")}
         >
           <Plus className="size-4" />

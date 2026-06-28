@@ -40,8 +40,7 @@ export const footerNav = [
     heading: "Explore",
     links: [
       { label: "Membership Plans", href: "/pricing" },
-      { label: "Meeting Rooms", href: "/meeting-rooms" },
-{ label: "Resources", href: "/resources" },
+      { label: "Resources", href: "/resources" },
     ],
   },
 ];

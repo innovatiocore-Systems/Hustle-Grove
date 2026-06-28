@@ -75,7 +75,6 @@ export function CommandPalette() {
       { id: "n-home",      group: "Navigate", label: "Home",             icon: Home,          href: "/" },
       { id: "n-locations", group: "Navigate", label: "Our Space",        icon: MapPin,        href: "/locations" },
       { id: "n-pricing",   group: "Navigate", label: "Membership Plans", icon: CreditCard,    href: "/pricing" },
-      { id: "n-rooms",     group: "Navigate", label: "Meeting Rooms",    icon: CalendarCheck, href: "/meeting-rooms" },
       { id: "n-resources", group: "Navigate", label: "Resources",        icon: FileText,      href: "/resources" },
       { id: "n-about",     group: "Navigate", label: "About",            icon: Info,          href: "/about" },
       { id: "n-contact",   group: "Navigate", label: "Contact",          icon: Phone,         href: "/contact" },
