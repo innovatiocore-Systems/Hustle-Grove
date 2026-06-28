@@ -50,14 +50,11 @@ function PopupLogo({
 export function PopupBanner() {
   const { name, logoUrl, logoSize, popupEnabled, popupTitle, popupMessage } =
     useSiteSettings();
-  const [visible, setVisible] = React.useState(false);
+  const [dismissed, setDismissed] = React.useState(false);
 
-  React.useEffect(() => {
-    if (popupEnabled && popupMessage.trim()) setVisible(true);
-  }, [popupEnabled, popupMessage]);
+  const dismiss = () => setDismissed(true);
 
-  const dismiss = () => setVisible(false);
-
+  const visible = popupEnabled && popupMessage.trim().length > 0 && !dismissed;
   if (!visible) return null;
 
   return (

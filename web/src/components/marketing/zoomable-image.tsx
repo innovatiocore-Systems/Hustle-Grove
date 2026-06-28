@@ -34,6 +34,7 @@ export function ZoomableImage({
   const [open, setOpen] = React.useState(false);
   const [scale, setScale] = React.useState(1);
   const [pos, setPos] = React.useState({ x: 0, y: 0 });
+  const [dragging, setDragging] = React.useState(false);
   const drag = React.useRef<{
     startX: number;
     startY: number;
@@ -84,6 +85,7 @@ export function ZoomableImage({
   const onPointerDown = (e: React.PointerEvent) => {
     if (scale === 1) return;
     (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+    setDragging(true);
     drag.current = {
       startX: e.clientX,
       startY: e.clientY,
@@ -104,6 +106,7 @@ export function ZoomableImage({
   const onPointerUp = (e: React.PointerEvent) => {
     const wasDragging = drag.current?.moved;
     drag.current = null;
+    setDragging(false);
     // A click (no drag) toggles zoom in/out.
     if (!wasDragging) {
       if (scale === 1) zoomBy(1.5);
@@ -198,7 +201,7 @@ export function ZoomableImage({
                 style={{
                   transform: `translate(${pos.x}px, ${pos.y}px) scale(${scale})`,
                   cursor: scale > 1 ? "grab" : "zoom-in",
-                  transition: drag.current ? "none" : "transform 0.2s ease-out",
+                  transition: dragging ? "none" : "transform 0.2s ease-out",
                 }}
                 className="max-h-full max-w-full touch-none select-none rounded-lg shadow-2xl"
               />

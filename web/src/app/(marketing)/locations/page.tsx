@@ -46,6 +46,7 @@ export default async function LocationsPage() {
       {/* 2D Floor Plan */}
       <section className="container-px py-10 md:py-14">
         <div className="overflow-hidden rounded-3xl border border-border/70 shadow-2xl shadow-black/20">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/floor-plan-2d.png"
             alt="Hustle Grove 2D Floor Plan — Level 4, University Ave Canberra"
