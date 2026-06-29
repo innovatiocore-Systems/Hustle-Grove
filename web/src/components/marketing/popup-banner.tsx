@@ -79,14 +79,14 @@ export function PopupBanner() {
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-end justify-center p-4 sm:items-center"
+      className="fixed inset-0 z-[60] flex items-center justify-center overflow-y-auto p-4 sm:p-6"
       style={{ background: "rgba(0,0,0,0.72)", backdropFilter: "blur(8px)" }}
       onClick={(e) => {
         if (e.target === e.currentTarget) dismiss();
       }}
     >
       <div
-        className="relative grid w-full max-w-3xl animate-in fade-in zoom-in-95 slide-in-from-bottom-6 overflow-hidden rounded-3xl shadow-[0_32px_80px_rgba(0,0,0,0.6)] duration-300 sm:slide-in-from-bottom-0 md:grid-cols-[1.08fr_0.92fr]"
+        className="relative my-auto grid max-h-[90vh] w-full max-w-3xl animate-in fade-in zoom-in-95 overflow-y-auto rounded-3xl shadow-[0_32px_80px_rgba(0,0,0,0.6)] duration-300 md:max-h-none md:grid-cols-[1.08fr_0.92fr] md:overflow-hidden"
         style={{
           background:
             "linear-gradient(135deg, #0f1712 0%, #13131a 55%, #0d1410 100%)",
@@ -102,7 +102,7 @@ export function PopupBanner() {
         </button>
 
         {/* Content */}
-        <div className="relative flex flex-col p-7 sm:p-9">
+        <div className="relative flex flex-col p-6 sm:p-9">
           {/* Decorative glow */}
           <div
             className="pointer-events-none absolute -left-16 -top-16 size-60 rounded-full blur-3xl"
