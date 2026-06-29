@@ -11,6 +11,19 @@ const MIN_SCALE = 1;
 const MAX_SCALE = 5;
 const STEP = 0.5;
 
+const PORTRAIT_PHONE = "(max-width: 767px) and (orientation: portrait)";
+
+function subscribePortraitPhone(cb: () => void) {
+  if (typeof window === "undefined") return () => {};
+  const mq = window.matchMedia(PORTRAIT_PHONE);
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+}
+
+function getPortraitPhone() {
+  return window.matchMedia(PORTRAIT_PHONE).matches;
+}
+
 /**
  * Renders an image that opens in a full-screen lightbox on click. Inside the
  * lightbox the image can be zoomed (scroll wheel, +/- buttons, double-click or
@@ -22,6 +35,7 @@ export function ZoomableImage({
   alt,
   className,
   wrapperClassName,
+  landscapeOnMobile = false,
 }: {
   src: string;
   alt: string;
@@ -29,6 +43,8 @@ export function ZoomableImage({
   className?: string;
   /** Classes for the clickable wrapper (e.g. the framed card). */
   wrapperClassName?: string;
+  /** Rotate the image to landscape when the lightbox opens on a portrait phone. */
+  landscapeOnMobile?: boolean;
 }) {
   const mounted = useMounted();
   const [open, setOpen] = React.useState(false);
@@ -77,6 +93,16 @@ export function ZoomableImage({
       document.body.style.overflow = prevOverflow;
     };
   }, [open, close, zoomBy, reset]);
+
+  // On a portrait phone, rotate the (wide) image to landscape so it fills the
+  // screen instead of appearing as a thin strip. Subscribed via an external
+  // store so there's no set-state-in-effect.
+  const portraitPhone = React.useSyncExternalStore(
+    subscribePortraitPhone,
+    getPortraitPhone,
+    () => false
+  );
+  const rotated = open && landscapeOnMobile && portraitPhone;
 
   const onWheel = (e: React.WheelEvent) => {
     zoomBy(e.deltaY < 0 ? STEP : -STEP);
@@ -199,11 +225,24 @@ export function ZoomableImage({
                 onPointerUp={onPointerUp}
                 draggable={false}
                 style={{
-                  transform: `translate(${pos.x}px, ${pos.y}px) scale(${scale})`,
+                  transform: `translate(${pos.x}px, ${pos.y}px)${
+                    rotated ? " rotate(90deg)" : ""
+                  } scale(${scale})`,
                   cursor: scale > 1 ? "grab" : "zoom-in",
                   transition: dragging ? "none" : "transform 0.2s ease-out",
+                  // When rotated, constrain against the swapped viewport axes so
+                  // the landscape image fits the portrait screen.
+                  ...(rotated
+                    ? {
+                        maxWidth: "calc(100dvh - 2rem)",
+                        maxHeight: "calc(100dvw - 2rem)",
+                      }
+                    : {}),
                 }}
-                className="max-h-full max-w-full touch-none select-none rounded-lg shadow-2xl"
+                className={cn(
+                  "touch-none select-none rounded-lg shadow-2xl",
+                  !rotated && "max-h-full max-w-full"
+                )}
               />
             </div>
 

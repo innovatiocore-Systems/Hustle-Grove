@@ -56,6 +56,7 @@ export default function HomePage() {
               alt="Hustle Grove 2D Floor Plan — Level 4, University Ave Canberra"
               wrapperClassName="overflow-hidden rounded-3xl border border-border/70 shadow-2xl shadow-black/20"
               className="block w-full transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+              landscapeOnMobile
             />
             <p className="mt-3 text-center text-xs text-muted-foreground">
               Level 4 · 6 private suites · 14 dedicated desks · 1 meeting room

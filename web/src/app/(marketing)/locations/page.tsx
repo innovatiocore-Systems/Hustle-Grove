@@ -5,6 +5,7 @@ import { MapPin, Users, Clock, Wifi, Car, Coffee, Shield, ArrowRight } from "luc
 import { getSiteSettings } from "@/lib/settings/server";
 import { PageHeader } from "@/components/marketing/page-header";
 import { CtaSection } from "@/components/marketing/cta-section";
+import { ZoomableImage } from "@/components/marketing/zoomable-image";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -45,16 +46,13 @@ export default async function LocationsPage() {
 
       {/* 2D Floor Plan */}
       <section className="container-px py-10 md:py-14">
-        <div className="overflow-hidden rounded-3xl border border-border/70 shadow-2xl shadow-black/20">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/floor-plan-2d.png"
-            alt="Hustle Grove 2D Floor Plan — Level 4, University Ave Canberra"
-            className="w-full block"
-            loading="lazy"
-            style={{ display: "block" }}
-          />
-        </div>
+        <ZoomableImage
+          src="/floor-plan-2d.png"
+          alt="Hustle Grove 2D Floor Plan — Level 4, University Ave Canberra"
+          wrapperClassName="overflow-hidden rounded-3xl border border-border/70 shadow-2xl shadow-black/20"
+          className="block w-full"
+          landscapeOnMobile
+        />
         <p className="mt-3 text-center text-xs text-muted-foreground">
           Level 4 · 6 private suites · 14 dedicated desks · 1 meeting room
         </p>
