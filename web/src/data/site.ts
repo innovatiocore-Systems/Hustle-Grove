@@ -7,6 +7,8 @@ export const site = {
   email: "hello@hustlegrove.com.au",
   phone: "+61 2 6100 0142",
   headquarters: "Level 4, 1 University Avenue\nCanberra ACT 2601, Australia",
+  /** Canonical public URL — override with NEXT_PUBLIC_SITE_URL in deployment. */
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://hustle-grove.vercel.app",
 };
 
 export const mainNav = [

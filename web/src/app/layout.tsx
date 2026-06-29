@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
 import { getSiteSettings } from "@/lib/settings/server";
+import { site } from "@/data/site";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -23,13 +24,18 @@ const caveat = Caveat({
   display: "swap",
 });
 
+const TITLE_DEFAULT =
+  "The Hustle Grove Workspace — Where ambition takes root.";
+const DESCRIPTION =
+  "Flexible private offices, dedicated desks, hot desks and meeting rooms designed for modern teams to do their best work.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
   title: {
-    default: "The Hustle Grove Workspace — Where ambition takes root.",
+    default: TITLE_DEFAULT,
     template: "%s · Hustle Grove",
   },
-  description:
-    "Flexible private offices, dedicated desks, hot desks and meeting rooms designed for modern teams to do their best work.",
+  description: DESCRIPTION,
   keywords: [
     "coworking",
     "private office",
@@ -37,7 +43,31 @@ export const metadata: Metadata = {
     "dedicated desk",
     "meeting rooms",
     "Hustle Grove Workspaces",
+    "Canberra coworking",
   ],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: site.name,
+    title: TITLE_DEFAULT,
+    description: DESCRIPTION,
+    url: site.url,
+    locale: "en_AU",
+    images: [
+      {
+        url: "/hero-lounge.png",
+        width: 1536,
+        height: 1024,
+        alt: site.name,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE_DEFAULT,
+    description: DESCRIPTION,
+    images: ["/hero-lounge.png"],
+  },
 };
 
 export default async function RootLayout({
