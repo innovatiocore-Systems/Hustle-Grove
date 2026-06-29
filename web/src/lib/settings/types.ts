@@ -4,6 +4,9 @@ import { site } from "@/data/site";
 export interface SiteSettings {
   name: string;
   address: string;
+  email: string;
+  phone: string;
+  hours: string;
   logoUrl: string | null;
   logoSize: number;
   popupEnabled: boolean;
@@ -16,6 +19,9 @@ export interface SiteSettings {
 export const DEFAULT_SITE_SETTINGS: SiteSettings = {
   name: site.name,
   address: site.headquarters,
+  email: site.email,
+  phone: site.phone,
+  hours: "Mon–Fri, 8am–6pm · Member access 24/7",
   logoUrl: null,
   logoSize: 36,
   popupEnabled: false,

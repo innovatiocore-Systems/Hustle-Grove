@@ -20,8 +20,8 @@ import {
 import { cn } from "@/lib/utils";
 import { getLocation, locations } from "@/data/locations";
 import { getSolution } from "@/data/solutions";
-import { site } from "@/data/site";
 import { faqs } from "@/data/faqs";
+import { getSiteSettings } from "@/lib/settings/server";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Accordion } from "@/components/ui/accordion";
@@ -70,6 +70,8 @@ export default async function LocationDetailPage({
   const { slug } = await params;
   const location = getLocation(slug);
   if (!location) notFound();
+
+  const settings = await getSiteSettings();
 
   const offered = location.solutions
     .map((s) => getSolution(s))
@@ -306,14 +308,14 @@ export default async function LocationDetailPage({
                   <ArrowRight className="size-4" />
                 </Link>
                 <a
-                  href={`tel:${site.phone}`}
+                  href={`tel:${settings.phone}`}
                   className={cn(
                     buttonVariants({ variant: "outline", size: "lg" }),
                     "w-full"
                   )}
                 >
                   <Phone className="size-4" />
-                  {site.phone}
+                  {settings.phone}
                 </a>
               </div>
 

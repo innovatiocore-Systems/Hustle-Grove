@@ -152,10 +152,13 @@ export type Database = {
       site_settings: {
         Row: {
           address: string
+          email: string
+          hours: string
           id: boolean
           logo_size: number
           logo_url: string | null
           name: string
+          phone: string
           popup_enabled: boolean
           popup_message: string
           popup_title: string
@@ -164,10 +167,13 @@ export type Database = {
         }
         Insert: {
           address?: string
+          email?: string
+          hours?: string
           id?: boolean
           logo_size?: number
           logo_url?: string | null
           name: string
+          phone?: string
           popup_enabled?: boolean
           popup_message?: string
           popup_title?: string
@@ -176,10 +182,13 @@ export type Database = {
         }
         Update: {
           address?: string
+          email?: string
+          hours?: string
           id?: boolean
           logo_size?: number
           logo_url?: string | null
           name?: string
+          phone?: string
           popup_enabled?: boolean
           popup_message?: string
           popup_title?: string

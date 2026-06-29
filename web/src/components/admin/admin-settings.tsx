@@ -37,6 +37,9 @@ export function AdminSettings({ initial }: { initial: SiteSettings }) {
 
   const [name, setName] = React.useState(initial.name);
   const [address, setAddress] = React.useState(initial.address);
+  const [email, setEmail] = React.useState(initial.email);
+  const [phone, setPhone] = React.useState(initial.phone);
+  const [hours, setHours] = React.useState(initial.hours);
   const [logoUrl, setLogoUrl] = React.useState<string | null>(initial.logoUrl);
   const [logoSize, setLogoSize] = React.useState(initial.logoSize);
   const [popupEnabled, setPopupEnabled] = React.useState(initial.popupEnabled);
@@ -48,6 +51,9 @@ export function AdminSettings({ initial }: { initial: SiteSettings }) {
   const dirty =
     name !== initial.name ||
     address !== initial.address ||
+    email !== initial.email ||
+    phone !== initial.phone ||
+    hours !== initial.hours ||
     logoUrl !== initial.logoUrl ||
     logoSize !== initial.logoSize ||
     popupEnabled !== initial.popupEnabled ||
@@ -90,6 +96,9 @@ export function AdminSettings({ initial }: { initial: SiteSettings }) {
     const res = await updateSiteSettings({
       name: name.trim(),
       address: address.trim(),
+      email: email.trim(),
+      phone: phone.trim(),
+      hours: hours.trim(),
       logoUrl,
       logoSize,
       popupEnabled,
@@ -112,6 +121,9 @@ export function AdminSettings({ initial }: { initial: SiteSettings }) {
   const reset = () => {
     setName(initial.name);
     setAddress(initial.address);
+    setEmail(initial.email);
+    setPhone(initial.phone);
+    setHours(initial.hours);
     setLogoUrl(initial.logoUrl);
     setLogoSize(initial.logoSize);
     setPopupEnabled(initial.popupEnabled);
@@ -123,7 +135,7 @@ export function AdminSettings({ initial }: { initial: SiteSettings }) {
     <div className="space-y-6">
       <Card
         title="Branding"
-        description="Set the logo, name, and address used across the website."
+        description="Set the logo and name used across the website."
       >
         <div className="space-y-6">
           <div>
@@ -207,28 +219,71 @@ export function AdminSettings({ initial }: { initial: SiteSettings }) {
             </div>
           </div>
 
+          <div>
+            <Label className="mb-1.5" htmlFor="site-name">
+              Website name
+            </Label>
+            <Input
+              id="site-name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Hustle Grove Workspaces"
+            />
+          </div>
+        </div>
+      </Card>
+
+      <Card
+        title="Contact details"
+        description="Used on the contact page, footer, and across the website. Changes apply after saving."
+      >
+        <div className="space-y-5">
+          <div>
+            <Label className="mb-1.5" htmlFor="site-address">
+              Address
+            </Label>
+            <Textarea
+              id="site-address"
+              className="min-h-20"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              placeholder="Level 4, 1 University Avenue, Canberra ACT 2601, Australia"
+            />
+          </div>
           <div className="grid gap-5 sm:grid-cols-2">
             <div>
-              <Label className="mb-1.5" htmlFor="site-name">
-                Website name
+              <Label className="mb-1.5" htmlFor="site-email">
+                Email
               </Label>
               <Input
-                id="site-name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Hustle Grove Workspaces"
+                id="site-email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="hello@hustlegrove.com.au"
+              />
+            </div>
+            <div>
+              <Label className="mb-1.5" htmlFor="site-phone">
+                Phone number
+              </Label>
+              <Input
+                id="site-phone"
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="+61 2 6100 0142"
               />
             </div>
             <div className="sm:col-span-2">
-              <Label className="mb-1.5" htmlFor="site-address">
-                Address
+              <Label className="mb-1.5" htmlFor="site-hours">
+                Hours
               </Label>
-              <Textarea
-                id="site-address"
-                className="min-h-20"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                placeholder="548 Market Street, Suite 400, San Francisco, CA 94104"
+              <Input
+                id="site-hours"
+                value={hours}
+                onChange={(e) => setHours(e.target.value)}
+                placeholder="Mon–Fri, 8am–6pm · Member access 24/7"
               />
             </div>
           </div>

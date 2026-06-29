@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { MapPin, Mail, Phone, Clock } from "lucide-react";
 
-import { site } from "@/data/site";
 import { faqs } from "@/data/faqs";
 import { getSiteSettings } from "@/lib/settings/server";
 import { PageHeader } from "@/components/marketing/page-header";
@@ -27,19 +26,19 @@ export default async function ContactPage() {
     {
       icon: Mail,
       label: "Email us",
-      value: site.email,
-      href: `mailto:${site.email}`,
+      value: settings.email,
+      href: `mailto:${settings.email}`,
     },
     {
       icon: Phone,
       label: "Call us",
-      value: site.phone,
-      href: `tel:${site.phone}`,
+      value: settings.phone,
+      href: `tel:${settings.phone}`,
     },
     {
       icon: Clock,
       label: "Hours",
-      value: "Mon–Fri, 8am–6pm · Member access 24/7",
+      value: settings.hours,
     },
   ];
 

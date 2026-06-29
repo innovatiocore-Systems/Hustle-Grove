@@ -37,14 +37,14 @@ export async function Footer() {
               </p>
               <p className="flex items-center gap-2.5">
                 <Mail className="size-4 shrink-0 text-sidebar-primary" />
-                <a href={`mailto:${site.email}`} className="hover:text-white">
-                  {site.email}
+                <a href={`mailto:${settings.email}`} className="hover:text-white">
+                  {settings.email}
                 </a>
               </p>
               <p className="flex items-center gap-2.5">
                 <Phone className="size-4 shrink-0 text-sidebar-primary" />
-                <a href={`tel:${site.phone}`} className="hover:text-white">
-                  {site.phone}
+                <a href={`tel:${settings.phone}`} className="hover:text-white">
+                  {settings.phone}
                 </a>
               </p>
             </div>

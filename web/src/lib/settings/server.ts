@@ -11,6 +11,9 @@ export const SITE_SETTINGS_TAG = "site-settings";
 interface SiteSettingsRow {
   name: string;
   address: string;
+  email: string | null;
+  phone: string | null;
+  hours: string | null;
   logo_url: string | null;
   logo_size: number | null;
   popup_enabled: boolean | null;
@@ -24,7 +27,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
 
   try {
     const res = await fetch(
-      `${url}/rest/v1/site_settings?select=name,address,logo_url,logo_size,popup_enabled,popup_title,popup_message,resources_visible&limit=1`,
+      `${url}/rest/v1/site_settings?select=name,address,email,phone,hours,logo_url,logo_size,popup_enabled,popup_title,popup_message,resources_visible&limit=1`,
       {
         headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}` },
         next: { revalidate: 30, tags: [SITE_SETTINGS_TAG] },
@@ -39,6 +42,9 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     return {
       name: row.name || DEFAULT_SITE_SETTINGS.name,
       address: row.address ?? DEFAULT_SITE_SETTINGS.address,
+      email: row.email || DEFAULT_SITE_SETTINGS.email,
+      phone: row.phone || DEFAULT_SITE_SETTINGS.phone,
+      hours: row.hours || DEFAULT_SITE_SETTINGS.hours,
       logoUrl: row.logo_url,
       logoSize: row.logo_size ?? DEFAULT_SITE_SETTINGS.logoSize,
       popupEnabled: row.popup_enabled ?? false,

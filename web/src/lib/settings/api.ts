@@ -37,6 +37,9 @@ export interface SettingsResult {
 export async function updateSiteSettings(input: {
   name: string;
   address: string;
+  email: string;
+  phone: string;
+  hours: string;
   logoUrl: string | null;
   logoSize: number;
   popupEnabled: boolean;
@@ -51,6 +54,9 @@ export async function updateSiteSettings(input: {
     .update({
       name: input.name,
       address: input.address,
+      email: input.email,
+      phone: input.phone,
+      hours: input.hours,
       logo_url: input.logoUrl,
       logo_size: input.logoSize,
       popup_enabled: input.popupEnabled,
