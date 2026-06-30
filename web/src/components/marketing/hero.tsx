@@ -72,7 +72,7 @@ export function Hero() {
               href="/contact"
               className={cn(buttonVariants({ size: "lg" }), "group")}
             >
-              Book a Tour
+              Inquire Now
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
             <Link

@@ -16,15 +16,48 @@ import { Select } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 
 const schema = z.object({
-  name: z.string().min(2, "Please enter your name"),
-  email: z.string().email("Enter a valid email address"),
-  company: z.string().optional(),
-  phone: z.string().optional(),
-  interest: z.string().optional(),
-  message: z.string().min(10, "Tell us a little more (10+ characters)"),
+  name: z
+    .string()
+    .trim()
+    .min(2, "Please enter your name")
+    .max(100, "Name is too long"),
+  email: z
+    .string()
+    .trim()
+    .min(1, "Email is required")
+    .email("Enter a valid email address"),
+  company: z
+    .string()
+    .trim()
+    .max(120, "Company is too long")
+    .optional()
+    .or(z.literal("")),
+  phone: z
+    .string()
+    .trim()
+    .min(6, "Enter a valid phone number")
+    .max(32, "Phone number is too long")
+    .regex(/^[0-9\s+().-]+$/, "Phone number contains invalid characters"),
+  interest: z.string().min(1, "Please select a workspace type"),
+  date: z.string().optional().or(z.literal("")),
+  message: z
+    .string()
+    .trim()
+    .min(10, "Tell us a little more (10+ characters)")
+    .max(2000, "Message is too long"),
 });
 
 type FormValues = z.infer<typeof schema>;
+
+/** Marks a required field in a label. */
+function Req() {
+  return <span className="text-destructive"> *</span>;
+}
+
+/** Today as YYYY-MM-DD, for the preferred-date min. */
+function todayISO() {
+  return new Date().toISOString().slice(0, 10);
+}
 
 const interests = [
   "Private Office",
@@ -95,11 +128,17 @@ export function InquiryForm({
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { interest: defaultInterest ?? "" },
+    // When attached to a room, `interest` is hidden — seed it with the room name
+    // so the required check passes; otherwise use the provided default.
+    defaultValues: { interest: room ? room.roomName : defaultInterest ?? "", date: "" },
   });
 
   const onSubmit = async (values: FormValues) => {
-    const requestedDate = room && slot ? nextDateForWeekday(day) : "";
+    const requestedDate = room
+      ? slot
+        ? nextDateForWeekday(day)
+        : ""
+      : values.date ?? "";
     const requestedTime = room && slot ? slot : "";
 
     const res = await createInquiry({
@@ -129,7 +168,7 @@ export function InquiryForm({
           } shortly.`
         : `We'll email ${values.email} within one business day.`,
     });
-    reset({ interest: defaultInterest ?? "" });
+    reset({ interest: room ? room.roomName : defaultInterest ?? "", date: "" });
     setSlot(null);
     onSuccess?.();
   };
@@ -195,50 +234,73 @@ export function InquiryForm({
           </div>
         )}
 
+        {/* Room forms hide the interest picker — keep the seeded value registered. */}
+        {room && <input type="hidden" {...register("interest")} />}
+
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <Label htmlFor="name">Full name</Label>
-            <Input id="name" className="mt-1.5" placeholder="Jamie Rivera" {...register("name")} />
+            <Label htmlFor="name">
+              Full name<Req />
+            </Label>
+            <Input id="name" className="mt-1.5" placeholder="Jamie Rivera" aria-invalid={!!errors.name} {...register("name")} />
             <FieldError message={errors.name?.message} />
           </div>
           <div>
-            <Label htmlFor="email">Work email</Label>
-            <Input id="email" type="email" className="mt-1.5" placeholder="jamie@company.com" {...register("email")} />
+            <Label htmlFor="email">
+              Work email<Req />
+            </Label>
+            <Input id="email" type="email" className="mt-1.5" placeholder="jamie@company.com" aria-invalid={!!errors.email} {...register("email")} />
             <FieldError message={errors.email?.message} />
           </div>
           <div>
-            <Label htmlFor="company">Company</Label>
+            <Label htmlFor="company">Company (optional)</Label>
             <Input id="company" className="mt-1.5" placeholder="Acme Inc." {...register("company")} />
+            <FieldError message={errors.company?.message} />
           </div>
           <div>
-            <Label htmlFor="phone">Phone (optional)</Label>
-            <Input id="phone" className="mt-1.5" placeholder="+1 (555) 000-0000" {...register("phone")} />
+            <Label htmlFor="phone">
+              Phone<Req />
+            </Label>
+            <Input id="phone" type="tel" className="mt-1.5" placeholder="+61 2 6100 0142" aria-invalid={!!errors.phone} {...register("phone")} />
+            <FieldError message={errors.phone?.message} />
           </div>
         </div>
 
         {!room && (
-          <div>
-            <Label htmlFor="interest">I&apos;m interested in</Label>
-            <Select id="interest" className="mt-1.5" defaultValue={defaultInterest ?? ""} {...register("interest")}>
-              <option value="" disabled>
-                Select a workspace type
-              </option>
-              {interests.map((i) => (
-                <option key={i} value={i}>
-                  {i}
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <Label htmlFor="interest">
+                I&apos;m interested in<Req />
+              </Label>
+              <Select id="interest" className="mt-1.5" aria-invalid={!!errors.interest} {...register("interest")}>
+                <option value="" disabled>
+                  Select a workspace type
                 </option>
-              ))}
-            </Select>
-            <FieldError message={errors.interest?.message} />
+                {interests.map((i) => (
+                  <option key={i} value={i}>
+                    {i}
+                  </option>
+                ))}
+              </Select>
+              <FieldError message={errors.interest?.message} />
+            </div>
+            <div>
+              <Label htmlFor="date">Preferred date (optional)</Label>
+              <Input id="date" type="date" min={todayISO()} className="mt-1.5" {...register("date")} />
+              <FieldError message={errors.date?.message} />
+            </div>
           </div>
         )}
 
         <div>
-          <Label htmlFor="message">How can we help?</Label>
+          <Label htmlFor="message">
+            How can we help?<Req />
+          </Label>
           <Textarea
             id="message"
             className="mt-1.5"
             placeholder="Tell us about your team size, preferred location and timeline…"
+            aria-invalid={!!errors.message}
             {...register("message")}
           />
           <FieldError message={errors.message?.message} />

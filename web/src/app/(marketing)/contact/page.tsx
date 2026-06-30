@@ -11,7 +11,7 @@ import { Accordion } from "@/components/ui/accordion";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Get in touch with Hustle Grove Workspaces. Book a tour, ask about membership, or talk to our enterprise team.",
+    "Get in touch with Hustle Grove Workspaces. Make an inquiry, ask about membership, or talk to our team.",
 };
 
 export default async function ContactPage() {
@@ -47,7 +47,7 @@ export default async function ContactPage() {
       <PageHeader
         eyebrow="Contact us"
         title="Let's find your team the right space"
-        description="Book a tour, ask a question, or talk to our enterprise team. We typically reply within one business day."
+        description="Make an inquiry, ask a question, or talk to our team. We typically reply within one business day."
       />
 
       {/* Form + details */}

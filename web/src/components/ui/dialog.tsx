@@ -52,7 +52,12 @@ export function Dialog({
       />
       <div
         className={cn(
-          "relative z-10 w-full max-w-lg overflow-hidden rounded-2xl border border-border bg-card shadow-2xl animate-in fade-in-0 zoom-in-95",
+          "relative z-10 w-full max-w-lg overflow-y-auto overflow-x-hidden overscroll-contain rounded-2xl border border-border bg-card shadow-2xl animate-in fade-in-0 zoom-in-95",
+          // Never exceed the viewport — scroll inside the panel so footers
+          // (e.g. a Delete button) stay reachable on tall content / short screens.
+          align === "top"
+            ? "max-h-[calc(100dvh-12vh-1.5rem)]"
+            : "max-h-[calc(100dvh-2rem)]",
           className
         )}
       >

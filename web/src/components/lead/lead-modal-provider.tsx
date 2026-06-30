@@ -12,10 +12,10 @@ const configs: Record<
   { title: string; description: string; submit: string; defaultInterest?: string }
 > = {
   tour: {
-    title: "Book a Tour",
+    title: "Make an Inquiry",
     description:
-      "Tell us about your team and we'll arrange a time to show you around — we'll confirm within one business day.",
-    submit: "Request tour",
+      "Tell us what you're looking for and we'll be in touch within one business day.",
+    submit: "Send inquiry",
   },
   proposal: {
     title: "Request a Proposal",

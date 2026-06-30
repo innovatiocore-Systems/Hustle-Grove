@@ -29,7 +29,7 @@ export function CtaSection() {
               href="/contact"
               className={cn(buttonVariants({ variant: "solid", size: "lg" }), "bg-white text-primary hover:bg-white/90")}
             >
-              Book a Tour
+              Inquire Now
               <ArrowRight className="size-4" />
             </Link>
             <Link

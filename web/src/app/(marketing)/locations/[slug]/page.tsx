@@ -116,7 +116,7 @@ export default async function LocationDetailPage({
                 href="/contact"
                 className={cn(buttonVariants({ size: "lg" }))}
               >
-                Book a Tour
+                Inquire Now
                 <ArrowRight className="size-4" />
               </Link>
             </div>

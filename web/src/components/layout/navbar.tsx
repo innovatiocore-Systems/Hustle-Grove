@@ -125,7 +125,7 @@ export function Navbar({ resourcesVisible = true }: { resourcesVisible?: boolean
             </Link>
           )}
           <LeadButton lead="tour" size="sm" className="gap-1.5">
-            Book a Tour
+            Inquire Now
             <ArrowRight className="size-4" />
           </LeadButton>
         </div>
@@ -163,7 +163,7 @@ export function Navbar({ resourcesVisible = true }: { resourcesVisible?: boolean
                 </Link>
               )}
               <Link href="/contact" className={cn(buttonVariants(), "w-full")}>
-                Book a Tour
+                Inquire Now
               </Link>
             </div>
           </div>

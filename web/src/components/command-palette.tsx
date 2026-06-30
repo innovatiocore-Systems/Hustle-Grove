@@ -67,7 +67,7 @@ export function CommandPalette() {
 
   const items = React.useMemo<Item[]>(() => {
     const actions: Item[] = [
-      { id: "a-tour", group: "Actions", label: "Book a Tour", icon: CalendarCheck, action: () => openLead("tour") },
+      { id: "a-tour", group: "Actions", label: "Make an Inquiry", icon: CalendarCheck, action: () => openLead("tour") },
       { id: "a-proposal", group: "Actions", label: "Request a Proposal", icon: FileText, action: () => openLead("proposal") },
       { id: "a-sales", group: "Actions", label: "Contact Sales", icon: Phone, action: () => openLead("sales") },
     ];
