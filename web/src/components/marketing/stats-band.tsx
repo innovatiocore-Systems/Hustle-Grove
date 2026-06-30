@@ -1,4 +1,4 @@
-import { Building2, Users, Star, LayoutGrid } from "lucide-react";
+import { Building2, LayoutGrid } from "lucide-react";
 
 import { Counter } from "@/components/marketing/counter";
 
@@ -13,23 +13,13 @@ const stats = [
     value: "21",
     label: "Workspaces Available",
   },
-  {
-    icon: Users,
-    value: "40+",
-    label: "Active Members",
-  },
-  {
-    icon: Star,
-    value: "4.9/5",
-    label: "Member Rating",
-  },
 ];
 
 export function StatsBand() {
   return (
     <section className="container-px py-6">
       <div className="overflow-hidden rounded-3xl border border-border/70 bg-card px-6 py-7 shadow-sm md:px-10 md:py-8">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-border/70">
+        <div className="grid gap-6 sm:grid-cols-2 lg:divide-x lg:divide-border/70">
           {stats.map((stat) => {
             const Icon = stat.icon;
             return (
