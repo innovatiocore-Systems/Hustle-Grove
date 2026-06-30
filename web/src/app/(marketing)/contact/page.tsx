@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 export default async function ContactPage() {
   const settings = await getSiteSettings();
 
+  // Fields an admin has cleared are omitted entirely rather than shown blank.
   const contactDetails = [
     {
       icon: MapPin,
@@ -40,7 +41,7 @@ export default async function ContactPage() {
       label: "Hours",
       value: settings.hours,
     },
-  ];
+  ].filter((detail) => detail.value);
 
   return (
     <>

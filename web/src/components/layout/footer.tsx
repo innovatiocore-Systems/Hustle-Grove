@@ -31,22 +31,28 @@ export async function Footer() {
               modern teams do their best work.
             </p>
             <div className="mt-6 space-y-3 text-sm text-white/70">
-              <p className="flex items-start gap-2.5">
-                <MapPin className="mt-0.5 size-4 shrink-0 text-sidebar-primary" />
-                {settings.address}
-              </p>
-              <p className="flex items-center gap-2.5">
-                <Mail className="size-4 shrink-0 text-sidebar-primary" />
-                <a href={`mailto:${settings.email}`} className="hover:text-white">
-                  {settings.email}
-                </a>
-              </p>
-              <p className="flex items-center gap-2.5">
-                <Phone className="size-4 shrink-0 text-sidebar-primary" />
-                <a href={`tel:${settings.phone}`} className="hover:text-white">
-                  {settings.phone}
-                </a>
-              </p>
+              {settings.address && (
+                <p className="flex items-start gap-2.5">
+                  <MapPin className="mt-0.5 size-4 shrink-0 text-sidebar-primary" />
+                  {settings.address}
+                </p>
+              )}
+              {settings.email && (
+                <p className="flex items-center gap-2.5">
+                  <Mail className="size-4 shrink-0 text-sidebar-primary" />
+                  <a href={`mailto:${settings.email}`} className="hover:text-white">
+                    {settings.email}
+                  </a>
+                </p>
+              )}
+              {settings.phone && (
+                <p className="flex items-center gap-2.5">
+                  <Phone className="size-4 shrink-0 text-sidebar-primary" />
+                  <a href={`tel:${settings.phone}`} className="hover:text-white">
+                    {settings.phone}
+                  </a>
+                </p>
+              )}
             </div>
           </div>
 

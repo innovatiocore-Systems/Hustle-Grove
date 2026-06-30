@@ -40,11 +40,15 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     if (!row) return DEFAULT_SITE_SETTINGS;
 
     return {
+      // Contact fields intentionally preserve an empty value: when an admin
+      // clears address/email/phone/hours we hide it on the site rather than
+      // resurrecting the static default. `name` always falls back so the brand
+      // never renders blank.
       name: row.name || DEFAULT_SITE_SETTINGS.name,
-      address: row.address ?? DEFAULT_SITE_SETTINGS.address,
-      email: row.email || DEFAULT_SITE_SETTINGS.email,
-      phone: row.phone || DEFAULT_SITE_SETTINGS.phone,
-      hours: row.hours || DEFAULT_SITE_SETTINGS.hours,
+      address: row.address?.trim() ?? "",
+      email: row.email?.trim() ?? "",
+      phone: row.phone?.trim() ?? "",
+      hours: row.hours?.trim() ?? "",
       logoUrl: row.logo_url,
       logoSize: row.logo_size ?? DEFAULT_SITE_SETTINGS.logoSize,
       popupEnabled: row.popup_enabled ?? false,
