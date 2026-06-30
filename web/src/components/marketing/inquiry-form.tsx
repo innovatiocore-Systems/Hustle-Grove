@@ -39,7 +39,6 @@ const schema = z.object({
     .max(32, "Phone number is too long")
     .regex(/^[0-9\s+().-]+$/, "Phone number contains invalid characters"),
   interest: z.string().min(1, "Please select a workspace type"),
-  date: z.string().optional().or(z.literal("")),
   message: z
     .string()
     .trim()
@@ -130,15 +129,13 @@ export function InquiryForm({
     resolver: zodResolver(schema),
     // When attached to a room, `interest` is hidden — seed it with the room name
     // so the required check passes; otherwise use the provided default.
-    defaultValues: { interest: room ? room.roomName : defaultInterest ?? "", date: "" },
+    defaultValues: { interest: room ? room.roomName : defaultInterest ?? "" },
   });
 
   const onSubmit = async (values: FormValues) => {
-    const requestedDate = room
-      ? slot
-        ? nextDateForWeekday(day)
-        : ""
-      : values.date ?? "";
+    // Record the submission date by default; a room booking with a chosen slot
+    // overrides it with the requested booking date.
+    const requestedDate = room && slot ? nextDateForWeekday(day) : todayISO();
     const requestedTime = room && slot ? slot : "";
 
     const res = await createInquiry({
@@ -168,7 +165,7 @@ export function InquiryForm({
           } shortly.`
         : `We'll email ${values.email} within one business day.`,
     });
-    reset({ interest: room ? room.roomName : defaultInterest ?? "", date: "" });
+    reset({ interest: room ? room.roomName : defaultInterest ?? "" });
     setSlot(null);
     onSuccess?.();
   };
@@ -267,28 +264,21 @@ export function InquiryForm({
         </div>
 
         {!room && (
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div>
-              <Label htmlFor="interest">
-                I&apos;m interested in<Req />
-              </Label>
-              <Select id="interest" className="mt-1.5" aria-invalid={!!errors.interest} {...register("interest")}>
-                <option value="" disabled>
-                  Select a workspace type
+          <div>
+            <Label htmlFor="interest">
+              I&apos;m interested in<Req />
+            </Label>
+            <Select id="interest" className="mt-1.5" aria-invalid={!!errors.interest} {...register("interest")}>
+              <option value="" disabled>
+                Select a workspace type
+              </option>
+              {interests.map((i) => (
+                <option key={i} value={i}>
+                  {i}
                 </option>
-                {interests.map((i) => (
-                  <option key={i} value={i}>
-                    {i}
-                  </option>
-                ))}
-              </Select>
-              <FieldError message={errors.interest?.message} />
-            </div>
-            <div>
-              <Label htmlFor="date">Preferred date (optional)</Label>
-              <Input id="date" type="date" min={todayISO()} className="mt-1.5" {...register("date")} />
-              <FieldError message={errors.date?.message} />
-            </div>
+              ))}
+            </Select>
+            <FieldError message={errors.interest?.message} />
           </div>
         )}
 

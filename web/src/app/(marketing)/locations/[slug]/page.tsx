@@ -25,7 +25,7 @@ import { getSiteSettings } from "@/lib/settings/server";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Accordion } from "@/components/ui/accordion";
-import { InquiryForm } from "@/components/marketing/inquiry-form";
+import { LeadButton } from "@/components/lead/lead-button";
 import { Gallery } from "@/components/marketing/gallery";
 
 export function generateStaticParams() {
@@ -432,11 +432,16 @@ export default async function LocationDetailPage({
               availability, pricing and a personalised tour of the space.
             </p>
           </div>
-          <InquiryForm
-            title="Inquire about this space"
-            description={`We'll get back to you about ${location.name} within one business day.`}
-            submitLabel="Send inquiry"
-          />
+          <div className="flex flex-col items-start justify-center gap-5 rounded-2xl border border-border/70 bg-card p-8">
+            <p className="text-base leading-relaxed text-muted-foreground">
+              Ready to find out more about {location.name}? Send us an inquiry and
+              our team will be in touch within one business day.
+            </p>
+            <LeadButton lead="tour" size="lg" className="gap-2">
+              Make an Inquiry
+              <ArrowRight className="size-4" />
+            </LeadButton>
+          </div>
         </div>
       </section>
     </>
