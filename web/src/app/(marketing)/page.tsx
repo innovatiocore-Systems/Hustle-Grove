@@ -31,14 +31,14 @@ export default function HomePage() {
         </Reveal>
       )}
 
-      {/* 3D Floor Plan preview */}
+      {/* 2D Floor Plan preview */}
       <section className="bg-sand/60 py-20 md:py-28">
         <div className="container-px">
           <Reveal className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <SectionHeading
               eyebrow="Our space · Level 4, University Ave"
               title={<>Tour the floor before you visit</>}
-              description="Explore every workspace zone in our interactive 3D floor plan. Private suites, dedicated desks, meeting room and more — all on one level."
+              description="Explore every workspace zone in our interactive 2D floor plan. Private suites, dedicated desks, meeting room and more — all on one level."
               className="max-w-2xl"
             />
             <Link
