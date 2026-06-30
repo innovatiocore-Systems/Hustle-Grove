@@ -101,7 +101,7 @@ export default function AboutPage() {
 
       {/* Stats */}
       <section className="bg-sand/40 py-16 md:py-20">
-        <div className="container-px grid grid-cols-2 gap-8 md:grid-cols-4">
+        <div className="container-px mx-auto grid max-w-2xl grid-cols-2 gap-8">
           {companyStats.map((stat) => (
             <StatCard key={stat.label} stat={stat} />
           ))}

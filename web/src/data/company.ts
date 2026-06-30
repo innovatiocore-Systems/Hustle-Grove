@@ -5,8 +5,6 @@ import type { Stat, Value } from "@/lib/types";
 export const companyStats: Stat[] = [
   { label: "Location", value: "Canberra", description: "Level 4, University Ave CBD" },
   { label: "Floor Space", value: "~145 sqm", description: "One premium level" },
-  { label: "Member Retention", value: "94%", description: "Love where they work" },
-  { label: "Member Rating", value: "4.9/5", description: "From our members" },
 ];
 
 export const values: Value[] = [
