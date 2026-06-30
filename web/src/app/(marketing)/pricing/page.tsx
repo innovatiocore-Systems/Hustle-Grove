@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import { Clock, CalendarDays, CalendarRange, ArrowRight } from "lucide-react";
 
-import { faqs } from "@/data/faqs";
 import { meetingRoomRates } from "@/data/plans";
 import { PageHeader } from "@/components/marketing/page-header";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { PricingPlans } from "@/components/marketing/pricing-plans";
-import { Accordion } from "@/components/ui/accordion";
 import { LeadButton } from "@/components/lead/lead-button";
 
 export const metadata: Metadata = {
@@ -76,18 +74,6 @@ export default function PricingPage() {
             Book a free tour
             <ArrowRight className="size-4" />
           </LeadButton>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="bg-sand/60 py-20 md:py-28">
-        <div className="container-px grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-          <SectionHeading
-            eyebrow="FAQ"
-            title={<>Pricing questions, answered</>}
-            description="Still curious? Reach out and our team will be glad to help."
-          />
-          <Accordion items={faqs} />
         </div>
       </section>
     </>

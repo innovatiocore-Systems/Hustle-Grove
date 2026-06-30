@@ -2,8 +2,6 @@ import {
   Wifi,
   Users,
   PartyPopper,
-  Coffee,
-  Clock,
   ConciergeBell,
   Printer,
   Lock,
@@ -31,18 +29,6 @@ export const amenities: Amenity[] = [
     description:
       "Flexible venues for launches, workshops and team offsites — fully catered.",
     icon: PartyPopper,
-  },
-  {
-    name: "Coffee & Refreshments",
-    description:
-      "Barista-grade coffee, curated teas and filtered water on tap, all day.",
-    icon: Coffee,
-  },
-  {
-    name: "24/7 Access",
-    description:
-      "Secure keycard entry around the clock so your team works on its own schedule.",
-    icon: Clock,
   },
   {
     name: "Reception Services",
