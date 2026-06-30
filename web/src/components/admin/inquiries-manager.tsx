@@ -1,12 +1,14 @@
 "use client";
 
 import * as React from "react";
-import { Search, Loader2 } from "lucide-react";
+import { Search, Loader2, RefreshCw, Trash2 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { useInquiries } from "@/lib/inquiries/use-inquiries";
 import { INQUIRY_STATUSES, type Inquiry, type InquiryStatus } from "@/lib/inquiries/types";
 import { Select } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogHeader } from "@/components/ui/dialog";
 import {
   Table,
   TableHeader,
@@ -26,10 +28,20 @@ import { InquiryDetailDialog } from "@/components/admin/inquiry-detail-dialog";
 type StatusFilter = "All" | InquiryStatus;
 
 export function InquiriesManager() {
-  const { inquiries, loading, error, reload, setStatus } = useInquiries();
+  const { inquiries, loading, error, reload, setStatus, remove } = useInquiries();
   const [query, setQuery] = React.useState("");
   const [filter, setFilter] = React.useState<StatusFilter>("All");
   const [active, setActive] = React.useState<Inquiry | null>(null);
+  const [deleteTarget, setDeleteTarget] = React.useState<Inquiry | null>(null);
+  const [deleting, setDeleting] = React.useState(false);
+
+  const confirmDelete = async () => {
+    if (!deleteTarget) return;
+    setDeleting(true);
+    await remove(deleteTarget.id);
+    setDeleting(false);
+    setDeleteTarget(null);
+  };
 
   const filtered = React.useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -57,6 +69,16 @@ export function InquiriesManager() {
             {inquiries.filter((i) => i.status === "New").length} new
           </p>
         </div>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={reload}
+          disabled={loading}
+          className="gap-2 self-start"
+        >
+          <RefreshCw className={cn("size-4", loading && "animate-spin")} />
+          Refresh
+        </Button>
       </div>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -99,7 +121,7 @@ export function InquiriesManager() {
           }
         />
       ) : (
-        <div className="overflow-hidden rounded-2xl border border-border/70 bg-card">
+        <div className="overflow-x-auto rounded-2xl border border-border/70 bg-card">
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-transparent">
@@ -149,7 +171,51 @@ export function InquiriesManager() {
         inquiry={activeLive}
         onClose={() => setActive(null)}
         onStatusChange={setStatus}
+        onDelete={(i) => {
+          setActive(null);
+          setDeleteTarget(i);
+        }}
       />
+
+      <Dialog open={!!deleteTarget} onClose={() => setDeleteTarget(null)}>
+        {deleteTarget && (
+          <>
+            <DialogHeader
+              title="Delete inquiry?"
+              description={`This permanently removes the inquiry from ${deleteTarget.fullName}. This can't be undone.`}
+              onClose={() => setDeleteTarget(null)}
+            />
+            <div className="flex justify-end gap-3 p-6">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setDeleteTarget(null)}
+                disabled={deleting}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="button"
+                onClick={confirmDelete}
+                disabled={deleting}
+                className="gap-2 bg-destructive text-white hover:bg-destructive/90"
+              >
+                {deleting ? (
+                  <>
+                    <Loader2 className="size-4 animate-spin" />
+                    Deleting…
+                  </>
+                ) : (
+                  <>
+                    <Trash2 className="size-4" />
+                    Delete
+                  </>
+                )}
+              </Button>
+            </div>
+          </>
+        )}
+      </Dialog>
     </div>
   );
 }

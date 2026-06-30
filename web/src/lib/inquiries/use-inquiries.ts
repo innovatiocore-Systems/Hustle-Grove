@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import {
   listInquiries,
   updateInquiryStatus as apiUpdateStatus,
+  deleteInquiry as apiDeleteInquiry,
 } from "@/lib/inquiries/api";
 import type { Inquiry, InquiryStatus } from "@/lib/inquiries/types";
 
@@ -62,5 +63,24 @@ export function useInquiries() {
     [inquiries]
   );
 
-  return { inquiries, loading, error, reload: load, setStatus };
+  const remove = React.useCallback(
+    async (id: string) => {
+      const previous = inquiries;
+      // Optimistic removal.
+      setInquiries((rows) => rows.filter((r) => r.id !== id));
+      const res = await apiDeleteInquiry(id);
+      if (!res.ok) {
+        setInquiries(previous);
+        toast.error("Couldn't delete inquiry", {
+          description: res.error ?? "Please try again.",
+        });
+        return false;
+      }
+      toast.success("Inquiry deleted");
+      return true;
+    },
+    [inquiries]
+  );
+
+  return { inquiries, loading, error, reload: load, setStatus, remove };
 }

@@ -8,6 +8,7 @@ import {
   MapPin,
   CalendarClock,
   DoorOpen,
+  Trash2,
 } from "lucide-react";
 
 import { Dialog, DialogHeader } from "@/components/ui/dialog";
@@ -51,10 +52,12 @@ export function InquiryDetailDialog({
   inquiry,
   onClose,
   onStatusChange,
+  onDelete,
 }: {
   inquiry: Inquiry | null;
   onClose: () => void;
   onStatusChange: (id: string, status: InquiryStatus) => void;
+  onDelete?: (inquiry: Inquiry) => void;
 }) {
   const schedule = [inquiry?.requestedDate ? shortDate(inquiry.requestedDate) : null, inquiry?.requestedTime]
     .filter(Boolean)
@@ -111,6 +114,19 @@ export function InquiryDetailDialog({
               </div>
             )}
           </div>
+
+          {onDelete && (
+            <div className="flex justify-end border-t border-border/70 p-4">
+              <button
+                type="button"
+                onClick={() => onDelete(inquiry)}
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium text-destructive transition-colors hover:bg-destructive/10"
+              >
+                <Trash2 className="size-4" />
+                Delete inquiry
+              </button>
+            </div>
+          )}
         </>
       )}
     </Dialog>

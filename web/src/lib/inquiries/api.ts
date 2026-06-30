@@ -60,6 +60,17 @@ export async function listInquiries(): Promise<Result<Inquiry[]>> {
   return { ok: true, data: (data ?? []).map(mapInquiry) };
 }
 
+/** Permanently delete an inquiry (admin only — enforced by RLS). */
+export async function deleteInquiry(id: string): Promise<Result<null>> {
+  const supabase = getSupabase();
+  if (!supabase) return { ok: false, error: NOT_CONFIGURED };
+
+  const { error } = await supabase.from("inquiries").delete().eq("id", id);
+
+  if (error) return { ok: false, error: error.message };
+  return { ok: true, data: null };
+}
+
 /** Update an inquiry's workflow status (admin / CRM). */
 export async function updateInquiryStatus(
   id: string,
