@@ -57,9 +57,6 @@ export default function PricingPage() {
               );
             })}
           </div>
-          <p className="mt-6 text-center text-xs text-muted-foreground">
-            Members receive 5–unlimited complimentary hours per month depending on plan.
-          </p>
         </div>
       </section>
 
