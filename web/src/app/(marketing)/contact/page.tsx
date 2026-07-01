@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
 import { MapPin, Mail, Phone, Clock } from "lucide-react";
 
-import { faqs } from "@/data/faqs";
 import { getSiteSettings } from "@/lib/settings/server";
 import { PageHeader } from "@/components/marketing/page-header";
-import { SectionHeading } from "@/components/marketing/section-heading";
 import { InquiryForm } from "@/components/marketing/inquiry-form";
-import { Accordion } from "@/components/ui/accordion";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -96,7 +93,7 @@ export default async function ContactPage() {
       </section>
 
       {/* Map */}
-      <section className="container-px pb-12 sm:pb-16 md:pb-20">
+      <section className="container-px pb-14 sm:pb-20 md:pb-28">
         <div className="overflow-hidden rounded-2xl border border-border/70 sm:rounded-3xl">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3257.051427834239!2d149.1231730766086!3d-35.279847593521524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b164d426070001d%3A0x2c16216b7ef71df9!2slevel%204%2F28%20University%20Ave%2C%20Canberra%20ACT%202601%2C%20Australia!5e0!3m2!1sen!2snp!4v1782299287785!5m2!1sen!2snp"
@@ -107,18 +104,6 @@ export default async function ContactPage() {
             title="Hustle Grove location"
             className="block h-[300px] w-full sm:h-[400px] lg:h-[450px]"
           />
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="bg-sand/40 py-14 sm:py-20 md:py-28">
-        <div className="container-px grid gap-8 sm:gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-12">
-          <SectionHeading
-            eyebrow="FAQ"
-            title={<>Frequently asked questions</>}
-            description="Can't find what you're looking for? Reach out and our team will be glad to help."
-          />
-          <Accordion items={faqs} />
         </div>
       </section>
     </>
