@@ -12,6 +12,7 @@ import {
   X,
   LogOut,
   UserCircle,
+  ChevronDown,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -109,11 +110,23 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
     <img
       src={user.avatarUrl}
       alt=""
-      className="size-10 rounded-full object-cover"
+      className="size-9 rounded-full object-cover"
     />
   ) : (
-    <span className="flex size-10 items-center justify-center rounded-full bg-brand-gradient font-semibold uppercase text-white">
+    <span className="flex size-9 items-center justify-center rounded-full bg-brand-gradient font-semibold uppercase text-white">
       {initials}
+    </span>
+  );
+
+  // Present the avatar as an obvious account menu: chevron + name affordance so
+  // it's clear it's clickable (and where "Your profile" lives).
+  const accountTrigger = (
+    <span className="flex items-center gap-2 rounded-full border border-border bg-card py-1 pl-1 pr-2.5 transition-colors hover:bg-muted">
+      {avatarChip}
+      <span className="hidden max-w-32 truncate text-sm font-medium text-foreground sm:block">
+        {user?.firstName || "Account"}
+      </span>
+      <ChevronDown className="size-4 text-muted-foreground" />
     </span>
   );
 
@@ -164,7 +177,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
               Admin mode
             </span>
             <ThemeToggle />
-            <DropdownMenu trigger={avatarChip}>
+            <DropdownMenu trigger={accountTrigger}>
               <DropdownLabel>
                 <p className="text-sm font-medium text-foreground">
                   {user?.fullName ?? "Signed in"}
