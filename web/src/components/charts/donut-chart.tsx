@@ -63,7 +63,9 @@ export function DonutChart({
                   fontSize="7"
                   fontWeight="600"
                   fill="white"
-                  stroke="var(--foreground)"
+                  // Fixed dark halo (not theme-dependent) so white labels stay
+                  // legible on every segment colour in both light and dark mode.
+                  stroke="rgba(0,0,0,0.55)"
                   strokeWidth="2"
                   paintOrder="stroke"
                 >
