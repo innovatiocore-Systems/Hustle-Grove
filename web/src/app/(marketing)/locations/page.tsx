@@ -78,7 +78,6 @@ export default async function LocationsPage() {
         <div className="container-px grid gap-12 lg:grid-cols-2">
           <div>
             <h2 className="font-display text-2xl font-bold text-foreground">Everything included</h2>
-            <p className="mt-1.5 text-sm text-muted-foreground">No hidden extras. No setup fees.</p>
             <div className="mt-8 grid grid-cols-2 gap-4">
               {amenities.map(({ icon: Icon, label }) => (
                 <div key={label} className="flex items-center gap-3 text-sm font-medium text-foreground">

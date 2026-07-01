@@ -21,7 +21,7 @@ export default function PricingPage() {
       <PageHeader
         eyebrow="Membership plans"
         title="Simple, flexible pricing"
-        description="Choose the membership that fits today — and flex up or down as your team grows. All prices in AUD. No hidden fees."
+        description="Choose the membership that fits today — and flex up or down as your team grows. All prices in AUD."
       />
 
       {/* Plans */}
