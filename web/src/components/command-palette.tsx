@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 import { FEATURES } from "@/lib/features";
 import { Dialog } from "@/components/ui/dialog";
 import { useLeadModal } from "@/components/lead/lead-modal-provider";
+import { useSiteSettings } from "@/components/site-settings-provider";
 
 type Item = {
   id: string;
@@ -34,6 +35,7 @@ type Item = {
 export function CommandPalette() {
   const router = useRouter();
   const { open: openLead } = useLeadModal();
+  const { resourcesVisible } = useSiteSettings();
   const [open, setOpen] = React.useState(false);
   const [query, setQuery] = React.useState("");
   const [active, setActive] = React.useState(0);
@@ -75,7 +77,10 @@ export function CommandPalette() {
       { id: "n-home",      group: "Navigate", label: "Home",             icon: Home,          href: "/" },
       { id: "n-locations", group: "Navigate", label: "Our Space",        icon: MapPin,        href: "/locations" },
       { id: "n-pricing",   group: "Navigate", label: "Membership Plans", icon: CreditCard,    href: "/pricing" },
-      { id: "n-resources", group: "Navigate", label: "Resources",        icon: FileText,      href: "/resources" },
+      // Only surface Resources when the admin has the section enabled.
+      ...(resourcesVisible
+        ? [{ id: "n-resources", group: "Navigate", label: "Resources", icon: FileText, href: "/resources" } as Item]
+        : []),
       { id: "n-about",     group: "Navigate", label: "About",            icon: Info,          href: "/about" },
       { id: "n-contact",   group: "Navigate", label: "Contact",          icon: Phone,         href: "/contact" },
       ...(FEATURES.memberAccess
@@ -83,7 +88,7 @@ export function CommandPalette() {
         : []),
     ];
     return [...actions, ...nav];
-  }, [openLead]);
+  }, [openLead, resourcesVisible]);
 
   const filtered = React.useMemo(() => {
     const q = query.trim().toLowerCase();
