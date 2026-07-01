@@ -62,5 +62,5 @@ export const amenities: Amenity[] = [
   },
 ];
 
-/** The six headline amenities featured on the home page. */
-export const featuredAmenities = amenities.slice(0, 6);
+/** The headline amenities featured on the home page. */
+export const featuredAmenities = amenities.slice(0, 3);
