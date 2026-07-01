@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { MapPin, Users, Clock, Wifi, Car, Coffee, Shield, ArrowRight } from "lucide-react";
+import { MapPin, Users, Clock, Wifi, Car, Shield, ArrowRight } from "lucide-react";
 
 import { getSiteSettings } from "@/lib/settings/server";
 import { PageHeader } from "@/components/marketing/page-header";
@@ -26,9 +26,7 @@ const spaces = [
 
 const amenities = [
   { icon: Wifi,     label: "Gigabit Wi-Fi" },
-  { icon: Coffee,   label: "Barista coffee" },
   { icon: Car,      label: "Parking nearby" },
-  { icon: Clock,    label: "24 / 7 member access" },
   { icon: Shield,   label: "Secure key-card entry" },
   { icon: Users,    label: "Networking events" },
 ];
