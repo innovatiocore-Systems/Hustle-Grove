@@ -78,7 +78,7 @@ export default function HomePage() {
           <SectionHeading
             eyebrow="Amenities"
             title={<>Everything handled, so you can focus on the work</>}
-            description="Thoughtful amenities included with every membership — no hidden extras, no setup, no fuss."
+            description="Thoughtful amenities included with every membership — no setup, no fuss."
             align="center"
             className="mx-auto"
           />
