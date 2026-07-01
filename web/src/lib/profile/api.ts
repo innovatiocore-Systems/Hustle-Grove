@@ -10,8 +10,14 @@ const NO_SESSION =
 
 /**
  * Returns the browser client only once its persisted auth session is restored,
- * plus the current user. Mirrors the guard in `src/lib/settings/api.ts` so an
- * authenticated write is never sent as `anon` (which RLS would reject).
+ * plus the current user. Mirrors the guard in `src/lib/settings/api.ts`.
+ *
+ * IMPORTANT: use `getSession()` (not `getUser()`). supabase-js resolves the
+ * token for Storage/PostgREST via `getSession()` and falls back to the anon /
+ * publishable key when the in-memory session isn't primed. `getUser()` only
+ * validates over the network without hydrating that session, so a subsequent
+ * `storage.upload` could go out as `anon` and RLS would reject it. Calling
+ * `getSession()` here primes the session the upload relies on.
  */
 async function getAuthedClient(): Promise<
   | {
@@ -31,10 +37,11 @@ async function getAuthedClient(): Promise<
   if (!supabase) return { ok: false, message: NOT_CONFIGURED };
 
   const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return { ok: false, message: NO_SESSION };
+    data: { session },
+  } = await supabase.auth.getSession();
+  if (!session?.user) return { ok: false, message: NO_SESSION };
 
+  const user = session.user;
   return {
     ok: true,
     supabase,
@@ -146,9 +153,13 @@ export async function uploadAvatar(
   const ext = file.name.split(".").pop()?.toLowerCase() || "png";
   const path = `${authed.user.id}/avatar-${Date.now()}.${ext}`;
 
+  // `upsert:false` — each filename is unique (timestamped), so there's never a
+  // conflict. Upsert issues an INSERT..ON CONFLICT that also evaluates the
+  // UPDATE storage policy and is rejected by our owner-folder RLS; a plain
+  // insert passes cleanly. The previous object is removed below instead.
   const { error } = await authed.supabase.storage
     .from("avatars")
-    .upload(path, file, { upsert: true, cacheControl: "3600" });
+    .upload(path, file, { upsert: false, cacheControl: "3600" });
   if (error) return { ok: false, message: error.message };
 
   const prev = avatarPathFromUrl(previousUrl);
