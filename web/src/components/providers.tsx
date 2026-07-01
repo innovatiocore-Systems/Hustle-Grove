@@ -20,7 +20,7 @@ export function Providers({
     <ThemeProvider
       attribute="class"
       defaultTheme="light"
-      enableSystem={false}
+      enableSystem
       disableTransitionOnChange
     >
       <SiteSettingsProvider value={siteSettings}>

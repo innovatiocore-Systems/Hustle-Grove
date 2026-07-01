@@ -28,6 +28,7 @@ interface AuthContextValue {
   login: (email: string, password: string) => Promise<AuthResult>;
   register: (payload: RegisterPayload) => Promise<AuthResult>;
   setSession: (auth: AuthResponse) => void;
+  updateUser: (partial: Partial<AuthUser>) => void;
   logout: () => void;
 }
 
@@ -88,6 +89,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     [persist]
   );
 
+  // Merge updated fields into the current user and re-persist, so profile
+  // edits (name, avatar…) reflect in the shell without a re-login.
+  const updateUser = React.useCallback<AuthContextValue["updateUser"]>(
+    (partial) => {
+      setUser((prev) => {
+        if (!prev) return prev;
+        const next = { ...prev, ...partial };
+        try {
+          localStorage.setItem(USER_KEY, JSON.stringify(next));
+        } catch {
+          /* ignore */
+        }
+        return next;
+      });
+    },
+    []
+  );
+
   const logout = React.useCallback(() => {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(USER_KEY);
@@ -104,6 +123,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     login,
     register,
     setSession: persist,
+    updateUser,
     logout,
   };
 

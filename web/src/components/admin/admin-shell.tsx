@@ -11,6 +11,7 @@ import {
   Menu,
   X,
   LogOut,
+  UserCircle,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -103,6 +104,19 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
     ? `${user.firstName?.[0] ?? ""}${user.lastName?.[0] ?? ""}` || "U"
     : "HG";
 
+  const avatarChip = user?.avatarUrl ? (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={user.avatarUrl}
+      alt=""
+      className="size-10 rounded-full object-cover"
+    />
+  ) : (
+    <span className="flex size-10 items-center justify-center rounded-full bg-brand-gradient font-semibold uppercase text-white">
+      {initials}
+    </span>
+  );
+
   const signOut = () => {
     logout();
     router.replace("/admin-login");
@@ -150,13 +164,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
               Admin mode
             </span>
             <ThemeToggle />
-            <DropdownMenu
-              trigger={
-                <span className="flex size-10 items-center justify-center rounded-full bg-brand-gradient font-semibold uppercase text-white">
-                  {initials}
-                </span>
-              }
-            >
+            <DropdownMenu trigger={avatarChip}>
               <DropdownLabel>
                 <p className="text-sm font-medium text-foreground">
                   {user?.fullName ?? "Signed in"}
@@ -164,6 +172,10 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                 <p className="font-normal text-muted-foreground">{user?.email}</p>
               </DropdownLabel>
               <DropdownSeparator />
+              <DropdownItem onSelect={() => router.push("/admin/profile")}>
+                <UserCircle />
+                Your profile
+              </DropdownItem>
               <DropdownItem onSelect={() => router.push("/")}>
                 <LayoutDashboard />
                 Back to site

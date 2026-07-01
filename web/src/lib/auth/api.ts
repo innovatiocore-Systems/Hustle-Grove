@@ -13,6 +13,8 @@ export interface AuthUser {
   firstName: string;
   lastName: string;
   fullName: string;
+  displayName?: string | null;
+  avatarUrl?: string | null;
   phoneNumber?: string | null;
   jobTitle?: string | null;
   companyName?: string | null;

@@ -34,7 +34,7 @@ export async function signInWithSupabase(
   // signed in). Fall back to the JWT user metadata if the row is missing.
   const { data: profile } = await supabase
     .from("profiles")
-    .select("first_name, last_name, role, is_active")
+    .select("first_name, last_name, display_name, avatar_url, role, is_active")
     .eq("id", data.user.id)
     .single();
 
@@ -50,6 +50,8 @@ export async function signInWithSupabase(
     firstName,
     lastName,
     fullName: `${firstName} ${lastName}`.trim() || userEmail,
+    displayName: profile?.display_name || null,
+    avatarUrl: profile?.avatar_url || null,
     isActive: profile?.is_active ?? true,
     emailConfirmed: Boolean(data.user.email_confirmed_at),
     roles: [role],
