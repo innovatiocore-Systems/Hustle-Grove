@@ -2,18 +2,37 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Inbox, Sparkles, Building2, DoorOpen, ArrowRight, Loader2 } from "lucide-react";
+import { Inbox, Sparkles, Building2, DoorOpen, ArrowRight, Loader2, Info } from "lucide-react";
 
 import { useInquiries } from "@/lib/inquiries/use-inquiries";
 import { locations } from "@/data/locations";
 import { meetingRooms } from "@/data/meeting-rooms";
-import { utilization } from "@/data/admin";
 import { KpiCard, type Kpi } from "@/components/charts/kpi-card";
+import { DonutChart } from "@/components/charts/donut-chart";
 import { ErrorState } from "@/components/states/states";
 import {
   InquiryStatusBadge,
   relativeTime,
 } from "@/components/admin/inquiry-status";
+
+// Maps the `interest`/`roomName` values collected by the inquiry form to the
+// space-type buckets shown in the distribution chart below.
+const SPACE_TYPE_BY_ROOM_NAME: Record<string, string> = {
+  "Private Office": "Private Offices",
+  "Dedicated Desk": "Dedicated Desks",
+  "Hot Desk": "Hot Desks",
+  "Meeting Room": "Meeting Rooms",
+};
+
+const SPACE_TYPE_ORDER = ["Private Offices", "Dedicated Desks", "Hot Desks", "Meeting Rooms", "Other"];
+
+const SPACE_TYPE_COLORS: Record<string, string> = {
+  "Private Offices": "var(--primary)",
+  "Dedicated Desks": "color-mix(in oklch, var(--primary) 55%, white)",
+  "Hot Desks": "var(--violet)",
+  "Meeting Rooms": "color-mix(in oklch, var(--violet) 45%, white)",
+  Other: "#d4d4d8",
+};
 
 export function AdminOverview() {
   const { inquiries, loading, error, reload } = useInquiries();
@@ -32,6 +51,19 @@ export function AdminOverview() {
 
   const newCount = inquiries.filter((i) => i.status === "New").length;
   const recent = inquiries.slice(0, 6);
+
+  const spaceTypeCounts = new Map<string, number>();
+  for (const i of inquiries) {
+    const key = (i.roomName && SPACE_TYPE_BY_ROOM_NAME[i.roomName]) || "Other";
+    spaceTypeCounts.set(key, (spaceTypeCounts.get(key) ?? 0) + 1);
+  }
+  const inquirySegments = SPACE_TYPE_ORDER.filter(
+    (label) => label !== "Other" || spaceTypeCounts.has("Other")
+  ).map((label) => ({
+    label,
+    value: spaceTypeCounts.get(label) ?? 0,
+    color: SPACE_TYPE_COLORS[label],
+  }));
 
   const kpis: Kpi[] = [
     {
@@ -71,25 +103,21 @@ export function AdminOverview() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
-        {/* Occupancy demo stats */}
+        {/* Inquiry distribution by space type */}
         <div className="rounded-2xl border border-border/70 bg-card p-6">
-          <h2 className="font-semibold text-foreground">Occupancy by space type</h2>
-          <p className="text-sm text-muted-foreground">Demo utilisation across the network</p>
-          <div className="mt-6 space-y-4">
-            {utilization.map((u) => (
-              <div key={u.label}>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-foreground">{u.label}</span>
-                  <span className="font-medium text-muted-foreground">{u.value}%</span>
-                </div>
-                <div className="mt-1.5 h-2.5 overflow-hidden rounded-full bg-muted">
-                  <div
-                    className="h-full rounded-full bg-brand-gradient"
-                    style={{ width: `${u.value}%` }}
-                  />
-                </div>
-              </div>
-            ))}
+          <h2 className="font-semibold text-foreground">Inquiry distribution by space type</h2>
+          <p className="text-sm text-muted-foreground">Percentage share of total inquiries</p>
+          <div className="mt-6">
+            <DonutChart
+              segments={inquirySegments}
+              centerLabel={String(inquiries.length)}
+              centerSub="Total inquiries"
+              formatValue={(value, pct) => `${pct}% (${value})`}
+            />
+          </div>
+          <div className="mt-5 flex items-start gap-3 rounded-xl bg-muted/40 p-4 text-sm text-muted-foreground">
+            <Info className="mt-0.5 size-4 shrink-0" />
+            <p>Percentages are based on total inquiries received in the selected period.</p>
           </div>
         </div>
 

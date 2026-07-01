@@ -3,11 +3,14 @@ export function DonutChart({
   size = 168,
   centerLabel,
   centerSub,
+  formatValue,
 }: {
   segments: { label: string; value: number; color: string }[];
   size?: number;
   centerLabel: string;
   centerSub?: string;
+  /** Custom legend value text, e.g. `(value, pct) => `${pct}% (${value})``. Defaults to `${pct}%`. */
+  formatValue?: (value: number, pct: number) => string;
 }) {
   const total = segments.reduce((s, seg) => s + seg.value, 0) || 1;
   const r = 42;
@@ -25,21 +28,49 @@ export function DonutChart({
   return (
     <div className="flex flex-col items-center gap-5 sm:flex-row sm:gap-8">
       <div className="relative shrink-0" style={{ width: size, height: size }}>
-        <svg viewBox="0 0 100 100" className="size-full -rotate-90">
+        <svg viewBox="0 0 100 100" className="size-full">
           <circle cx="50" cy="50" r={r} fill="none" stroke="var(--muted)" strokeWidth="12" />
-          {arcs.map((seg) => (
-            <circle
-              key={seg.label}
-              cx="50"
-              cy="50"
-              r={r}
-              fill="none"
-              stroke={seg.color}
-              strokeWidth="12"
-              strokeDasharray={`${seg.len} ${circ - seg.len}`}
-              strokeDashoffset={-seg.offset}
-            />
-          ))}
+          <g transform="rotate(-90 50 50)">
+            {arcs.map((seg) => (
+              <circle
+                key={seg.label}
+                cx="50"
+                cy="50"
+                r={r}
+                fill="none"
+                stroke={seg.color}
+                strokeWidth="12"
+                strokeDasharray={`${seg.len} ${circ - seg.len}`}
+                strokeDashoffset={-seg.offset}
+              />
+            ))}
+          </g>
+          {arcs
+            .filter((seg) => seg.value / total > 0.04)
+            .map((seg) => {
+              // Top-based, clockwise angle to the arc's midpoint — matches the
+              // -90deg-rotated stroke above without rotating the label text.
+              const angle = ((seg.offset + seg.len / 2) / circ) * 2 * Math.PI;
+              const x = 50 + r * Math.sin(angle);
+              const y = 50 - r * Math.cos(angle);
+              return (
+                <text
+                  key={seg.label}
+                  x={x}
+                  y={y}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fontSize="7"
+                  fontWeight="600"
+                  fill="white"
+                  stroke="var(--foreground)"
+                  strokeWidth="2"
+                  paintOrder="stroke"
+                >
+                  {Math.round((seg.value / total) * 100)}%
+                </text>
+              );
+            })}
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span className="font-display text-2xl text-foreground">{centerLabel}</span>
@@ -49,18 +80,21 @@ export function DonutChart({
         </div>
       </div>
       <ul className="w-full space-y-2.5">
-        {segments.map((seg) => (
-          <li key={seg.label} className="flex items-center gap-2.5 text-sm">
-            <span
-              className="size-3 shrink-0 rounded-full"
-              style={{ backgroundColor: seg.color }}
-            />
-            <span className="flex-1 text-muted-foreground">{seg.label}</span>
-            <span className="font-medium text-foreground">
-              {Math.round((seg.value / total) * 100)}%
-            </span>
-          </li>
-        ))}
+        {segments.map((seg) => {
+          const pct = Math.round((seg.value / total) * 100);
+          return (
+            <li key={seg.label} className="flex items-center gap-2.5 text-sm">
+              <span
+                className="size-3 shrink-0 rounded-full"
+                style={{ backgroundColor: seg.color }}
+              />
+              <span className="flex-1 text-muted-foreground">{seg.label}</span>
+              <span className="font-medium text-foreground">
+                {formatValue ? formatValue(seg.value, pct) : `${pct}%`}
+              </span>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
