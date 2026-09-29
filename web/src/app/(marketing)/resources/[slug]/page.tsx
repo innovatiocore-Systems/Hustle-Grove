@@ -50,7 +50,7 @@ export default async function ArticleDetailPage({
 
   return (
     <>
-      <article className="container-px py-12 md:py-16">
+      <article className="container-px pb-12 pt-28 md:pb-16 md:pt-32">
         <div className="mx-auto max-w-3xl">
           <nav className="flex items-center gap-1.5 text-sm text-muted-foreground">
             <Link href="/resources" className="hover:text-foreground">Resources</Link>

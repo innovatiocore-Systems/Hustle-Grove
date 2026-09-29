@@ -45,6 +45,8 @@ export default async function ContactPage() {
       <PageHeader
         eyebrow="Contact us"
         title="Let's find your team the right space"
+        highlight="right space"
+        icon={Mail}
         description="Make an inquiry, ask a question, or talk to our team. We typically reply within one business day."
       />
 

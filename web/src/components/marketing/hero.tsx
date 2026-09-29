@@ -13,6 +13,7 @@ import {
 import { cn } from "@/lib/utils";
 import { img } from "@/lib/images";
 import { buttonVariants } from "@/components/ui/button";
+import { LeadButton } from "@/components/lead/lead-button";
 import { AnimatedBackground } from "@/components/marketing/animated-background";
 
 const featureCard = [
@@ -30,7 +31,7 @@ export function Hero() {
       <div className="pointer-events-none absolute inset-0 bg-hero-wash" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-dot-grid opacity-60 [mask-image:linear-gradient(to_bottom,black,transparent)]" />
 
-      <div className="relative container-px grid items-center gap-10 py-14 md:py-16 lg:grid-cols-[1fr_1.15fr] lg:gap-6 lg:py-20">
+      <div className="relative container-px grid items-center gap-10 pb-14 pt-28 md:pb-16 md:pt-32 lg:grid-cols-[1fr_1.15fr] lg:gap-6 lg:pb-20 lg:pt-36">
         {/* Left — copy */}
         <div className="max-w-xl">
           <span className="animate-fade-up inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/8 px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-primary">
@@ -68,13 +69,10 @@ export function Hero() {
           </p>
 
           <div className="animate-fade-up anim-delay-300 mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/contact"
-              className={cn(buttonVariants({ size: "lg" }), "group")}
-            >
-              Inquire Now
+            <LeadButton lead="tour" size="lg" className="group">
+              Enquire Now
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-            </Link>
+            </LeadButton>
             <Link
               href="/locations"
               className={cn(buttonVariants({ variant: "outline", size: "lg" }))}

@@ -21,13 +21,11 @@ const configs: Record<
     title: "Request a Proposal",
     description: "Tell us about your team and we'll send a tailored proposal.",
     submit: "Request proposal",
-    defaultInterest: "Enterprise / Custom",
   },
   sales: {
     title: "Contact Sales",
     description: "Talk to our team about a custom workspace for your business.",
     submit: "Contact sales",
-    defaultInterest: "Enterprise / Custom",
   },
 };
 

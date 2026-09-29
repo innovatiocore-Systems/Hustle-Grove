@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   },
   
   description:
-    "Flexible private offices, dedicated desks, hot desks and meeting rooms designed for modern teams to do their best work.",
+    "Dedicated desks, private offices, a meeting room and a soundproof booth designed for modern teams to do their best work.",
   keywords: [
     "coworking",
     "private office",

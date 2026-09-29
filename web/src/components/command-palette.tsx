@@ -76,7 +76,7 @@ export function CommandPalette() {
     const nav: Item[] = [
       { id: "n-home",      group: "Navigate", label: "Home",             icon: Home,          href: "/" },
       { id: "n-locations", group: "Navigate", label: "Our Space",        icon: MapPin,        href: "/locations" },
-      { id: "n-pricing",   group: "Navigate", label: "Membership Plans", icon: CreditCard,    href: "/pricing" },
+      { id: "n-pricing",   group: "Navigate", label: "Pricing", icon: CreditCard,    href: "/pricing" },
       // Only surface Resources when the admin has the section enabled.
       ...(resourcesVisible
         ? [{ id: "n-resources", group: "Navigate", label: "Resources", icon: FileText, href: "/resources" } as Item]

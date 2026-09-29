@@ -27,9 +27,9 @@ export function CtaSection() {
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               href="/contact"
-              className={cn(buttonVariants({ variant: "solid", size: "lg" }), "bg-white text-primary hover:bg-white/90")}
+              className={buttonVariants({ size: "lg" })}
             >
-              Inquire Now
+              Enquire Now
               <ArrowRight className="size-4" />
             </Link>
             <Link

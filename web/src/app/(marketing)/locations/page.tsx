@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { MapPin, Users, Clock, Wifi, Car, Shield, ArrowRight } from "lucide-react";
+import { MapPin, Users, Clock, Wifi, Car, Shield, ArrowRight, LayoutGrid, Navigation, ExternalLink } from "lucide-react";
 
 import { getSiteSettings } from "@/lib/settings/server";
 import { PageHeader } from "@/components/marketing/page-header";
 import { CtaSection } from "@/components/marketing/cta-section";
+import { SectionHeading } from "@/components/marketing/section-heading";
+import { LeadButton } from "@/components/lead/lead-button";
 import { ZoomableImage } from "@/components/marketing/zoomable-image";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -25,11 +26,16 @@ const spaces = [
 ];
 
 const amenities = [
-  { icon: Wifi,     label: "Gigabit Wi-Fi" },
-  { icon: Car,      label: "Parking nearby" },
-  { icon: Shield,   label: "Secure key-card entry" },
-  { icon: Users,    label: "Networking events" },
+  { icon: Wifi,   label: "Gigabit Wi-Fi",         desc: "Fast, reliable connectivity across the entire floor." },
+  { icon: Car,    label: "Parking nearby",        desc: "Convenient parking just moments from the door." },
+  { icon: Shield, label: "Secure key-card entry", desc: "Monitored, key-card access around the clock." },
+  { icon: Users,  label: "Networking events",     desc: "Regular member mixers and community nights." },
 ];
+
+const MAP_EMBED =
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3257.051427834239!2d149.1231730766086!3d-35.279847593521524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b164d426070001d%3A0x2c16216b7ef71df9!2slevel%204%2F28%20University%20Ave%2C%20Canberra%20ACT%202601%2C%20Australia!5e0!3m2!1sen!2snp!4v1782299287785!5m2!1sen!2snp";
+const MAP_LINK =
+  "https://www.google.com/maps/search/?api=1&query=Level+4+1+University+Avenue+Canberra+ACT+2601";
 
 export default async function LocationsPage() {
   const settings = await getSiteSettings();
@@ -39,11 +45,25 @@ export default async function LocationsPage() {
       <PageHeader
         eyebrow="Our space"
         title="LV4 University Ave, Canberra"
+        highlight="Canberra"
+        icon={MapPin}
+        chips={["Level 4", "~145 sqm", "6 private suites", "24/7 member access"]}
         description="One premium floor. Every workspace type. Everything included — so you can focus on what matters."
       />
 
       {/* 2D Floor Plan */}
-      <section className="container-px py-10 md:py-14">
+      <section className="container-px py-16 md:py-20">
+        <div className="mb-10 flex flex-col items-center">
+          <span className="mb-4 flex size-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+            <LayoutGrid className="size-5" />
+          </span>
+          <SectionHeading
+            eyebrow="Workspace plan"
+            title={<>Every zone, planned around your work</>}
+            description="Explore our entire Level 4 floor — private suites, dedicated desks, a meeting room and shared lounges — and see exactly where you'll do your best work."
+            align="center"
+          />
+        </div>
         <ZoomableImage
           src="/floor-plan-2d.png"
           alt="Hustle Grove 2D Floor Plan — Level 4, University Ave Canberra"
@@ -74,47 +94,98 @@ export default async function LocationsPage() {
       </section>
 
       {/* Amenities + address */}
-      <section className="bg-sand/60 py-16 md:py-20">
+      <section className="bg-sand/60 py-16 md:py-24">
         <div className="container-px grid gap-12 lg:grid-cols-2">
           <div>
-            <h2 className="font-display text-2xl font-bold text-foreground">Everything included</h2>
-            <div className="mt-8 grid grid-cols-2 gap-4">
-              {amenities.map(({ icon: Icon, label }) => (
-                <div key={label} className="flex items-center gap-3 text-sm font-medium text-foreground">
-                  <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                    <Icon className="size-4" />
+            <SectionHeading
+              eyebrow="Amenities"
+              title={<>Everything included</>}
+              description="Show up and get to work — the essentials are handled, with the extras that make the day better."
+            />
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              {amenities.map(({ icon: Icon, label, desc }) => (
+                <div
+                  key={label}
+                  className="group rounded-2xl border border-border/70 bg-card p-5 transition-all hover:-translate-y-0.5 hover:shadow-lg"
+                >
+                  <span className="flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                    <Icon className="size-5" />
                   </span>
-                  {label}
+                  <p className="mt-4 font-semibold text-foreground transition-colors group-hover:text-primary">
+                    {label}
+                  </p>
+                  <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{desc}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="space-y-4">
-            <h2 className="font-display text-2xl font-bold text-foreground">Find us</h2>
-            <div className="flex gap-4 rounded-2xl border border-border/70 bg-card p-5">
-              <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                <MapPin className="size-5" />
-              </span>
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Address</p>
-                <p className="mt-0.5 font-medium text-foreground whitespace-pre-wrap">{settings.address}</p>
+          <div>
+            <SectionHeading
+              eyebrow="Visit"
+              title={<>Find us</>}
+              description="One premium floor in the heart of Canberra's city centre."
+            />
+            <div className="mt-8 overflow-hidden rounded-3xl border border-border/70 bg-card shadow-xl shadow-black/5">
+              <div className="relative">
+                <iframe
+                  src={MAP_EMBED}
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  title="Hustle Grove location"
+                  className="block h-60 w-full"
+                />
+                <a
+                  href={MAP_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm font-medium text-blue-600 shadow"
+                >
+                  Open in Maps
+                  <ExternalLink className="size-3.5" />
+                </a>
+              </div>
+              <div className="flex items-center gap-4 border-b border-border/70 bg-muted/40 p-5">
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground">
+                  <MapPin className="size-5" />
+                </span>
+                <div>
+                  <p className="font-semibold text-foreground">{settings.name}</p>
+                  <p className="text-sm text-muted-foreground">Level 4 · University Ave, Canberra</p>
+                </div>
+              </div>
+              <div className="flex gap-4 border-b border-border/70 p-5">
+                <MapPin className="mt-0.5 size-5 shrink-0 text-primary" />
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Address</p>
+                  <p className="mt-1 whitespace-pre-wrap font-medium text-foreground">{settings.address}</p>
+                </div>
+              </div>
+              <div className="flex gap-4 border-b border-border/70 p-5">
+                <Clock className="mt-0.5 size-5 shrink-0 text-primary" />
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Hours</p>
+                  <p className="mt-1 font-medium text-foreground">Mon–Fri 8am–6pm</p>
+                  <p className="text-sm text-muted-foreground">Members: 24 / 7 access</p>
+                </div>
+              </div>
+              <div className="grid gap-3 p-5 sm:grid-cols-2">
+                <LeadButton lead="tour" size="lg" className="w-full">
+                  Book a free tour
+                  <ArrowRight className="size-4" />
+                </LeadButton>
+                <a
+                  href={MAP_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full")}
+                >
+                  Get directions
+                  <Navigation className="size-4" />
+                </a>
               </div>
             </div>
-            <div className="flex gap-4 rounded-2xl border border-border/70 bg-card p-5">
-              <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                <Clock className="size-5" />
-              </span>
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Hours</p>
-                <p className="mt-0.5 font-medium text-foreground">Mon–Fri 8am–6pm</p>
-                <p className="text-sm text-muted-foreground">Members: 24 / 7 access</p>
-              </div>
-            </div>
-            <Link href="/contact" className={cn(buttonVariants({ size: "lg" }), "w-full justify-center mt-2")}>
-              Book a free tour
-              <ArrowRight className="size-4" />
-            </Link>
           </div>
         </div>
       </section>

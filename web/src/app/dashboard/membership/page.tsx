@@ -5,7 +5,6 @@ import { member } from "@/data/dashboard";
 import { plans } from "@/data/plans";
 import { Badge } from "@/components/ui/badge";
 import { ActionButton } from "@/components/dashboard/action-button";
-import { ComparisonTable } from "@/components/marketing/comparison-table";
 
 export default function MembershipPage() {
   const currentPlan = plans.find((p) => member.plan.includes(p.name)) ?? plans[1];
@@ -103,13 +102,6 @@ export default function MembershipPage() {
         </div>
       </div>
 
-      {/* Benefits comparison */}
-      <div>
-        <h2 className="font-semibold text-foreground">Compare benefits</h2>
-        <div className="mt-5 rounded-2xl border border-border/70 bg-card p-2 md:p-4">
-          <ComparisonTable />
-        </div>
-      </div>
     </div>
   );
 }

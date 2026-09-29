@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 
 import { site } from "@/data/site";
-import { locations } from "@/data/locations";
 import { getSiteSettings } from "@/lib/settings/server";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -19,12 +18,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: path === "" ? 1 : 0.7,
   }));
 
-  const locationEntries: MetadataRoute.Sitemap = locations.map((l) => ({
-    url: `${base}/locations/${l.slug}`,
-    lastModified: now,
-    changeFrequency: "monthly",
-    priority: 0.6,
-  }));
-
-  return [...staticEntries, ...locationEntries];
+  return staticEntries;
 }

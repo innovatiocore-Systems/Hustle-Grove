@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { Lightbulb } from "lucide-react";
 
 import { getSiteSettings } from "@/lib/settings/server";
 import { getArticles } from "@/lib/articles/server";
@@ -30,8 +31,10 @@ export default async function ResourcesPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Resource center"
+        eyebrow="Insights"
+        icon={Lightbulb}
         title="Ideas for the way you work"
+        highlight="the way you work"
         description="Practical thinking on productivity, workplace design, startups and remote work — from the people who build workspaces for a living."
       />
 

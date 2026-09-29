@@ -4,7 +4,7 @@ import { articles as staticArticles } from "@/data/articles";
 import type { Article } from "@/data/articles";
 
 const url  = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const key  = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const key  = process.env.SUPABASE_SECRET_KEY;
 
 export const ARTICLES_TAG = "articles";
 

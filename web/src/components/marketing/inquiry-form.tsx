@@ -59,12 +59,10 @@ function todayISO() {
 }
 
 const interests = [
-  "Private Office",
   "Dedicated Desk",
-  "Hot Desk",
+  "Private Office",
   "Meeting Room",
-  "Event Space",
-  "Enterprise / Custom",
+  "Soundproof Booth",
 ];
 
 /** Scheduling grid — used when the form is attached to a specific room. */

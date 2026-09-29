@@ -3,7 +3,7 @@ export const site = {
   shortName: "Hustle Grove",
   tagline: "Where ambition takes root.",
   description:
-    "Flexible private offices, dedicated desks, hot desks and meeting rooms designed for modern teams.",
+    "Dedicated desks, private offices, a meeting room and a soundproof booth designed for modern teams.",
   email: "hello@hustlegrove.com.au",
   phone: "+61 2 6100 0142",
   headquarters: "Level 4, 1 University Avenue\nCanberra ACT 2601, Australia",
@@ -14,7 +14,7 @@ export const site = {
 export const mainNav = [
   { label: "Home", href: "/" },
   { label: "Locations", href: "/locations" },
-  { label: "Memberships", href: "/locations" },
+  { label: "Pricing", href: "/pricing" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
@@ -23,10 +23,10 @@ export const footerNav = [
   {
     heading: "Workspaces",
     links: [
-      { label: "Private Offices", href: "/locations" },
-      { label: "Dedicated Desks", href: "/locations" },
-      { label: "Hot Desks", href: "/locations" },
-      { label: "Meeting Rooms", href: "/locations" },
+      { label: "Dedicated Desks", href: "/pricing" },
+      { label: "Private Offices", href: "/pricing" },
+      { label: "Meeting Room", href: "/pricing" },
+      { label: "Soundproof Booth", href: "/pricing" },
     ],
   },
   {
@@ -41,8 +41,8 @@ export const footerNav = [
   {
     heading: "Explore",
     links: [
-      { label: "Membership Plans", href: "/pricing" },
-      { label: "Resources", href: "/resources" },
+      { label: "Pricing", href: "/pricing" },
+      { label: "Insights", href: "/resources" },
     ],
   },
 ];

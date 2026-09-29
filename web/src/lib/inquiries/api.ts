@@ -13,7 +13,7 @@ export interface Result<T> {
 }
 
 const NOT_CONFIGURED =
-  "Supabase isn't configured. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.";
+  "Supabase isn't configured. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY.";
 
 function clean(value?: string | null): string | null {
   const trimmed = value?.trim();

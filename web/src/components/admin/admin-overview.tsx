@@ -20,17 +20,17 @@ import {
 const SPACE_TYPE_BY_ROOM_NAME: Record<string, string> = {
   "Private Office": "Private Offices",
   "Dedicated Desk": "Dedicated Desks",
-  "Hot Desk": "Hot Desks",
   "Meeting Room": "Meeting Rooms",
+  "Soundproof Booth": "Soundproof Booths",
 };
 
-const SPACE_TYPE_ORDER = ["Private Offices", "Dedicated Desks", "Hot Desks", "Meeting Rooms", "Other"];
+const SPACE_TYPE_ORDER = ["Private Offices", "Dedicated Desks", "Meeting Rooms", "Soundproof Booths", "Other"];
 
 const SPACE_TYPE_COLORS: Record<string, string> = {
   "Private Offices": "var(--primary)",
   "Dedicated Desks": "color-mix(in oklch, var(--primary) 55%, white)",
-  "Hot Desks": "var(--violet)",
-  "Meeting Rooms": "color-mix(in oklch, var(--violet) 45%, white)",
+  "Meeting Rooms": "var(--violet)",
+  "Soundproof Booths": "color-mix(in oklch, var(--violet) 45%, white)",
   Other: "#d4d4d8",
 };
 
