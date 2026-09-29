@@ -679,3 +679,219 @@ All exports of the module are statically known (It doesn't have dynamic exports)
  GET /pricing 200 in 750ms (next.js: 259ms, application-code: 491ms)
  GET /pricing 200 in 764ms (next.js: 27ms, application-code: 737ms)
  GET /pricing 200 in 274ms (next.js: 14ms, application-code: 260ms)
+  Reload env: .env
+⚠ Fast Refresh had to perform a full reload when ./web/node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./web/node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+✓ Compiled in 2.9s
+⚠ Fast Refresh had to perform a full reload when ./web/node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./web/node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+  Reload env: .env
+✓ Compiled in 414ms
+⚠ Fast Refresh had to perform a full reload when ./web/node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./web/node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET / 200 in 8.7s (next.js: 3.1s, application-code: 5.6s)
+ GET /pricing 200 in 8.7s (next.js: 1398ms, application-code: 7.3s)
+⨯ Error: Module [project]/web/src/components/marketing/reveal.tsx [app-ssr] (ecmascript) was instantiated because it was required from module [project]/web/node_modules/next/dist/esm/build/templates/app-page.js?page=/(marketing)/pricing/page { METADATA_0 => "[project]/web/src/app/icon.svg.mjs { IMAGE => \"[project]/web/src/app/icon.svg (static in ecmascript, tag client)\" } [app-rsc] (structured image object, ecmascript)", MODULE_1 => "[project]/web/src/app/layout.tsx [app-rsc] (ecmascript, Next.js Server Component)", MODULE_2 => "[project]/web/src/app/error.tsx [app-rsc] (ecmascript, Next.js Server Component)", MODULE_3 => "[project]/web/src/app/loading.tsx [app-rsc] (ecmascript, Next.js Server Component)", MODULE_4 => "[project]/web/src/app/not-found.tsx [app-rsc] (ecmascript, Next.js Server Component)", MODULE_5 => "[project]/web/node_modules/next/dist/client/components/builtin/forbidden.js [app-rsc] (ecmascript, Next.js Server Component)", MODULE_6 => "[project]/web/node_modules/next/dist/client/components/builtin/unauthorized.js [app-rsc] (ecmascript, Next.js Server Component)", MODULE_7 => "[project]/web/src/app/global-error.tsx [app-rsc] (ecmascript, Next.js Server Component)", MODULE_8 => "[project]/web/src/app/(marketing)/layout.tsx [app-rsc] (ecmascript, Next.js Server Component)", MODULE_9 => "[project]/web/src/app/not-found.tsx [app-rsc] (ecmascript, Next.js Server Component)", MODULE_10 => "[project]/web/node_modules/next/dist/client/components/builtin/forbidden.js [app-rsc] (ecmascript, Next.js Server Component)", MODULE_11 => "[project]/web/node_modules/next/dist/client/components/builtin/unauthorized.js [app-rsc] (ecmascript, Next.js Server Component)", MODULE_12 => "[project]/web/src/app/(marketing)/pricing/page.tsx [app-rsc] (ecmascript, Next.js Server Component)" } [app-rsc] (ecmascript) <locals>, but the module factory is not available.
+This is often caused by a stale browser cache, misconfigured Cache-Control headers, or a service worker serving outdated responses.
+To fix this, make sure your Cache-Control headers allow revalidation of chunks and review your service worker configuration. As an immediate workaround, try hard-reloading the page, clearing the browser cache, or unregistering any service workers.
+    at ignore-listed frames {
+  digest: '3571362733'
+}
+ GET /pricing 200 in 25.3s (next.js: 6.9s, application-code: 18.5s)
+ GET / 200 in 25.4s (next.js: 2.4s, application-code: 23.1s)
+ GET /pricing 200 in 17.4s (next.js: 2.3s, application-code: 15.1s)
+ GET / 200 in 17.7s (next.js: 3.6s, application-code: 14.1s)
+ GET /pricing 200 in 9.2s (next.js: 200ms, application-code: 9.0s)
+ GET /pricing 200 in 9.2s (next.js: 461ms, application-code: 8.8s)
+ GET /pricing 200 in 901ms (next.js: 6ms, application-code: 895ms)
+ GET /pricing 200 in 828ms (next.js: 52ms, application-code: 777ms)
+ GET / 200 in 2.1s (next.js: 237ms, application-code: 1910ms)
+ GET /pricing 200 in 2.2s (next.js: 17ms, application-code: 2.1s)
+  Reload env: .env
+✓ Compiled in 941ms
+⚠ Fast Refresh had to perform a full reload when ./web/node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /pricing 200 in 569ms (next.js: 7ms, application-code: 563ms)
+ GET / 200 in 1408ms (next.js: 744ms, application-code: 663ms)
+ GET /pricing 200 in 2.9s (next.js: 214ms, application-code: 2.7s)
+ GET / 200 in 3.5s (next.js: 581ms, application-code: 2.9s)
+ GET /pricing 200 in 2.3s (next.js: 664ms, application-code: 1630ms)
+ GET /pricing 200 in 891ms (next.js: 5ms, application-code: 886ms)
+ GET /pricing 200 in 823ms (next.js: 5ms, application-code: 817ms)
+ GET /pricing 200 in 1048ms (next.js: 5ms, application-code: 1043ms)
+ GET /pricing 200 in 945ms (next.js: 6ms, application-code: 940ms)
+ GET / 200 in 3.2s (next.js: 119ms, application-code: 3.0s)
+ GET /pricing 200 in 1388ms (next.js: 7ms, application-code: 1381ms)
+ GET /pricing 200 in 1324ms (next.js: 11ms, application-code: 1313ms)
+ GET /pricing 200 in 1419ms (next.js: 87ms, application-code: 1332ms)
+ GET /pricing 200 in 1495ms (next.js: 8ms, application-code: 1487ms)
+ GET /pricing 200 in 1072ms (next.js: 19ms, application-code: 1053ms)
+ GET /pricing 200 in 811ms (next.js: 66ms, application-code: 745ms)
+ GET /pricing 200 in 530ms (next.js: 10ms, application-code: 520ms)
+ GET /pricing 200 in 421ms (next.js: 9ms, application-code: 412ms)
+ GET /pricing 200 in 396ms (next.js: 26ms, application-code: 371ms)
+⚠ Fast Refresh had to perform a full reload when ./web/node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⨯ Error: Module [project]/web/src/components/marketing/reveal.tsx [app-ssr] (ecmascript) was instantiated because it was required from module [project]/web/node_modules/next/dist/esm/build/templates/app-page.js?page=/(marketing)/pricing/page { METADATA_0 => "[project]/web/src/app/icon.svg.mjs { IMAGE => \"[project]/web/src/app/icon.svg (static in ecmascript, tag client)\" } [app-rsc] (structured image object, ecmascript)", MODULE_1 => "[project]/web/src/app/layout.tsx [app-rsc] (ecmascript, Next.js Server Component)", MODULE_2 => "[project]/web/src/app/error.tsx [app-rsc] (ecmascript, Next.js Server Component)", MODULE_3 => "[project]/web/src/app/loading.tsx [app-rsc] (ecmascript, Next.js Server Component)", MODULE_4 => "[project]/web/src/app/not-found.tsx [app-rsc] (ecmascript, Next.js Server Component)", MODULE_5 => "[project]/web/node_modules/next/dist/client/components/builtin/forbidden.js [app-rsc] (ecmascript, Next.js Server Component)", MODULE_6 => "[project]/web/node_modules/next/dist/client/components/builtin/unauthorized.js [app-rsc] (ecmascript, Next.js Server Component)", MODULE_7 => "[project]/web/src/app/global-error.tsx [app-rsc] (ecmascript, Next.js Server Component)", MODULE_8 => "[project]/web/src/app/(marketing)/layout.tsx [app-rsc] (ecmascript, Next.js Server Component)", MODULE_9 => "[project]/web/src/app/not-found.tsx [app-rsc] (ecmascript, Next.js Server Component)", MODULE_10 => "[project]/web/node_modules/next/dist/client/components/builtin/forbidden.js [app-rsc] (ecmascript, Next.js Server Component)", MODULE_11 => "[project]/web/node_modules/next/dist/client/components/builtin/unauthorized.js [app-rsc] (ecmascript, Next.js Server Component)", MODULE_12 => "[project]/web/src/app/(marketing)/pricing/page.tsx [app-rsc] (ecmascript, Next.js Server Component)" } [app-rsc] (ecmascript) <locals>, but the module factory is not available.
+This is often caused by a stale browser cache, misconfigured Cache-Control headers, or a service worker serving outdated responses.
+To fix this, make sure your Cache-Control headers allow revalidation of chunks and review your service worker configuration. As an immediate workaround, try hard-reloading the page, clearing the browser cache, or unregistering any service workers.
+    at ignore-listed frames {
+  digest: '3571362733'
+}
+ GET / 200 in 1699ms (next.js: 109ms, application-code: 1590ms)
+ GET / 200 in 3.1s (next.js: 590ms, application-code: 2.5s)
+ GET /pricing 200 in 3.3s (next.js: 151ms, application-code: 3.1s)
+ GET /pricing 200 in 1915ms (next.js: 10ms, application-code: 1905ms)
+ GET /pricing 200 in 1693ms (next.js: 9ms, application-code: 1684ms)
+ GET /pricing 200 in 609ms (next.js: 10ms, application-code: 599ms)
+ GET /pricing 200 in 611ms (next.js: 99ms, application-code: 512ms)
+ GET / 200 in 3.4s (next.js: 498ms, application-code: 2.9s)
+  Reload env: .env
+ GET /pricing 200 in 1689ms (next.js: 112ms, application-code: 1577ms)
+ GET /pricing 200 in 1693ms (next.js: 12ms, application-code: 1681ms)
+ GET /pricing 200 in 1688ms (next.js: 191ms, application-code: 1497ms)
+ GET /pricing 200 in 1854ms (next.js: 9ms, application-code: 1845ms)
+ GET /pricing 200 in 1713ms (next.js: 165ms, application-code: 1548ms)
+ GET /pricing 200 in 1715ms (next.js: 79ms, application-code: 1636ms)
+ GET /pricing 200 in 1127ms (next.js: 115ms, application-code: 1012ms)
+ GET /pricing 200 in 1126ms (next.js: 328ms, application-code: 798ms)
+ GET /pricing 200 in 1128ms (next.js: 241ms, application-code: 888ms)
+ GET /pricing 200 in 583ms (next.js: 9ms, application-code: 575ms)
+ GET /pricing 200 in 615ms (next.js: 109ms, application-code: 506ms)
+[browser] Uncaught Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <InnerLayoutRouter url="/about" tree={[...]} params={{}} cacheNode={{...}} segmentPath={[...]} ...>
+      <SegmentViewNode type="layout" pagePath="(marketing...">
+        <SegmentTrieNode>
+        <script>
+        <script>
+        <script>
+        <MarketingLayout>
+          <div className="flex min-h...">
+            <PopupBanner>
+            <Navbar resourcesVisible={true}>
+              <header className="sticky top...">
+                <nav className="mx-auto fl...">
+                  <Logo>
+                    <LinkComponent href="/" className="group inli..." aria-label="The Hustle...">
+                      <a className="group inli..." aria-label="The Hustle..." ref={function} onClick={function onClick} ...>
++                       <img
++                         alt=""
++                         fetchPriority={undefined}
++                         loading={undefined}
++                         width={48}
++                         height={48}
++                         decoding="async"
++                         data-nimg="1"
++                         className="shrink-0 rounded-full"
++                         style={{color:"transparent"}}
++                         sizes={undefined}
++                         srcSet={"/_next/image?url=%2Flogo-badge.png&w=48&q=75 1x, /_next/image?url=%2Flogo-badge.pn..."}
++                         src={"/_next/image?url=%2Flogo-badge.png&w=96&q=75"}
++                         ref={function}
++                         onLoad={function onLoad}
++                         onError={function onError}
++                       >
+-                       <span
+-                         className="flex shrink-0 items-center justify-center rounded-full bg-[#0f130e] ring-1 ring-w..."
+-                         style={{width:"44px",height:"44px"}}
+-                       >
+                        ...
+                        ...
+                  ...
+            ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at img (<anonymous>)
+    at <unknown> (file://D:/Hustle-Grove/web/.next/dev/static/chunks/0aq__119l1kr._.js:3960:46)
+    at <unknown> (file://D:/Hustle-Grove/web/.next/dev/static/chunks/0aq__119l1kr._.js:4076:47)
+    at Logo (src/components/layout/logo.tsx:34:9)
+    at Navbar (src/components/layout/navbar.tsx:59:9)
+    at MarketingLayout (src\app\(marketing)\layout.tsx:16:7)
+  32 |         />
+  33 |       ) : (
+> 34 |         <Image
+     |         ^
+  35 |           src="/logo-badge.png"
+  36 |           alt=""
+  37 |           width={logoSize + 12}
+  Reload env: .env
+✓ Compiled in 1275ms
+⚠ Fast Refresh had to perform a full reload when ./web/node_modules/next/dist/client/image-component.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /about 200 in 921ms (next.js: 46ms, application-code: 875ms)
+ GET /about 200 in 1010ms (next.js: 6ms, application-code: 1003ms)
+ GET /about 200 in 1514ms (next.js: 8ms, application-code: 1507ms)
+ GET /about 200 in 5.8s (next.js: 892ms, application-code: 4.9s)
+ GET /pricing 200 in 6.1s (next.js: 2.0s, application-code: 4.0s)
+ GET /pricing 200 in 2.3s (next.js: 145ms, application-code: 2.2s)
+ GET /pricing 200 in 908ms (next.js: 8ms, application-code: 899ms)
+ GET /pricing 200 in 907ms (next.js: 180ms, application-code: 727ms)
+ GET /pricing 200 in 910ms (next.js: 78ms, application-code: 831ms)
+ GET /about 200 in 6.2s (next.js: 1839ms, application-code: 4.3s)
+ GET /pricing 200 in 1036ms (next.js: 11ms, application-code: 1025ms)
+ GET /pricing 200 in 938ms (next.js: 9ms, application-code: 929ms)
+ GET /pricing 200 in 1145ms (next.js: 13ms, application-code: 1132ms)
+ GET /pricing 200 in 1156ms (next.js: 217ms, application-code: 939ms)
+ GET /pricing 200 in 1159ms (next.js: 102ms, application-code: 1057ms)
+ GET /pricing 200 in 955ms (next.js: 17ms, application-code: 938ms)
+ GET /pricing 200 in 1592ms (next.js: 14ms, application-code: 1578ms)
+ GET /pricing 200 in 1419ms (next.js: 111ms, application-code: 1308ms)
+ GET /pricing 200 in 1277ms (next.js: 10ms, application-code: 1267ms)
+ GET /pricing 200 in 1153ms (next.js: 42ms, application-code: 1110ms)
+ GET /pricing 200 in 1134ms (next.js: 260ms, application-code: 874ms)
+ GET /pricing 200 in 812ms (next.js: 32ms, application-code: 781ms)
+ GET /pricing 200 in 1091ms (next.js: 108ms, application-code: 983ms)
+ GET /pricing 200 in 1096ms (next.js: 8ms, application-code: 1087ms)
+ GET /pricing 200 in 2.4s (next.js: 40ms, application-code: 2.4s)
+ GET /pricing 200 in 2.6s (next.js: 14ms, application-code: 2.6s)
+ GET /pricing 200 in 2.9s (next.js: 24ms, application-code: 2.9s)
+ GET /pricing 200 in 3.1s (next.js: 66ms, application-code: 3.1s)
+ GET /pricing 200 in 6.3s (next.js: 8ms, application-code: 6.3s)
+ GET /pricing 200 in 6.3s (next.js: 129ms, application-code: 6.2s)
+ GET /pricing 200 in 4.5s (next.js: 39ms, application-code: 4.5s)
+ GET /pricing 200 in 3.8s (next.js: 70ms, application-code: 3.7s)
+ GET /pricing 200 in 2.9s (next.js: 202ms, application-code: 2.7s)
+ GET /pricing 200 in 2.9s (next.js: 1415ms, application-code: 1469ms)
+✓ Compiled in 434ms
+ GET /about 200 in 1517ms (next.js: 887ms, application-code: 630ms)
+ GET /pricing 200 in 2.0s (next.js: 395ms, application-code: 1623ms)
+[browser] Uncaught Error: Switched to client rendering because the server rendering errored:
+
+Module [project]/web/src/components/marketing/reveal.tsx [app-ssr] (ecmascript) was instantiated because it was required from module [project]/web/node_modules/next/dist/esm/build/templates/app-page.js?page=/(marketing)/pricing/page { METADATA_0 => "[project]/web/src/app/icon.svg.mjs { IMAGE => \"[project]/web/src/app/icon.svg (static in ecmascript, tag client)\" } [app-rsc] (structured image object, ecmascript)", MODULE_1 => "[project]/web/src/app/layout.tsx [app-rsc] (ecmascript, Next.js Server Component)", MODULE_2 => "[project]/web/src/app/error.tsx [app-rsc] (ecmascript, Next.js Server Component)", MODULE_3 => "[project]/web/src/app/loading.tsx [app-rsc] (ecmascript, Next.js Server Component)", MODULE_4 => "[project]/web/src/app/not-found.tsx [app-rsc] (ecmascript, Next.js Server Component)", MODULE_5 => "[project]/web/node_modules/next/dist/client/components/builtin/forbidden.js [app-rsc] (ecmascript, Next.js Server Component)", MODULE_6 => "[project]/web/node_modules/next/dist/client/components/builtin/unauthorized.js [app-rsc] (ecmascript, Next.js Server Component)", MODULE_7 => "[project]/web/src/app/global-error.tsx [app-rsc] (ecmascript, Next.js Server Component)", MODULE_8 => "[project]/web/src/app/(marketing)/layout.tsx [app-rsc] (ecmascript, Next.js Server Component)", MODULE_9 => "[project]/web/src/app/not-found.tsx [app-rsc] (ecmascript, Next.js Server Component)", MODULE_10 => "[project]/web/node_modules/next/dist/client/components/builtin/forbidden.js [app-rsc] (ecmascript, Next.js Server Component)", MODULE_11 => "[project]/web/node_modules/next/dist/client/components/builtin/unauthorized.js [app-rsc] (ecmascript, Next.js Server Component)", MODULE_12 => "[project]/web/src/app/(marketing)/pricing/page.tsx [app-rsc] (ecmascript, Next.js Server Component)" } [app-rsc] (ecmascript) <locals>, but the module factory is not available.
+This is often caused by a stale browser cache, misconfigured Cache-Control headers, or a service worker serving outdated responses.
+To fix this, make sure your Cache-Control headers allow revalidation of chunks and review your service worker configuration. As an immediate workaround, try hard-reloading the page, clearing the browser cache, or unregistering any service workers.
+[browser] Image with src "/hero-badge.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+ GET / 200 in 5.1s (next.js: 1336ms, application-code: 3.8s)
+[browser] Image with src "/hero-badge.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+ GET / 200 in 394ms (next.js: 18ms, application-code: 375ms)
+[browser] Image with src "/hero-badge.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+ GET /admin 200 in 2.2s (next.js: 611ms, application-code: 1613ms)
+ GET /admin-login 200 in 2.1s (next.js: 1493ms, application-code: 651ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET / 200 in 786ms (next.js: 56ms, application-code: 730ms)
+[browser] Image with src "/hero-badge.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+ GET /admin-login 200 in 1101ms (next.js: 26ms, application-code: 1075ms)
+ GET /login 200 in 1583ms (next.js: 675ms, application-code: 909ms)
+ GET / 200 in 231ms (next.js: 7ms, application-code: 223ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[browser] Image with src "/hero-badge.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+ GET /login 200 in 211ms (next.js: 9ms, application-code: 202ms)
+ GET / 200 in 129ms (next.js: 9ms, application-code: 119ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[browser] Image with src "/hero-badge.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+ GET /admin 200 in 170ms (next.js: 16ms, application-code: 154ms)
+ GET /admin-login 200 in 53ms (next.js: 7ms, application-code: 46ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /admin 200 in 104ms (next.js: 8ms, application-code: 96ms)
+ GET /admin 200 in 52ms (next.js: 6ms, application-code: 46ms)
+○ Compiling /admin/inquiries ...
+ GET /admin/inquiries 200 in 6.4s (next.js: 6.3s, application-code: 55ms)

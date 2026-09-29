@@ -21,11 +21,12 @@ function clean(value?: string | null): string | null {
 }
 
 /** Persist a new inquiry from any public entry point. */
-export async function createInquiry(input: InquiryInput): Promise<Result<Inquiry>> {
+export async function createInquiry(input: InquiryInput): Promise<Result<null>> {
   const supabase = getSupabase();
   if (!supabase) return { ok: false, error: NOT_CONFIGURED };
 
-  const { data, error } = await supabase
+  // No .select(): visitors can insert but not read inquiries (RLS).
+  const { error } = await supabase
     .from("inquiries")
     .insert({
       full_name: input.fullName.trim(),
@@ -38,12 +39,10 @@ export async function createInquiry(input: InquiryInput): Promise<Result<Inquiry
       requested_date: clean(input.requestedDate),
       requested_time: clean(input.requestedTime),
       message: clean(input.message),
-    })
-    .select()
-    .single();
+    });
 
   if (error) return { ok: false, error: error.message };
-  return { ok: true, data: mapInquiry(data) };
+  return { ok: true, data: null };
 }
 
 /** Fetch all inquiries (admin), newest first. */
