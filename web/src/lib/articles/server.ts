@@ -64,14 +64,9 @@ export async function getArticles(): Promise<Article[]> {
   return rows.map(toArticle);
 }
 
+// Same source as the listing, so every card shown resolves to a page.
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
-  const rows = await fetchRows(
-    `slug=eq.${encodeURIComponent(slug)}&published=eq.true&limit=1`
-  );
-  if (rows === null) {
-    return staticArticles.find((a) => a.slug === slug) ?? null;
-  }
-  return rows[0] ? toArticle(rows[0]) : null;
+  return (await getArticles()).find((a) => a.slug === slug) ?? null;
 }
 
 export async function getAllSlugs(): Promise<string[]> {
